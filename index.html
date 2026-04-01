@@ -487,6 +487,7 @@ body{font-family:var(--fb);font-size:14px;line-height:1.5;
   <button class="nb" onclick="sw('keywords',this)"><span>⌥</span> Palabras Clave</button>
   <button class="nb" onclick="sw('meta',this)"><span>◈</span> Meta Ads</button>
   <button class="nb" onclick="sw('insights',this)"><span>✦</span> Análisis IA</button>
+  <button class="nb" onclick="sw('diagnostico',this)"><span>⚑</span> Diagnóstico</button>
 </nav>
 
 <main class="wrap">
@@ -1090,6 +1091,44 @@ body{font-family:var(--fb);font-size:14px;line-height:1.5;
   </div>
 </div><!-- /insights -->
 
+<!-- ════════════════ DIAGNÓSTICO / CONFIG HEALTH ════════════════ -->
+<div class="panel" id="panel-diagnostico">
+  <div class="ptitle">DIAGNÓSTICO</div>
+  <div class="psub">Estado real de tu configuración · Qué está funcionando · Qué falta · Qué hacer esta semana</div>
+  <div id="config-health" class="card">
+    <div class="aiload">Cargando diagnóstico...</div>
+  </div>
+
+  <!-- ANÁLISIS DETALLADO GOOGLE -->
+  <div class="card" style="margin-top:14px">
+    <div class="chd">Ciudades — Distribución Geográfica (Datos Reales)</div>
+    <div id="real-geo-table"><div class="aiload">Cargando...</div></div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <div class="chd">Top Keywords — Rendimiento Real ARQ_2025_B</div>
+    <div class="tw" id="real-kw-table"><div class="aiload">Cargando...</div></div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <div class="chd">
+      Términos de Búsqueda — Análisis de Negativos
+      <span style="font-family:var(--fm);font-size:9px;color:var(--t3);font-weight:400;margin-left:8px">Lo que la gente busca antes de hacer clic en tus anuncios</span>
+    </div>
+    <div class="tw" id="real-terms-table"><div class="aiload">Cargando...</div></div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <div class="chd">Anuncios Activos — Rendimiento Real</div>
+    <div class="tw" id="real-ads-table"><div class="aiload">Cargando...</div></div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <div class="chd">Conjuntos de Anuncios Meta — CPL Real por Audiencia</div>
+    <div class="tw" id="real-adsets-table"><div class="aiload">Cargando...</div></div>
+  </div>
+</div><!-- /diagnostico -->
+
 </main>
 
 <!-- BOTTOM NAV -->
@@ -1100,17 +1139,21 @@ body{font-family:var(--fb);font-size:14px;line-height:1.5;
     <button class="bb" onclick="sw('keywords',this,1)"><span class="bb-icon">⌥</span>KW</button>
     <button class="bb" onclick="sw('meta',this,1)"><span class="bb-icon">◈</span>Meta</button>
     <button class="bb" onclick="sw('insights',this,1)"><span class="bb-icon">✦</span>IA</button>
+    <button class="bb" onclick="sw('diagnostico',this,1)"><span class="bb-icon">⚑</span>Config</button>
   </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
-/* ── SHEET DATA LOADER ────────────────────────────────────
-   Lee datos reales del Google Apps Script.
-   Reemplaza SHEET_API_URL con la URL de tu Apps Script
-   (la que obtuviste al desplegarlo como aplicacion web).
-   ────────────────────────────────────────────────────── */
-const SHEET_API_URL = localStorage.getItem('arq-sheet-url') || '';
+/* ── SHEET DATA LOADER + ANALYSIS ENGINE ──────────────────── */
+const SHEET_API_URL = localStorage.getItem('arq-sheet-url') || 'https://script.google.com/macros/s/AKfycbxyrmc3JXpUFnjrCYVEF23oZgX5KbVYeKRKc0i9933HZx_flPh6mSDhe5bO4ruOc8Fk_Q/exec';
+
+let REAL_DATA = null;
+
+function setVal(id, val) { const el=document.getElementById(id); if(el) el.textContent=val; }
+function setHTML(id, val) { const el=document.getElementById(id); if(el) el.innerHTML=val; }
+function mxn(n) { return '$' + Math.round(n).toLocaleString('es-MX'); }
+function pct(n) { return (+n||0).toFixed(1) + '%'; }
 
 async function loadRealData() {
   if (!SHEET_API_URL) return;
@@ -1120,95 +1163,275 @@ async function loadRealData() {
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const json = await res.json();
     const d = json.latest || {};
-    if (!d || !d['Total Spend']) return;
+    REAL_DATA = d;
+    if (!d || (!d['Total Spend'] && !d['total_spend'])) return;
 
-    // ── Actualizar metricas principales ──
-    const inv   = d['Total Spend']        || 0;
-    const leads = d['Google Conversiones'] || 0;
-    const wa    = d['Meta WA Convs']       || 0;
-    const gSpend= d['Google Spend']        || 0;
-    const mSpend= d['Meta Spend']          || 0;
-    const gClicks = d['Google Clicks']     || 0;
-    const gImpr   = d['Google Impresiones']|| 0;
-    const mReach  = d['Meta Reach']        || 0;
-    const cpl     = leads > 0 ? Math.round(inv / leads) : 0;
-    const citas   = Math.round(leads * 0.268); // 26.8% SQL -> cita
+    const inv     = +(d['Total Spend']         || d.total_spend          || 0);
+    const gSpend  = +(d['Google Spend']         || d.google_spend         || 0);
+    const mSpend  = +(d['Meta Spend']           || d.meta_spend           || 0);
+    const gClicks = +(d['Google Clicks']        || d.google_clicks        || 0);
+    const gImpr   = +(d['Google Impresiones']   || d.google_impressions   || 0);
+    const gCTR    = +(d['Google CTR']           || d.google_ctr           || 0);
+    const gCPC    = +(d['Google CPC']           || d.google_cpc           || 0);
+    const gConv   = +(d['Google Conversiones']  || d.google_conversions   || 0);
+    const gCPA    = +(d['Google CPA']           || d.google_cpa           || 0);
+    const mImpr   = +(d['Meta Impresiones']     || d.meta_impressions     || 0);
+    const mClicks = +(d['Meta Clicks']          || d.meta_clicks          || 0);
+    const mCPM    = +(d['Meta CPM']             || d.meta_cpm             || 0);
+    const mCTR    = +(d['Meta CTR']             || d.meta_ctr             || 0);
+    const mReach  = +(d['Meta Reach']           || d.meta_reach           || 0);
+    const wa      = +(d['Meta WA Convs']        || d.meta_wa_convs        || 0);
+    const cwa     = +(d['Meta Costo WA']        || d.meta_cost_per_wa     || 0);
 
-    // Metricas de tarjetas
-    setVal('mv1', '$' + inv.toLocaleString('es-MX'));
-    setVal('mv2', leads.toLocaleString('es-MX'));
-    setVal('mv3', cpl > 0 ? '$' + cpl.toLocaleString('es-MX') : '—');
+    const geo     = d['Google Geo']          || d.google_geo          || [];
+    const kws     = d['Google Keywords']     || d.google_keywords     || [];
+    const terms   = d['Google Search Terms'] || d.google_search_terms || [];
+    const ads     = d['Google Ads']          || d.google_ads          || [];
+    const adsets  = d['Meta Ad Sets']        || d.meta_ad_sets        || [];
+
+    const cpl   = gConv > 0 ? Math.round(inv / gConv) : 0;
+    const citas = Math.round(gConv * 0.268);
+
+    // ── Periodo ──
+    const per = (d['Mes']||d.mes||'') + ' ' + (d['Anio']||d['Año']||d.anio||'');
+    if (per.trim().length > 2) {
+      ['strip-p','hdrper','cal-lbl','period-active'].forEach(id => setVal(id, per.trim()));
+    }
+
+    // ── Banner ──
+    if (banner) {
+      const ts = d['Timestamp']||d.timestamp||'';
+      banner.style.cssText = 'background:rgba(46,139,87,.07);border:1px solid rgba(46,139,87,.2);border-left:3px solid var(--grn);border-radius:var(--r);padding:12px 16px;margin-bottom:20px;display:flex;align-items:flex-start;gap:10px;font-size:12px;color:var(--t2)';
+      banner.innerHTML = '<span style="font-size:14px;margin-top:1px">✓</span><div><strong style="color:var(--grn)">Datos reales conectados</strong> — ARQ_2025_B + 2024, ARQ, QRO · Última sync: '+(ts?new Date(ts).toLocaleString('es-MX'):'hoy')+' · '+json.count+' período(s) en historial</div>';
+    }
+
+    // ── Funnel metrics ──
+    setVal('mv1', mxn(inv));
+    setVal('mv2', gConv.toLocaleString('es-MX'));
+    setVal('mv3', cpl>0 ? mxn(cpl) : '—');
     setVal('mv4', citas.toLocaleString('es-MX'));
-
-    // Numeros del funnel
     setVal('fs1', gClicks.toLocaleString('es-MX'));
     setVal('fs2', Math.round(gClicks * 0.7).toLocaleString('es-MX'));
     setVal('fs3', mReach.toLocaleString('es-MX'));
     setVal('fs4', wa.toLocaleString('es-MX'));
-    setVal('fs5', leads.toLocaleString('es-MX'));
+    setVal('fs5', gConv.toLocaleString('es-MX'));
     setVal('fs6', citas.toLocaleString('es-MX'));
 
-    // Metricas Google Ads (panel)
-    setVal('g-inv',  '$' + gSpend.toLocaleString('es-MX'));
+    // ── Google Ads metrics ──
+    setVal('g-inv',    mxn(gSpend));
     setVal('g-clicks', gClicks.toLocaleString('es-MX'));
-    const ctr = d['Google CTR'] || 0;
-    const cpc = d['Google CPC'] || 0;
-    setVal('g-ctr',  ctr.toFixed(1) + '%');
-    setVal('g-cpc',  '$' + cpc.toLocaleString('es-MX'));
+    setVal('g-ctr',    pct(gCTR));
+    setVal('g-cpc',    mxn(gCPC));
 
-    // Metricas Meta Ads (panel)
-    setVal('m-inv',  '$' + mSpend.toLocaleString('es-MX'));
+    // ── Meta metrics ──
+    setVal('m-inv',  mxn(mSpend));
     setVal('m-wa',   wa.toLocaleString('es-MX'));
-    const cwa = d['Meta Costo/WA'] || 0;
-    setVal('m-cpwa', '$' + Math.round(cwa).toLocaleString('es-MX'));
-    const mClicks = d['Meta Clicks'] || 0;
-    const roas = inv > 0 ? (leads * 15000 / inv).toFixed(1) : '—';
-    setVal('m-roas', roas + 'x');
+    setVal('m-cpwa', mxn(cwa));
+    setVal('m-roas', inv>0 ? (gConv*15000/inv).toFixed(1)+'x' : '—');
 
-    // Actualizar titulo del periodo
-    const per = (d['Mes'] || '') + ' ' + (d['Año'] || '');
-    if (per.trim()) {
-      document.getElementById('strip-p').textContent = per;
-      document.getElementById('hdrper').textContent  = per;
-      document.getElementById('cal-lbl').textContent = per;
-      document.getElementById('period-active').textContent = per;
-    }
+    // ── ANÁLISIS DETALLADO ──
+    renderGeoTable(geo);
+    renderKeywordsTable(kws);
+    renderSearchTerms(terms);
+    renderAdsTable(ads);
+    renderAdSetsTable(adsets, mSpend);
+    renderConfigHealth(gClicks, kws, terms, adsets);
 
-    // Actualizar banner: cambiar aviso de referencia a "datos reales"
-    if (banner) {
-      banner.style.borderLeftColor = 'var(--grn)';
-      banner.style.borderColor     = 'rgba(46,139,87,.2)';
-      banner.style.background      = 'rgba(46,139,87,.07)';
-      banner.querySelector('strong').textContent = 'Datos reales conectados';
-      banner.querySelector('div').innerHTML =
-        '<strong style="color:var(--grn)">Datos reales conectados</strong> — ' +
-        'Mostrando datos de <strong>ARQ_2025_B</strong> y <strong>2024, ARQ, QRO</strong>. ' +
-        'Ultima actualizacion: ' + (d['Timestamp'] ? new Date(d['Timestamp']).toLocaleString('es-MX') : 'hoy') +
-        ' · ' + (json.count || 1) + ' periodo(s) en el historial.';
-    }
-
-    console.log('[ARQ Dashboard] Datos reales cargados:', d);
-  } catch (err) {
-    console.warn('[ARQ Dashboard] No se pudieron cargar datos del Sheet:', err.message);
+  } catch(err) {
+    console.warn('[ARQ] Error cargando datos:', err.message);
   }
 }
 
-function setVal(id, val) {
-  const el = document.getElementById(id);
-  if (el) el.textContent = val;
+/* ── GEO TABLE ─────────────────────────────────────────────── */
+function renderGeoTable(geo) {
+  const el = document.getElementById('real-geo-table');
+  if (!el || !geo || !geo.length) return;
+  const maxClicks = Math.max(...geo.map(g => g.clicks||0), 1);
+  el.innerHTML = `
+    <table class="tbl"><thead><tr>
+      <th>Ciudad</th><th>Clics</th><th>Impresiones</th><th>Gasto</th><th>Conv.</th><th>Distribución</th>
+    </tr></thead><tbody>${geo.slice(0,10).map(g => `
+      <tr>
+        <td class="tdm">${g.city||'N/D'}</td>
+        <td>${(g.clicks||0).toLocaleString('es-MX')}</td>
+        <td>${(g.impressions||0).toLocaleString('es-MX')}</td>
+        <td>${mxn(g.spend||0)}</td>
+        <td>${g.conversions||0}</td>
+        <td><div style="background:var(--bg4);border-radius:2px;height:6px;width:100%;overflow:hidden">
+          <div style="background:var(--red);height:100%;width:${Math.round((g.clicks||0)/maxClicks*100)}%;border-radius:2px"></div>
+        </div></td>
+      </tr>`).join('')}
+    </tbody></table>`;
 }
 
-// IDs adicionales en los paneles de Google y Meta
-// (se agregan en el HTML como id="g-inv" etc.)
+/* ── KEYWORDS TABLE ────────────────────────────────────────── */
+function renderKeywordsTable(kws) {
+  const el = document.getElementById('real-kw-table');
+  if (!el || !kws || !kws.length) return;
+  const sorted = [...kws].sort((a,b) => (b.clicks||0)-(a.clicks||0));
+  el.innerHTML = `
+    <table class="tbl"><thead><tr>
+      <th>Keyword</th><th>Match</th><th>QS</th><th>Clics</th><th>CTR</th><th>Gasto</th><th>Conv.</th><th>Diagnóstico</th>
+    </tr></thead><tbody>${sorted.map(k => {
+      const qs = k.quality_score||0;
+      const qsColor = qs>=8?'var(--grn)':qs>=6?'var(--amb)':'var(--red)';
+      const diag = qs<5 ? '<span class="b br">QS Bajo — pausar</span>'
+                 : qs<7 ? '<span class="b ba">Mejorar anuncio</span>'
+                 : (k.clicks>50&&k.conversions==0) ? '<span class="b ba">Sin conv. — revisar</span>'
+                 : '<span class="b bg">OK</span>';
+      const mt = (k.match_type||'').replace('KEYWORD_MATCH_TYPE_','').replace('_',' ');
+      return `<tr>
+        <td class="tdm" style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${k.keyword||'—'}</td>
+        <td><span class="b bb2" style="font-size:9px">${mt}</span></td>
+        <td style="color:${qsColor};font-family:var(--fm);font-weight:500">${qs||'—'}/10</td>
+        <td>${(k.clicks||0).toLocaleString('es-MX')}</td>
+        <td>${pct(k.ctr||0)}</td>
+        <td>${mxn(k.spend||0)}</td>
+        <td>${k.conversions||0}</td>
+        <td>${diag}</td>
+      </tr>`;
+    }).join('')}</tbody></table>`;
+}
 
-// Ejecutar al cargar
+/* ── SEARCH TERMS ──────────────────────────────────────────── */
+function renderSearchTerms(terms) {
+  const el = document.getElementById('real-terms-table');
+  if (!el || !terms || !terms.length) return;
+
+  // Clasificar: posibles negativos = sin conversiones + gasto alto
+  const avgSpend = terms.reduce((s,t) => s+(t.spend||0),0) / terms.length;
+  const sorted = [...terms].sort((a,b) => (b.clicks||0)-(a.clicks||0));
+
+  el.innerHTML = `
+    <table class="tbl"><thead><tr>
+      <th>Término de búsqueda</th><th>Clics</th><th>Impresiones</th><th>Gasto</th><th>Conv.</th><th>Diagnóstico</th>
+    </tr></thead><tbody>${sorted.map(t => {
+      const isNeg = (t.conversions||0)===0 && (t.spend||0)>avgSpend;
+      const isGood = (t.conversions||0)>0;
+      const diag = isGood ? '<span class="b bg">✓ Agregar exact match</span>'
+                 : isNeg  ? '<span class="b br">⚠ Posible negativo</span>'
+                 :           '<span class="b bx">Monitorear</span>';
+      return `<tr>
+        <td class="tdm" style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.term||'—'}</td>
+        <td>${(t.clicks||0).toLocaleString('es-MX')}</td>
+        <td>${(t.impressions||0).toLocaleString('es-MX')}</td>
+        <td>${mxn(t.spend||0)}</td>
+        <td>${t.conversions||0}</td>
+        <td>${diag}</td>
+      </tr>`;
+    }).join('')}</tbody></table>
+    <div style="margin-top:10px;font-size:11px;color:var(--t3);border-top:1px solid var(--ln);padding-top:10px">
+      <strong style="color:var(--red)">Términos marcados como "Posible negativo"</strong> tienen gasto pero 0 conversiones.
+      Agrégralos como palabras clave negativas en ARQ_2025_B para ahorrar presupuesto.
+    </div>`;
+}
+
+/* ── ADS TABLE ─────────────────────────────────────────────── */
+function renderAdsTable(ads) {
+  const el = document.getElementById('real-ads-table');
+  if (!el || !ads || !ads.length) return;
+  const sorted = [...ads].sort((a,b) => (b.clicks||0)-(a.clicks||0));
+  el.innerHTML = `
+    <table class="tbl"><thead><tr>
+      <th>Anuncio</th><th>Estado</th><th>Clics</th><th>Impresiones</th><th>CTR</th><th>Gasto</th><th>Conv.</th>
+    </tr></thead><tbody>${sorted.map(a => {
+      const statusClass = (a.status||'').includes('ENABLED')?'bg':'ba';
+      const statusLabel = (a.status||'').includes('ENABLED')?'Activo':'Pausado';
+      return `<tr>
+        <td class="tdm" style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${a.name||'Sin nombre'}</td>
+        <td><span class="b b${statusClass}">${statusLabel}</span></td>
+        <td>${(a.clicks||0).toLocaleString('es-MX')}</td>
+        <td>${(a.impressions||0).toLocaleString('es-MX')}</td>
+        <td>${pct(a.ctr||0)}</td>
+        <td>${mxn(a.spend||0)}</td>
+        <td>${a.conversions||0}</td>
+      </tr>`;
+    }).join('')}</tbody></table>`;
+}
+
+/* ── AD SETS TABLE ─────────────────────────────────────────── */
+function renderAdSetsTable(adsets, totalMeta) {
+  const el = document.getElementById('real-adsets-table');
+  if (!el || !adsets || !adsets.length) return;
+  const sorted = [...adsets].sort((a,b) => (b.spend||0)-(a.spend||0));
+  el.innerHTML = `
+    <table class="tbl"><thead><tr>
+      <th>Conjunto de Anuncios</th><th>Estado</th><th>Gasto</th><th>Alcance</th><th>Clics</th><th>WA Convs</th><th>CPL WA</th><th>Diagnóstico</th>
+    </tr></thead><tbody>${sorted.map(a => {
+      const cpl = a.cost_per_wa||0;
+      const diag = cpl>0&&cpl<70 ? '<span class="b bg">CPL Excelente</span>'
+                 : cpl<120       ? '<span class="b ba">CPL Aceptable</span>'
+                 : cpl>0         ? '<span class="b br">CPL Alto — optimizar</span>'
+                 :                 '<span class="b bx">Sin conversiones</span>';
+      return `<tr>
+        <td class="tdm" style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${a.name||'—'}</td>
+        <td><span class="b ${a.status==='ACTIVE'?'bg':'ba'}">${a.status==='ACTIVE'?'Activo':'Pausado'}</span></td>
+        <td>${mxn(a.spend||0)}</td>
+        <td>${(a.reach||0).toLocaleString('es-MX')}</td>
+        <td>${(a.clicks||0).toLocaleString('es-MX')}</td>
+        <td>${a.wa_convs||0}</td>
+        <td style="font-family:var(--fm);color:${cpl<70?'var(--grn)':cpl<120?'var(--amb)':'var(--red)'}">${cpl>0?mxn(cpl):'—'}</td>
+        <td>${diag}</td>
+      </tr>`;
+    }).join('')}</tbody></table>`;
+}
+
+/* ── CONFIG HEALTH ─────────────────────────────────────────── */
+function renderConfigHealth(clicks, kws, terms, adsets) {
+  const el = document.getElementById('config-health');
+  if (!el) return;
+
+  const lowQsKws = kws.filter(k => (k.quality_score||0) < 6);
+  const negCandidates = terms.filter(t => (t.conversions||0)===0 && (t.spend||0)>50);
+  const highCPLSets = adsets.filter(a => (a.cost_per_wa||0) > 120);
+  const activeAdSets = adsets.filter(a => a.status==='ACTIVE');
+
+  const checks = [
+    { ok: clicks > 0,            label: 'Google Ads ARQ_2025_B activa',             fix: null },
+    { ok: adsets.length > 0,     label: 'Meta Ads 2024, ARQ, QRO activa',            fix: null },
+    { ok: lowQsKws.length === 0, label: `Quality Score: ${lowQsKws.length} keywords bajo QS 6`, fix: 'Pausar o mejorar anuncios de keywords con QS < 6 en Google Ads' },
+    { ok: negCandidates.length < 3, label: `${negCandidates.length} términos de búsqueda sin conversión con gasto`, fix: 'Agregar como palabras clave negativas en ARQ_2025_B' },
+    { ok: highCPLSets.length === 0, label: `${highCPLSets.length} conjuntos de Meta con CPL > $120`, fix: 'Pausar o ajustar audiencia de ad sets con CPL alto' },
+    { ok: activeAdSets.length >= 2, label: `${activeAdSets.length} conjuntos de anuncios activos en Meta`, fix: activeAdSets.length < 2 ? 'Activar más conjuntos de anuncios para escalar' : null },
+    { ok: false, label: 'Lead Form Extension configurada',    fix: 'Google Ads → Activos → Formulario de clientes potenciales' },
+    { ok: false, label: 'Image Extensions activas',           fix: 'Subir fotos de proyectos reales a Google Ads → Activos → Imágenes' },
+    { ok: false, label: 'CRM conectado (Pipedrive / HubSpot)', fix: 'Implementar CRM y conectar con WhatsApp Business para trackear SQL → Cita' },
+    { ok: false, label: 'Bot nocturno WhatsApp configurado',  fix: 'Activar respuesta automática en WA Business fuera de horario' },
+    { ok: false, label: 'Pixel Meta ViewContent verificado',  fix: 'Verificar con Meta Pixel Helper que dispara en páginas de portafolio' },
+    { ok: false, label: 'Calendly / agendado online',         fix: 'Instalar Calendly y agregar link en WA Business para agendar citas automáticamente' },
+  ];
+
+  const score = Math.round(checks.filter(c => c.ok).length / checks.length * 100);
+  const scoreColor = score >= 80 ? 'var(--grn)' : score >= 50 ? 'var(--amb)' : 'var(--red)';
+
+  el.innerHTML = `
+    <div style="display:flex;align-items:center;gap:20px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--ln)">
+      <div style="text-align:center">
+        <div style="font-family:var(--fpx);font-size:48px;color:${scoreColor};line-height:1">${score}</div>
+        <div style="font-family:var(--fh);font-size:10px;letter-spacing:.1em;color:var(--t3);text-transform:uppercase">Score de configuración</div>
+      </div>
+      <div style="flex:1">
+        <div style="height:8px;background:var(--bg4);border-radius:4px;overflow:hidden;margin-bottom:8px">
+          <div style="width:${score}%;height:100%;background:${scoreColor};border-radius:4px;transition:width .6s"></div>
+        </div>
+        <div style="font-size:12px;color:var(--t2)">${checks.filter(c=>c.ok).length} de ${checks.length} elementos configurados correctamente. ${score<80?'Hay oportunidades importantes de mejora.':'El funnel está bien configurado.'}</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+    ${checks.map(c => `
+      <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:var(--bg3);border-radius:var(--rsm);border-left:3px solid ${c.ok?'var(--grn)':'var(--red)'}">
+        <span style="font-size:14px;flex-shrink:0;margin-top:1px">${c.ok?'✓':'✗'}</span>
+        <div style="flex:1">
+          <div style="font-size:12px;color:var(--t1);font-weight:500">${c.label}</div>
+          ${c.fix && !c.ok ? `<div style="font-size:11px;color:var(--t3);margin-top:3px">→ ${c.fix}</div>` : ''}
+        </div>
+        ${c.ok ? '' : `<span class="b br" style="flex-shrink:0">Pendiente</span>`}
+      </div>`).join('')}
+    </div>`;
+}
+
 document.addEventListener('DOMContentLoaded', loadRealData);
-
-// Funcion para configurar la URL del Sheet desde el dashboard
-function setSheetUrl(url) {
-  localStorage.setItem('arq-sheet-url', url);
-  location.reload();
-}
+function setSheetUrl(url) { localStorage.setItem('arq-sheet-url', url); location.reload(); }
 
 /* ── DEVICE DETECTION ── */
 function detectDev(){
