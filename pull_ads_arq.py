@@ -49,7 +49,7 @@ def setup_google_client():
     tmp = tempfile.NamedTemporaryFile(mode="w", suffix=".yaml", delete=False)
     tmp.write(yaml_content)
     tmp.close()
-    client = GoogleAdsClient.load_from_storage(tmp.name, version="v17")
+    client = GoogleAdsClient.load_from_storage(tmp.name, version="v18")
     os.unlink(tmp.name)
     return client
 
