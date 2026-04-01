@@ -1,34 +1,17 @@
-"""
-CASA CLUB ARQ — Pull de datos publicitarios
-Jala metricas de Google Ads (ARQ_2025_B) + Meta Ads (2024, ARQ, QRO)
-y escribe los resultados a Google Sheets para que el dashboard los lea.
-
-USO:
-    python3 pull_ads_arq.py           # Mes actual
-    python3 pull_ads_arq.py 2025-03   # Mes especifico
-
-SECRETS REQUERIDOS en GitHub (mismos del repo marketing-guru):
-    GOOGLE_ADS_YAML   — contenido completo del google-ads.yaml
-    META_ACCESS_TOKEN — token de acceso Meta Marketing API
-    SHEET_API_URL     — URL del Google Apps Script de ARQ
-"""
-
 import json, requests, sys, os, calendar, time, tempfile
 from datetime import datetime
 
-# ── CAMPAAS ────────────────────────────────────────────────
 GOOGLE_CAMPAIGN_FILTER = "ARQ_2025_B"
 META_CAMPAIGN_FILTER   = "2024, ARQ, QRO"
 META_ACCOUNT           = "act_286249402372299"
 
-# ── SECRETS ────────────────────────────────────────────────
 META_TOKEN    = os.environ.get("META_ACCESS_TOKEN", "")
-SHEET_API_URL = os.environ.get("SHEET_API_URL_ARQ", 
+SHEET_API_URL = os.environ.get("SHEET_API_URL_ARQ", "https://script.google.com/macros/s/AKfycbxyrmc3JXpUFnjrCYVEF23oZgX5KbVYeKRKc0i9933HZx_flPh6mSDhe5bO4ruOc8Fk_Q/exec")
+
 RETRY_MAX   = 3
 RETRY_DELAY = 5
 
 
-# ── FECHAS ────────────────────────────────────────────────
 def get_date_range(ym=None):
     if ym:
         y, m = map(int, ym.split("-"))
@@ -39,7 +22,6 @@ def get_date_range(ym=None):
     return y, m, f"{y}-{m:02d}-01", f"{y}-{m:02d}-{last:02d}"
 
 
-# ── GOOGLE ADS ────────────────────────────────────────────
 def setup_google_client():
     from google.ads.googleads.client import GoogleAdsClient
     yaml_content = os.environ.get("GOOGLE_ADS_YAML", "")
@@ -65,7 +47,6 @@ def pull_google(date_from, date_to):
         cfg = yaml.safe_load(yaml_content)
         cid = str(cfg.get("login_customer_id",
                   cfg.get("client_customer_id", ""))).replace("-", "")
-
         ga = client.get_service("GoogleAdsService")
         query = f"""
             SELECT campaign.name, metrics.clicks, metrics.impressions,
@@ -91,13 +72,11 @@ def pull_google(date_from, date_to):
                     time.sleep(RETRY_DELAY)
                 else:
                     raise
-
         if result["clicks"] > 0:
             result["ctr"] = round(result["clicks"] / max(result["impressions"], 1) * 100, 2)
             result["cpc"] = round(result["spend"] / result["clicks"], 2)
         if result["conversions"] > 0:
             result["cpa"] = round(result["spend"] / result["conversions"], 2)
-
         print(f"[GOOGLE] ${result['spend']:,.2f} | {result['clicks']} clics | {result['conversions']} conv.")
     except Exception as e:
         result["status"] = f"error: {e}"
@@ -105,7 +84,6 @@ def pull_google(date_from, date_to):
     return result
 
 
-# ── META ADS ──────────────────────────────────────────────
 def pull_meta(date_from, date_to):
     print(f"[META] Jalando '{META_CAMPAIGN_FILTER}' | {date_from} -> {date_to}")
     result = dict(campaign=META_CAMPAIGN_FILTER, spend=0.0, impressions=0,
@@ -115,10 +93,8 @@ def pull_meta(date_from, date_to):
     if not META_TOKEN:
         result["status"] = "error: no token"
         return result
-
     base = "https://graph.facebook.com/v18.0"
     try:
-        # 1. Buscar campaña por nombre
         r = requests.get(
             f"{base}/{META_ACCOUNT}/campaigns"
             f"?fields=id,name,status&access_token={META_TOKEN}",
@@ -127,13 +103,10 @@ def pull_meta(date_from, date_to):
         r.raise_for_status()
         campaigns = [c for c in r.json().get("data", [])
                      if META_CAMPAIGN_FILTER.lower() in c["name"].lower()]
-
         if not campaigns:
             result["status"] = "campaign not found"
             print(f"[META] No se encontro '{META_CAMPAIGN_FILTER}'")
             return result
-
-        # 2. Insights por campaña
         for camp in campaigns:
             for attempt in range(RETRY_MAX):
                 try:
@@ -163,12 +136,10 @@ def pull_meta(date_from, date_to):
                         time.sleep(RETRY_DELAY)
                     else:
                         raise
-
         if result["clicks"] > 0:
             result["cpc"] = round(result["spend"] / result["clicks"], 2)
         if result["wa_conversations"] > 0:
             result["cost_per_wa"] = round(result["spend"] / result["wa_conversations"], 2)
-
         print(f"[META] ${result['spend']:,.2f} | {result['wa_conversations']} WA convs.")
     except Exception as e:
         result["status"] = f"error: {e}"
@@ -176,7 +147,6 @@ def pull_meta(date_from, date_to):
     return result
 
 
-# ── GOOGLE SHEET ──────────────────────────────────────────
 def update_sheet(year, month, g, m):
     if not SHEET_API_URL:
         print("[SHEET] SHEET_API_URL no configurada, saltando.")
@@ -220,19 +190,15 @@ def update_sheet(year, month, g, m):
                 print(f"[SHEET] ERROR: {e}")
 
 
-# ── MAIN ──────────────────────────────────────────────────
 if __name__ == "__main__":
     ym = sys.argv[1] if len(sys.argv) > 1 else None
     year, month, date_from, date_to = get_date_range(ym)
-
     print(f"\n{'='*50}")
     print(f"CASA CLUB ARQ — Pull de Ads | {date_from} -> {date_to}")
     print(f"{'='*50}\n")
-
     g = pull_google(date_from, date_to)
     m = pull_meta(date_from, date_to)
     update_sheet(year, month, g, m)
-
     print(f"\n{'='*50}")
     print(f"RESUMEN FINAL:")
     print(f"  Google (ARQ_2025_B)        : ${g['spend']:,.2f} MXN | {g['clicks']} clics | {g['conversions']} conv.")
