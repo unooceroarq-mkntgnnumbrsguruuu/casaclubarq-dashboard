@@ -23,8 +23,7 @@ META_ACCOUNT           = "act_286249402372299"
 
 # ── SECRETS ────────────────────────────────────────────────
 META_TOKEN    = os.environ.get("META_ACCESS_TOKEN", "")
-SHEET_API_URL = os.environ.get("SHEET_API_URL", "")
-
+SHEET_API_URL = os.environ.get("SHEET_API_URL_ARQ", 
 RETRY_MAX   = 3
 RETRY_DELAY = 5
 
