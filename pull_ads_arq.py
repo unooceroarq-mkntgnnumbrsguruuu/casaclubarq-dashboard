@@ -4,7 +4,6 @@ from datetime import datetime
 GOOGLE_CAMPAIGN_FILTER = "ARQ_2025_B"
 META_CAMPAIGN_FILTER   = "2024, ARQ, QRO"
 META_ACCOUNT           = "act_286249402372299"
-# Cuenta cliente real (no el manager)
 GOOGLE_CLIENT_ID       = "3248545148"
 
 META_TOKEN    = os.environ.get("META_ACCESS_TOKEN", "")
@@ -43,21 +42,14 @@ def pull_google(date_from, date_to):
         campaign=GOOGLE_CAMPAIGN_FILTER, spend=0.0, clicks=0,
         impressions=0, ctr=0.0, cpc=0.0, conversions=0, cpa=0.0,
         status="ok", date_from=date_from, date_to=date_to,
-        # Desglose por ciudad
-        geo=[], 
-        # Keywords
-        keywords=[],
-        # Terminos de busqueda top
-        search_terms=[],
-        # Anuncios RSA
-        ads=[]
+        geo=[], keywords=[], search_terms=[], ads=[]
     )
     try:
         client = setup_google_client()
         ga = client.get_service("GoogleAdsService")
         cid = GOOGLE_CLIENT_ID
 
-        # ── 1. METRICAS GENERALES DE CAMPAÑA ────────────────
+        # 1. METRICAS GENERALES
         q_camp = f"""
             SELECT campaign.name, campaign.status,
                    metrics.clicks, metrics.impressions,
@@ -78,9 +70,10 @@ def pull_google(date_from, date_to):
                 result["conversions"] += int(m.conversions)
         print(f"[GOOGLE] Campaña: ${result['spend']:,.2f} | {result['clicks']} clics")
 
-        # ── 2. DESGLOSE GEOGRAFICO ───────────────────────────
+        # 2. DESGLOSE GEOGRAFICO
         q_geo = f"""
-            SELECT geographic_view.country_criterion_id,
+            SELECT campaign.name,
+                   geographic_view.country_criterion_id,
                    segments.geo_target_city,
                    metrics.clicks, metrics.impressions,
                    metrics.cost_micros, metrics.conversions
@@ -106,7 +99,7 @@ def pull_google(date_from, date_to):
         except Exception as e:
             print(f"[GOOGLE] Geo error (no critico): {e}")
 
-        # ── 3. KEYWORDS ──────────────────────────────────────
+        # 3. KEYWORDS
         q_kw = f"""
             SELECT ad_group_criterion.keyword.text,
                    ad_group_criterion.keyword.match_type,
@@ -126,23 +119,24 @@ def pull_google(date_from, date_to):
             for batch in ga.search_stream(customer_id=cid, query=q_kw):
                 for row in batch.results:
                     kw_data.append({
-                        "keyword":      row.ad_group_criterion.keyword.text,
-                        "match_type":   str(row.ad_group_criterion.keyword.match_type),
+                        "keyword":       row.ad_group_criterion.keyword.text,
+                        "match_type":    str(row.ad_group_criterion.keyword.match_type),
                         "quality_score": row.ad_group_criterion.quality_info.quality_score,
-                        "clicks":       row.metrics.clicks,
-                        "impressions":  row.metrics.impressions,
-                        "spend":        round(row.metrics.cost_micros / 1_000_000, 2),
-                        "ctr":          round(row.metrics.ctr * 100, 2),
-                        "conversions":  int(row.metrics.conversions)
+                        "clicks":        row.metrics.clicks,
+                        "impressions":   row.metrics.impressions,
+                        "spend":         round(row.metrics.cost_micros / 1_000_000, 2),
+                        "ctr":           round(row.metrics.ctr * 100, 2),
+                        "conversions":   int(row.metrics.conversions)
                     })
             result["keywords"] = kw_data
             print(f"[GOOGLE] Keywords: {len(kw_data)} palabras")
         except Exception as e:
             print(f"[GOOGLE] Keywords error (no critico): {e}")
 
-        # ── 4. TERMINOS DE BUSQUEDA ──────────────────────────
+        # 4. TERMINOS DE BUSQUEDA
         q_st = f"""
-            SELECT search_term_view.search_term,
+            SELECT campaign.name,
+                   search_term_view.search_term,
                    search_term_view.status,
                    metrics.clicks, metrics.impressions,
                    metrics.cost_micros, metrics.conversions
@@ -169,9 +163,9 @@ def pull_google(date_from, date_to):
         except Exception as e:
             print(f"[GOOGLE] Search terms error (no critico): {e}")
 
-        # ── 5. ANUNCIOS RSA ──────────────────────────────────
+        # 5. ANUNCIOS RSA
         q_ads = f"""
-            SELECT ad_group_ad.ad.responsive_search_ad.headlines,
+            SELECT campaign.name,
                    ad_group_ad.ad.name,
                    ad_group_ad.status,
                    metrics.clicks, metrics.impressions,
@@ -202,7 +196,6 @@ def pull_google(date_from, date_to):
         except Exception as e:
             print(f"[GOOGLE] Ads error (no critico): {e}")
 
-        # Calculos finales
         if result["clicks"] > 0:
             result["ctr"] = round(result["clicks"] / max(result["impressions"], 1) * 100, 2)
             result["cpc"] = round(result["spend"] / result["clicks"], 2)
@@ -232,7 +225,6 @@ def pull_meta(date_from, date_to):
 
     base = "https://graph.facebook.com/v18.0"
     try:
-        # Buscar campaña
         r = requests.get(
             f"{base}/{META_ACCOUNT}/campaigns"
             f"?fields=id,name,status&access_token={META_TOKEN}",
@@ -247,7 +239,6 @@ def pull_meta(date_from, date_to):
             return result
 
         for camp in campaigns:
-            # Insights generales
             r2 = requests.get(
                 f"{base}/{camp['id']}/insights"
                 f"?fields=spend,impressions,clicks,cpm,cpc,ctr,reach,actions,frequency"
@@ -269,16 +260,14 @@ def pull_meta(date_from, date_to):
                     if "messaging" in action.get("action_type", ""):
                         result["wa_conversations"] += int(float(action.get("value", 0)))
 
-            # Conjuntos de anuncios (ad sets)
             try:
                 r3 = requests.get(
                     f"{base}/{camp['id']}/adsets"
-                    f"?fields=id,name,status,targeting&access_token={META_TOKEN}",
+                    f"?fields=id,name,status&access_token={META_TOKEN}",
                     timeout=30
                 )
                 r3.raise_for_status()
-                adsets = r3.json().get("data", [])
-                for adset in adsets:
+                for adset in r3.json().get("data", []):
                     r4 = requests.get(
                         f"{base}/{adset['id']}/insights"
                         f"?fields=spend,impressions,clicks,cpm,ctr,reach,actions"
@@ -331,33 +320,33 @@ def update_sheet(year, month, g, m):
     meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio",
              "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
     payload = {
-        "action":             "actualizar_arq",
-        "mes":                meses[month - 1],
-        "anio":               year,
-        "google_spend":       g["spend"],
-        "google_clicks":      g["clicks"],
-        "google_impressions": g["impressions"],
-        "google_ctr":         g["ctr"],
-        "google_cpc":         g["cpc"],
-        "google_conversions": g["conversions"],
-        "google_cpa":         g["cpa"],
-        "google_geo":         json.dumps(g.get("geo", [])),
-        "google_keywords":    json.dumps(g.get("keywords", [])),
-        "google_search_terms":json.dumps(g.get("search_terms", [])),
-        "google_ads":         json.dumps(g.get("ads", [])),
-        "meta_spend":         m["spend"],
-        "meta_impressions":   m["impressions"],
-        "meta_clicks":        m["clicks"],
-        "meta_cpm":           m["cpm"],
-        "meta_ctr":           m["ctr"],
-        "meta_reach":         m["reach"],
-        "meta_wa_convs":      m["wa_conversations"],
-        "meta_cost_per_wa":   m["cost_per_wa"],
-        "meta_ad_sets":       json.dumps(m.get("ad_sets", [])),
-        "total_spend":        round(g["spend"] + m["spend"], 2),
-        "google_status":      g["status"],
-        "meta_status":        m["status"],
-        "timestamp":          datetime.now().isoformat()
+        "action":              "actualizar_arq",
+        "mes":                 meses[month - 1],
+        "anio":                year,
+        "google_spend":        g["spend"],
+        "google_clicks":       g["clicks"],
+        "google_impressions":  g["impressions"],
+        "google_ctr":          g["ctr"],
+        "google_cpc":          g["cpc"],
+        "google_conversions":  g["conversions"],
+        "google_cpa":          g["cpa"],
+        "google_geo":          json.dumps(g.get("geo", [])),
+        "google_keywords":     json.dumps(g.get("keywords", [])),
+        "google_search_terms": json.dumps(g.get("search_terms", [])),
+        "google_ads":          json.dumps(g.get("ads", [])),
+        "meta_spend":          m["spend"],
+        "meta_impressions":    m["impressions"],
+        "meta_clicks":         m["clicks"],
+        "meta_cpm":            m["cpm"],
+        "meta_ctr":            m["ctr"],
+        "meta_reach":          m["reach"],
+        "meta_wa_convs":       m["wa_conversations"],
+        "meta_cost_per_wa":    m["cost_per_wa"],
+        "meta_ad_sets":        json.dumps(m.get("ad_sets", [])),
+        "total_spend":         round(g["spend"] + m["spend"], 2),
+        "google_status":       g["status"],
+        "meta_status":         m["status"],
+        "timestamp":           datetime.now().isoformat()
     }
     for attempt in range(RETRY_MAX):
         try:
@@ -385,6 +374,7 @@ if __name__ == "__main__":
     print(f"RESUMEN FINAL:")
     print(f"  Google (ARQ_2025_B) : ${g['spend']:,.2f} MXN | {g['clicks']} clics | {g['conversions']} conv.")
     print(f"  Keywords            : {len(g.get('keywords',[]))} | Search terms: {len(g.get('search_terms',[]))}")
+    print(f"  Geo                 : {len(g.get('geo',[]))} ciudades")
     print(f"  Meta (2024,ARQ,QRO) : ${m['spend']:,.2f} MXN | {m['wa_conversations']} WA | {len(m.get('ad_sets',[]))} ad sets")
     print(f"  TOTAL               : ${g['spend'] + m['spend']:,.2f} MXN")
     print(f"{'='*50}\n")
