@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark">
+<html lang="es" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -17,13 +17,6 @@
   --fb:'Barlow',sans-serif;
   --fm:'JetBrains Mono',monospace;
   --r:6px;--rsm:3px;
-}
-[data-theme=dark]{
-  --bg:#0E0F11;--bg2:#141618;--bg3:#1C1E22;--bg4:#252830;
-  --ln:rgba(255,255,255,.07);--ln2:rgba(255,255,255,.13);
-  --t1:#F0EDE8;--t2:#8E8A85;--t3:#555250;
-}
-[data-theme=light]{
   --bg:#ECEAE6;--bg2:#F4F2EE;--bg3:#FAFAF8;--bg4:#FFFFFF;
   --ln:rgba(0,0,0,.07);--ln2:rgba(0,0,0,.13);
   --t1:#1A1917;--t2:#5A5854;--t3:#9A9894;
@@ -57,12 +50,7 @@ body{font-family:var(--fb);font-size:14px;line-height:1.5;
   padding:3px 7px;border-radius:2px}
 .status{width:7px;height:7px;background:var(--grn);border-radius:50%}
 .hdr-per{font-family:var(--fm);font-size:11px;color:var(--t3)}
-.theme-tog{display:flex;align-items:center;background:var(--bg3);
-  border:1px solid var(--ln2);border-radius:20px;padding:3px;gap:2px}
-.tbtn{width:28px;height:24px;border:none;border-radius:14px;
-  background:transparent;color:var(--t3);font-size:12px;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;transition:all .15s}
-.tbtn.on{background:var(--t1);color:var(--bg)}
+
 
 /* ── TOP NAV ────────────────────────────── */
 .nav{background:var(--bg2);border-bottom:1px solid var(--ln);
@@ -456,6 +444,60 @@ body{font-family:var(--fb);font-size:14px;line-height:1.5;
   .g3{grid-template-columns:1fr 1fr}
   .fgrid{grid-template-columns:1fr 260px}
 }
+
+/* ── CRM ─────────────────────────────── */
+.crm-stages{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:20px}
+.crm-stage-col{background:var(--bg2);border:1px solid var(--ln);border-radius:var(--r);overflow:hidden}
+.crm-stage-hd{padding:10px 14px;border-bottom:1px solid var(--ln);display:flex;align-items:center;gap:8px}
+.crm-stage-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.crm-stage-name{font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--t2)}
+.crm-stage-cnt{font-family:var(--fm);font-size:10px;color:var(--t3);margin-left:auto}
+.crm-cards{padding:8px;display:flex;flex-direction:column;gap:6px;min-height:60px}
+.crm-card{background:var(--bg3);border:1px solid var(--ln);border-radius:4px;padding:10px 12px;cursor:pointer;transition:border-color .15s,background .15s;position:relative}
+.crm-card:hover{border-color:var(--ln2);background:var(--bg4)}
+.crm-card-name{font-family:var(--fh);font-size:13px;font-weight:600;color:var(--t1);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:18px}
+.crm-card-meta{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.crm-card-city{font-family:var(--fm);font-size:9px;color:var(--t3);background:var(--bg2);border:1px solid var(--ln);padding:1px 5px;border-radius:2px}
+.crm-card-src{font-family:var(--fh);font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:1px 5px;border-radius:2px}
+.crm-card-src.google{background:var(--red-l);color:var(--red)}
+.crm-card-src.meta{background:var(--blu-l);color:var(--blu)}
+.crm-card-src.referral{background:var(--grn-l);color:var(--grn)}
+.crm-card-src.otro{background:var(--bg4);color:var(--t3)}
+.crm-card-date{font-family:var(--fm);font-size:9px;color:var(--t3);margin-left:auto}
+.crm-card-del{position:absolute;top:6px;right:6px;width:16px;height:16px;border:none;background:transparent;color:var(--t3);font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:2px;transition:all .1s;line-height:1;padding:0}
+.crm-card-del:hover{background:var(--red-l);color:var(--red)}
+.crm-card-note{font-size:11px;color:var(--t3);margin-top:5px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.crm-add-btn{width:100%;padding:8px;border:1px dashed var(--ln2);border-radius:4px;background:transparent;color:var(--t3);font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .15s;margin-top:4px}
+.crm-add-btn:hover{border-color:var(--red);color:var(--red);background:var(--red-l)}
+.crm-modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:500;align-items:center;justify-content:center}
+.crm-modal-bg.open{display:flex}
+.crm-modal{background:var(--bg3);border:1px solid var(--ln2);border-radius:var(--r);padding:24px;width:100%;max-width:460px;max-height:90vh;overflow-y:auto}
+.crm-modal-title{font-family:var(--fpx);font-size:18px;color:var(--t1);margin-bottom:18px}
+.crm-field{margin-bottom:14px}
+.crm-field label{display:block;font-family:var(--fh);font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--t3);margin-bottom:5px}
+.crm-field input,.crm-field select,.crm-field textarea{width:100%;padding:8px 11px;border:1px solid var(--ln2);border-radius:2px;background:var(--bg4);color:var(--t1);font-family:var(--fb);font-size:13px;outline:none;transition:border-color .15s}
+.crm-field input:focus,.crm-field select:focus,.crm-field textarea:focus{border-color:var(--red)}
+.crm-field textarea{resize:vertical;min-height:70px;font-size:12px;line-height:1.5}
+.crm-row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.crm-btns{display:flex;gap:8px;margin-top:18px}
+.crm-save{flex:1;padding:9px;background:var(--red);color:#fff;border:none;border-radius:2px;font-family:var(--fh);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.crm-save:hover{background:#b52020}
+.crm-cancel{padding:9px 16px;background:transparent;border:1px solid var(--ln2);border-radius:2px;font-family:var(--fh);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);cursor:pointer}
+.crm-cancel:hover{border-color:var(--t2);color:var(--t2)}
+.crm-stats-band{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--ln);border:1px solid var(--ln);border-radius:var(--r);overflow:hidden;margin-bottom:20px}
+.crm-stat{background:var(--bg2);padding:14px 16px;text-align:center;cursor:pointer;transition:background .15s}
+.crm-stat:hover{background:var(--bg3)}
+.crm-stat-n{font-family:var(--fpx);font-size:24px;color:var(--t1);line-height:1;margin-bottom:4px}
+.crm-stat-lbl{font-family:var(--fh);font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--t3)}
+.crm-stat-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-bottom:5px}
+.crm-list-view{display:none}
+.crm-list-view.on{display:block}
+.crm-board-view{display:block}
+.crm-board-view.hidden{display:none}
+.crm-view-toggle{display:flex;gap:6px;margin-bottom:16px;align-items:center}
+.crm-vtbtn{font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 11px;border:1px solid var(--ln2);border-radius:2px;background:transparent;color:var(--t3);cursor:pointer;transition:all .14s}
+.crm-vtbtn.on{background:var(--t1);color:var(--bg);border-color:var(--t1)}
+@media(max-width:768px){.crm-stages{grid-template-columns:1fr 1fr}.crm-stats-band{grid-template-columns:repeat(3,1fr)}.crm-row2{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -473,10 +515,6 @@ body{font-family:var(--fb);font-size:14px;line-height:1.5;
     <span class="dev-badge" id="devlbl">Desktop</span>
     <div class="status"></div>
     <span class="hdr-per" id="hdrper">Feb 2025</span>
-    <div class="theme-tog">
-      <button class="tbtn on" id="btndark" onclick="setT('dark')" title="Oscuro">◑</button>
-      <button class="tbtn" id="btnlight" onclick="setT('light')" title="Claro">○</button>
-    </div>
   </div>
 </header>
 
@@ -486,6 +524,7 @@ body{font-family:var(--fb);font-size:14px;line-height:1.5;
   <button class="nb" onclick="sw('google',this)"><span>⬡</span> Google Ads</button>
   <button class="nb" onclick="sw('keywords',this)"><span>⌥</span> Palabras Clave</button>
   <button class="nb" onclick="sw('meta',this)"><span>◈</span> Meta Ads</button>
+  <button class="nb" onclick="sw('crm',this)"><span>◉</span> CRM</button>
   <button class="nb" onclick="sw('insights',this)"><span>✦</span> Análisis IA</button>
   <button class="nb" onclick="sw('diagnostico',this)"><span>⚑</span> Diagnóstico</button>
 </nav>
@@ -1129,6 +1168,190 @@ body{font-family:var(--fb);font-size:14px;line-height:1.5;
   </div>
 </div><!-- /diagnostico -->
 
+<!-- ════════════════ CRM ════════════════ -->
+<div class="panel" id="panel-crm">
+  <div class="ptitle">CRM</div>
+  <div class="psub">Pipeline de leads · Registra cada conversación de WhatsApp y sigue su evolución hasta proyecto activo</div>
+
+  <!-- STATS BAND -->
+  <div class="crm-stats-band">
+    <div class="crm-stat" onclick="crmFilter('wa')">
+      <div><span class="crm-stat-dot" style="background:#2860B4"></span></div>
+      <div class="crm-stat-n" id="crm-cnt-wa">0</div>
+      <div class="crm-stat-lbl">WA Iniciado</div>
+    </div>
+    <div class="crm-stat" onclick="crmFilter('sql')">
+      <div><span class="crm-stat-dot" style="background:#B07830"></span></div>
+      <div class="crm-stat-n" id="crm-cnt-sql">0</div>
+      <div class="crm-stat-lbl">Calificado</div>
+    </div>
+    <div class="crm-stat" onclick="crmFilter('cita')">
+      <div><span class="crm-stat-dot" style="background:#CC2929"></span></div>
+      <div class="crm-stat-n" id="crm-cnt-cita">0</div>
+      <div class="crm-stat-lbl">Cita agendada</div>
+    </div>
+    <div class="crm-stat" onclick="crmFilter('proyecto')">
+      <div><span class="crm-stat-dot" style="background:#2E8B57"></span></div>
+      <div class="crm-stat-n" id="crm-cnt-proyecto">0</div>
+      <div class="crm-stat-lbl">Proyecto activo</div>
+    </div>
+    <div class="crm-stat" onclick="crmFilter('perdido')">
+      <div><span class="crm-stat-dot" style="background:#9A9894"></span></div>
+      <div class="crm-stat-n" id="crm-cnt-perdido">0</div>
+      <div class="crm-stat-lbl">Perdido</div>
+    </div>
+  </div>
+
+  <!-- VIEW TOGGLE + ADD BUTTON -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px">
+    <div class="crm-view-toggle">
+      <button class="crm-vtbtn on" id="crm-vboard" onclick="crmView('board')">Pipeline</button>
+      <button class="crm-vtbtn" id="crm-vlist" onclick="crmView('list')">Lista</button>
+    </div>
+    <button class="crm-save" style="padding:8px 18px;font-size:10px" onclick="crmOpenModal()">+ Agregar lead</button>
+  </div>
+
+  <!-- BOARD VIEW -->
+  <div class="crm-board-view" id="crm-board">
+    <div class="crm-stages">
+      <div class="crm-stage-col">
+        <div class="crm-stage-hd">
+          <div class="crm-stage-dot" style="background:#2860B4"></div>
+          <span class="crm-stage-name">WA Iniciado</span>
+          <span class="crm-stage-cnt" id="crm-b-cnt-wa">0</span>
+        </div>
+        <div class="crm-cards" id="crm-col-wa"></div>
+        <div style="padding:0 8px 8px"><button class="crm-add-btn" onclick="crmOpenModal('wa')">+ Agregar</button></div>
+      </div>
+      <div class="crm-stage-col">
+        <div class="crm-stage-hd">
+          <div class="crm-stage-dot" style="background:#B07830"></div>
+          <span class="crm-stage-name">Calificado</span>
+          <span class="crm-stage-cnt" id="crm-b-cnt-sql">0</span>
+        </div>
+        <div class="crm-cards" id="crm-col-sql"></div>
+        <div style="padding:0 8px 8px"><button class="crm-add-btn" onclick="crmOpenModal('sql')">+ Agregar</button></div>
+      </div>
+      <div class="crm-stage-col">
+        <div class="crm-stage-hd">
+          <div class="crm-stage-dot" style="background:#CC2929"></div>
+          <span class="crm-stage-name">Cita agendada</span>
+          <span class="crm-stage-cnt" id="crm-b-cnt-cita">0</span>
+        </div>
+        <div class="crm-cards" id="crm-col-cita"></div>
+        <div style="padding:0 8px 8px"><button class="crm-add-btn" onclick="crmOpenModal('cita')">+ Agregar</button></div>
+      </div>
+      <div class="crm-stage-col">
+        <div class="crm-stage-hd">
+          <div class="crm-stage-dot" style="background:#2E8B57"></div>
+          <span class="crm-stage-name">Proyecto activo</span>
+          <span class="crm-stage-cnt" id="crm-b-cnt-proyecto">0</span>
+        </div>
+        <div class="crm-cards" id="crm-col-proyecto"></div>
+        <div style="padding:0 8px 8px"><button class="crm-add-btn" onclick="crmOpenModal('proyecto')">+ Agregar</button></div>
+      </div>
+      <div class="crm-stage-col">
+        <div class="crm-stage-hd">
+          <div class="crm-stage-dot" style="background:#9A9894"></div>
+          <span class="crm-stage-name">Perdido</span>
+          <span class="crm-stage-cnt" id="crm-b-cnt-perdido">0</span>
+        </div>
+        <div class="crm-cards" id="crm-col-perdido"></div>
+        <div style="padding:0 8px 8px"><button class="crm-add-btn" onclick="crmOpenModal('perdido')">+ Agregar</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIST VIEW -->
+  <div class="crm-list-view" id="crm-list">
+    <div class="card">
+      <div class="tw"><table class="tbl" id="crm-table">
+        <thead><tr>
+          <th>Estado</th><th>Nombre</th><th>Ciudad</th><th>Fuente</th><th>Fecha</th><th>Notas</th><th></th>
+        </tr></thead>
+        <tbody id="crm-tbody"></tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <!-- EMPTY STATE -->
+  <div id="crm-empty" style="text-align:center;padding:48px 24px;display:none">
+    <div style="font-family:var(--fpx);font-size:32px;color:var(--t3);margin-bottom:12px">◉</div>
+    <div style="font-family:var(--fh);font-size:14px;font-weight:700;color:var(--t2);letter-spacing:.06em;margin-bottom:6px">SIN LEADS REGISTRADOS</div>
+    <div style="font-size:12px;color:var(--t3);margin-bottom:16px">Agrega tu primer lead de WhatsApp para empezar a trackear el pipeline</div>
+    <button class="crm-save" style="padding:9px 20px;font-size:10px" onclick="crmOpenModal()">+ Agregar primer lead</button>
+  </div>
+</div><!-- /crm -->
+
+<!-- CRM MODAL -->
+<div class="crm-modal-bg" id="crm-modal-bg" onclick="crmCloseModal(event)">
+  <div class="crm-modal" onclick="event.stopPropagation()">
+    <div class="crm-modal-title" id="crm-modal-title">Nuevo Lead</div>
+    <input type="hidden" id="crm-edit-id">
+    <div class="crm-field">
+      <label>Nombre / Empresa</label>
+      <input type="text" id="crm-f-name" placeholder="ej. Carlos García">
+    </div>
+    <div class="crm-row2">
+      <div class="crm-field">
+        <label>Ciudad</label>
+        <select id="crm-f-city">
+          <option value="Querétaro">Querétaro</option>
+          <option value="CDMX">CDMX</option>
+          <option value="Toluca">Toluca</option>
+          <option value="Metepec">Metepec</option>
+          <option value="San Miguel de Allende">San Miguel de Allende</option>
+          <option value="Guanajuato">Guanajuato</option>
+          <option value="Otra">Otra</option>
+        </select>
+      </div>
+      <div class="crm-field">
+        <label>Fuente</label>
+        <select id="crm-f-source">
+          <option value="google">Google Ads</option>
+          <option value="meta">Meta Ads</option>
+          <option value="referral">Referido</option>
+          <option value="otro">Otro</option>
+        </select>
+      </div>
+    </div>
+    <div class="crm-field">
+      <label>Etapa actual</label>
+      <select id="crm-f-stage">
+        <option value="wa">WA Iniciado</option>
+        <option value="sql">Calificado (SQL)</option>
+        <option value="cita">Cita Agendada</option>
+        <option value="proyecto">Proyecto Activo</option>
+        <option value="perdido">Perdido / No calificó</option>
+      </select>
+    </div>
+    <div class="crm-row2">
+      <div class="crm-field">
+        <label>Teléfono / WA</label>
+        <input type="text" id="crm-f-phone" placeholder="442 123 4567">
+      </div>
+      <div class="crm-field">
+        <label>Presupuesto aprox.</label>
+        <select id="crm-f-budget">
+          <option value="">Sin definir</option>
+          <option value="<1M">&lt; $1M MXN</option>
+          <option value="1-2M">$1M – $2M MXN</option>
+          <option value="2-4M">$2M – $4M MXN</option>
+          <option value=">4M">&gt; $4M MXN</option>
+        </select>
+      </div>
+    </div>
+    <div class="crm-field">
+      <label>Notas de calificación</label>
+      <textarea id="crm-f-notes" placeholder="Terreno en Col. del Valle, quiere construir 220m², timeline 2026..."></textarea>
+    </div>
+    <div class="crm-btns">
+      <button class="crm-cancel" onclick="document.getElementById('crm-modal-bg').classList.remove('open')">Cancelar</button>
+      <button class="crm-save" onclick="crmSaveLead()">Guardar lead</button>
+    </div>
+  </div>
+</div>
+
 </main>
 
 <!-- BOTTOM NAV -->
@@ -1138,6 +1361,7 @@ body{font-family:var(--fb);font-size:14px;line-height:1.5;
     <button class="bb" onclick="sw('google',this,1)"><span class="bb-icon">⬡</span>Google</button>
     <button class="bb" onclick="sw('keywords',this,1)"><span class="bb-icon">⌥</span>KW</button>
     <button class="bb" onclick="sw('meta',this,1)"><span class="bb-icon">◈</span>Meta</button>
+    <button class="bb" onclick="sw('crm',this,1)"><span class="bb-icon">◉</span>CRM</button>
     <button class="bb" onclick="sw('insights',this,1)"><span class="bb-icon">✦</span>IA</button>
     <button class="bb" onclick="sw('diagnostico',this,1)"><span class="bb-icon">⚑</span>Config</button>
   </div>
@@ -1440,19 +1664,6 @@ function detectDev(){
 }
 detectDev();window.addEventListener('resize',detectDev);
 
-/* ── THEME ── */
-function setT(t){
-  document.documentElement.setAttribute('data-theme',t);
-  document.getElementById('btndark').classList.toggle('on',t==='dark');
-  document.getElementById('btnlight').classList.toggle('on',t==='light');
-  localStorage.setItem('arq-t',t);
-}
-(function(){
-  const s=localStorage.getItem('arq-t')||
-    (window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
-  setT(s);
-})();
-
 /* ── TABS ── */
 let aiLoaded=false;
 function sw(id,btn,mobile){
@@ -1621,8 +1832,8 @@ function mkChart(id,type,data,opts){
   if(!ctx)return;
   new Chart(ctx,{type,data,options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},...opts}});
 }
-const tc=()=>document.documentElement.getAttribute('data-theme')==='dark'?'#555250':'#9A9894';
-const gc=()=>document.documentElement.getAttribute('data-theme')==='dark'?'rgba(255,255,255,.05)':'rgba(0,0,0,.05)';
+const tc=()=>'#9A9894';
+const gc=()=>'rgba(0,0,0,.05)';
 const scl=(ax)=>({x:{grid:{display:false},ticks:{color:tc(),font:{size:10}}},y:{grid:{color:gc()},ticks:{color:tc(),font:{size:10},...ax}}});
 
 mkChart('budgetC','doughnut',{
@@ -1704,6 +1915,180 @@ async function genAI(type){
   }
   btn.disabled=false;
 }
+
+/* ════════════════════════════════════════
+   CRM — localStorage pipeline
+   ════════════════════════════════════════ */
+const CRM_KEY = 'arq-crm-leads';
+const CRM_STAGES = {
+  wa:       { label:'WA Iniciado',    dot:'#2860B4' },
+  sql:      { label:'Calificado',     dot:'#B07830' },
+  cita:     { label:'Cita agendada',  dot:'#CC2929' },
+  proyecto: { label:'Proyecto activo',dot:'#2E8B57' },
+  perdido:  { label:'Perdido',        dot:'#9A9894' }
+};
+
+function crmLoad(){ try{ return JSON.parse(localStorage.getItem(CRM_KEY)||'[]'); }catch(e){ return []; } }
+function crmSave(leads){ localStorage.setItem(CRM_KEY, JSON.stringify(leads)); }
+
+function crmRender(){
+  const leads = crmLoad();
+  // Update stat counters
+  Object.keys(CRM_STAGES).forEach(s=>{
+    const n = leads.filter(l=>l.stage===s).length;
+    const el = document.getElementById('crm-cnt-'+s);
+    const bel = document.getElementById('crm-b-cnt-'+s);
+    if(el) el.textContent = n;
+    if(bel) bel.textContent = n;
+  });
+  // Board view
+  Object.keys(CRM_STAGES).forEach(s=>{
+    const col = document.getElementById('crm-col-'+s);
+    if(!col) return;
+    const stageleads = leads.filter(l=>l.stage===s);
+    col.innerHTML = stageleads.length === 0
+      ? `<div style="font-family:var(--fh);font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);text-align:center;padding:12px 8px">vacío</div>`
+      : stageleads.map(l=>crmCardHTML(l)).join('');
+  });
+  // List view
+  const tbody = document.getElementById('crm-tbody');
+  if(tbody){
+    if(leads.length===0){
+      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--t3);padding:24px;font-family:var(--fh);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase">Sin leads — agrega el primero</td></tr>`;
+    } else {
+      const sorted = [...leads].sort((a,b)=>new Date(b.date)-new Date(a.date));
+      tbody.innerHTML = sorted.map(l=>{
+        const s = CRM_STAGES[l.stage]||CRM_STAGES.wa;
+        const srcCls = l.source||'otro';
+        const srcLbl = {google:'Google',meta:'Meta',referral:'Referido',otro:'Otro'}[l.source]||'Otro';
+        return `<tr>
+          <td><span style="display:inline-flex;align-items:center;gap:5px">
+            <span style="width:8px;height:8px;border-radius:50%;background:${s.dot};flex-shrink:0;display:inline-block"></span>
+            <span style="font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t2)">${s.label}</span>
+          </span></td>
+          <td class="tdm">${l.name||'—'}</td>
+          <td>${l.city||'—'}</td>
+          <td><span class="crm-card-src ${srcCls}">${srcLbl}</span></td>
+          <td style="font-family:var(--fm);font-size:10px;color:var(--t3)">${fmtDate(l.date)}</td>
+          <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--t3);font-size:11px">${l.notes||'—'}</td>
+          <td><button style="font-family:var(--fh);font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border:1px solid var(--ln2);border-radius:2px;background:transparent;color:var(--t3);cursor:pointer" onclick="crmOpenModal(null,'${l.id}')">Editar</button></td>
+        </tr>`;
+      }).join('');
+    }
+  }
+  // Empty state board
+  const empty = document.getElementById('crm-empty');
+  if(empty) empty.style.display = leads.length===0 ? 'block':'none';
+}
+
+function crmCardHTML(l){
+  const s = CRM_STAGES[l.stage]||CRM_STAGES.wa;
+  const srcCls = l.source||'otro';
+  const srcLbl = {google:'Google Ads',meta:'Meta Ads',referral:'Referido',otro:'Otro'}[l.source]||'Otro';
+  const budget = l.budget ? `<span class="crm-card-city">${l.budget}</span>` : '';
+  const phone = l.phone ? `<span class="crm-card-city">📱 ${l.phone}</span>`:'';
+  return `<div class="crm-card" onclick="crmOpenModal(null,'${l.id}')">
+    <button class="crm-card-del" onclick="event.stopPropagation();crmDelete('${l.id}')" title="Eliminar">×</button>
+    <div class="crm-card-name">${l.name||'Sin nombre'}</div>
+    <div class="crm-card-meta">
+      <span class="crm-card-city">${l.city||'—'}</span>
+      <span class="crm-card-src ${srcCls}">${srcLbl}</span>
+      ${budget}
+      <span class="crm-card-date">${fmtDate(l.date)}</span>
+    </div>
+    ${phone ? `<div style="margin-top:4px">${phone}</div>`:''}
+    ${l.notes ? `<div class="crm-card-note">${l.notes}</div>`:''}
+  </div>`;
+}
+
+function fmtDate(d){
+  if(!d) return '—';
+  try{ return new Date(d).toLocaleDateString('es-MX',{month:'short',day:'numeric'}); }catch(e){ return d; }
+}
+
+function crmOpenModal(defaultStage, editId){
+  const modal = document.getElementById('crm-modal-bg');
+  const title = document.getElementById('crm-modal-title');
+  document.getElementById('crm-edit-id').value = editId||'';
+  if(editId){
+    const leads = crmLoad();
+    const lead = leads.find(l=>l.id===editId);
+    if(lead){
+      title.textContent = 'Editar Lead';
+      document.getElementById('crm-f-name').value    = lead.name||'';
+      document.getElementById('crm-f-city').value    = lead.city||'Querétaro';
+      document.getElementById('crm-f-source').value  = lead.source||'google';
+      document.getElementById('crm-f-stage').value   = lead.stage||'wa';
+      document.getElementById('crm-f-phone').value   = lead.phone||'';
+      document.getElementById('crm-f-budget').value  = lead.budget||'';
+      document.getElementById('crm-f-notes').value   = lead.notes||'';
+    }
+  } else {
+    title.textContent = 'Nuevo Lead';
+    document.getElementById('crm-f-name').value    = '';
+    document.getElementById('crm-f-phone').value   = '';
+    document.getElementById('crm-f-notes').value   = '';
+    document.getElementById('crm-f-city').value    = 'Querétaro';
+    document.getElementById('crm-f-source').value  = 'google';
+    document.getElementById('crm-f-stage').value   = defaultStage||'wa';
+    document.getElementById('crm-f-budget').value  = '';
+  }
+  modal.classList.add('open');
+  setTimeout(()=>document.getElementById('crm-f-name').focus(), 80);
+}
+
+function crmCloseModal(e){
+  if(e.target === document.getElementById('crm-modal-bg'))
+    document.getElementById('crm-modal-bg').classList.remove('open');
+}
+
+function crmSaveLead(){
+  const name = document.getElementById('crm-f-name').value.trim();
+  if(!name){ document.getElementById('crm-f-name').focus(); return; }
+  const editId = document.getElementById('crm-edit-id').value;
+  const leads  = crmLoad();
+  const lead   = {
+    id:     editId || 'crm-' + Date.now(),
+    name,
+    city:   document.getElementById('crm-f-city').value,
+    source: document.getElementById('crm-f-source').value,
+    stage:  document.getElementById('crm-f-stage').value,
+    phone:  document.getElementById('crm-f-phone').value.trim(),
+    budget: document.getElementById('crm-f-budget').value,
+    notes:  document.getElementById('crm-f-notes').value.trim(),
+    date:   editId ? (leads.find(l=>l.id===editId)||{}).date || new Date().toISOString() : new Date().toISOString()
+  };
+  if(editId){
+    const idx = leads.findIndex(l=>l.id===editId);
+    if(idx>=0) leads[idx]=lead; else leads.push(lead);
+  } else { leads.push(lead); }
+  crmSave(leads);
+  document.getElementById('crm-modal-bg').classList.remove('open');
+  crmRender();
+}
+
+function crmDelete(id){
+  if(!confirm('¿Eliminar este lead?')) return;
+  const leads = crmLoad().filter(l=>l.id!==id);
+  crmSave(leads);
+  crmRender();
+}
+
+function crmFilter(stage){
+  // Click on stat → scroll to that column in board, or switch to list filtered
+  const col = document.getElementById('crm-col-'+stage);
+  if(col){ col.scrollIntoView({behavior:'smooth',block:'nearest'}); }
+}
+
+function crmView(v){
+  document.getElementById('crm-board').classList.toggle('hidden', v!=='board');
+  document.getElementById('crm-list').classList.toggle('on', v==='list');
+  document.getElementById('crm-vboard').classList.toggle('on', v==='board');
+  document.getElementById('crm-vlist').classList.toggle('on', v==='list');
+}
+
+// Init CRM on load
+document.addEventListener('DOMContentLoaded', crmRender);
 </script>
 </body>
 </html>
