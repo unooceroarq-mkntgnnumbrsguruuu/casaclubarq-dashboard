@@ -288,6 +288,16 @@ body{font-family:var(--fb);font-size:14px;line-height:1.5;background:var(--bg);c
   display:flex;align-items:flex-start;gap:10px;border-left:3px solid var(--amb);
   background:rgba(176,120,48,.07);border:1px solid rgba(176,120,48,.2)}
 
+/* ── PERIOD SELECTOR ── */
+.period-sel{display:flex;align-items:center;gap:4px}
+.period-sel select{font-family:var(--fm);font-size:11px;color:var(--t3);background:transparent;
+  border:none;outline:none;cursor:pointer;padding:2px 4px;border-radius:2px;
+  -webkit-appearance:none;-moz-appearance:none;appearance:none;
+  transition:color .15s,background .15s}
+.period-sel select:hover{color:var(--t1);background:var(--ln)}
+.period-sel select option{background:var(--bg3);color:var(--t1)}
+.period-dot{width:5px;height:5px;border-radius:50%;background:var(--amb);flex-shrink:0;margin:0 2px}
+
 /* ── RESPONSIVE ── */
 @media(max-width:900px){
   .stage-grid{grid-template-columns:1fr}
@@ -323,7 +333,27 @@ body{font-family:var(--fb);font-size:14px;line-height:1.5;background:var(--bg);c
   </div>
   <div class="hdr-r">
     <div class="conn-dot" id="conn-dot"></div>
-    <span class="hdr-per" id="hdr-per">—</span>
+    <div class="period-sel" title="Periodo analizado — cambia para ver otros meses">
+      <select id="sel-mes" onchange="onPeriodChange()">
+        <option value="Enero">Enero</option>
+        <option value="Febrero">Febrero</option>
+        <option value="Marzo">Marzo</option>
+        <option value="Abril">Abril</option>
+        <option value="Mayo">Mayo</option>
+        <option value="Junio">Junio</option>
+        <option value="Julio">Julio</option>
+        <option value="Agosto">Agosto</option>
+        <option value="Septiembre">Septiembre</option>
+        <option value="Octubre">Octubre</option>
+        <option value="Noviembre">Noviembre</option>
+        <option value="Diciembre">Diciembre</option>
+      </select>
+      <select id="sel-anio" onchange="onPeriodChange()">
+        <option value="2024">2024</option>
+        <option value="2025">2025</option>
+        <option value="2026">2026</option>
+      </select>
+    </div>
     <span class="pending-badge" id="pending-badge">— pendientes</span>
     <button class="hdr-btn p" onclick="crmOpenModal()">+ Lead</button>
     <button class="hdr-btn" onclick="runAI('full')">✦ IA Global</button>
@@ -1069,13 +1099,53 @@ function updatePendingBadge() {
   if (badge) badge.textContent = pend + ' pendientes';
 }
 
+/* ══ PERIOD HELPERS ══ */
+const MESES_ES = ["Enero","Febrero","Marzo","Abril","Mayo","Junio",
+                  "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+
+function initPeriodSelector() {
+  const now = new Date();
+  const selMes  = $('sel-mes');
+  const selAnio = $('sel-anio');
+  if (selMes)  selMes.value  = MESES_ES[now.getMonth()];
+  if (selAnio) selAnio.value = String(now.getFullYear());
+}
+
+function getPeriod() {
+  const mes  = ($('sel-mes')  || {}).value || MESES_ES[new Date().getMonth()];
+  const anio = ($('sel-anio') || {}).value || String(new Date().getFullYear());
+  return { mes, anio };
+}
+
+function onPeriodChange() {
+  // Resetear caché de IA al cambiar periodo para que se regenere con datos frescos
+  Object.keys(DONE_AI).forEach(k => delete DONE_AI[k]);
+  loadSheet();
+}
+
 /* ══ SHEET DATA ══ */
 async function loadSheet() {
+  const { mes, anio } = getPeriod();
+  const url = `${SHEET_URL}?mes=${encodeURIComponent(mes)}&anio=${encodeURIComponent(anio)}`;
+  // Actualizar banner mientras carga
+  const banner = $('data-banner');
+  if (banner) {
+    banner.style.cssText = 'border-radius:var(--r);padding:10px 14px;margin-bottom:16px;font-size:12px;display:flex;align-items:flex-start;gap:10px;border-left:3px solid var(--amb);background:rgba(176,120,48,.07);border:1px solid rgba(176,120,48,.2)';
+    banner.innerHTML = `<span style="font-size:14px;margin-top:1px">⟳</span><div><strong style="color:var(--amb)">Cargando ${mes} ${anio}</strong> — conectando con ARQ_2025_B + 2024, ARQ, QRO...</div>`;
+  }
   try {
-    const res  = await fetch(SHEET_URL);
+    const res  = await fetch(url);
     const json = await res.json();
     const d    = json.latest || {};
-    if (!d || (!d['Total Spend'] && !d.total_spend)) return;
+    if (!d || (!d['Total Spend'] && !d.total_spend)) {
+      // No hay datos para ese periodo
+      if (banner) {
+        banner.style.cssText = 'border-radius:var(--r);padding:10px 14px;margin-bottom:16px;font-size:12px;display:flex;align-items:flex-start;gap:10px;border-left:3px solid var(--red);background:rgba(204,41,41,.07);border:1px solid rgba(204,41,41,.2)';
+        banner.innerHTML = `<span style="font-size:14px;margin-top:1px">⚠</span><div><strong style="color:var(--red)">Sin datos para ${mes} ${anio}</strong> — ejecuta el pull de datos en GitHub Actions para este periodo</div>`;
+      }
+      $('conn-dot').style.background = 'var(--amb)';
+      return;
+    }
 
     const inv    = +(d['Total Spend']        ||d.total_spend       ||0);
     const gSpend = +(d['Google Spend']       ||d.google_spend      ||0);
@@ -1094,13 +1164,12 @@ async function loadSheet() {
     const citas  = Math.round(wa*0.268);
     const sql    = Math.round(wa*0.443);
 
-    // Banner
+    // Banner éxito
     const ts = d['Timestamp']||d.timestamp||'';
-    const banner = $('data-banner');
+    const foundTag = json.found === false ? ' · <span style="color:var(--amb)">mostrando último disponible</span>' : '';
     banner.style.cssText = 'border-radius:var(--r);padding:10px 14px;margin-bottom:16px;font-size:12px;display:flex;align-items:flex-start;gap:10px;border-left:3px solid var(--grn);background:rgba(46,139,87,.07);border:1px solid rgba(46,139,87,.2)';
-    banner.innerHTML = `<span style="font-size:14px;margin-top:1px">✓</span><div><strong style="color:var(--grn)">Datos reales conectados</strong> · ARQ_2025_B + 2024, ARQ, QRO · Sync: ${ts?new Date(ts).toLocaleString('es-MX'):'hoy'} · ${json.count||0} período(s)</div>`;
+    banner.innerHTML = `<span style="font-size:14px;margin-top:1px">✓</span><div><strong style="color:var(--grn)">Datos reales · ${per||mes+' '+anio}</strong> · ARQ_2025_B + 2024, ARQ, QRO · Sync: ${ts?new Date(ts).toLocaleString('es-MX'):'hoy'} · ${json.count||0} período(s)${foundTag}</div>`;
     $('conn-dot').style.background = 'var(--grn)';
-    if (per) setVal('hdr-per', per);
     if (per) setVal('kw-period', '· '+per);
 
     // Funnel bar
@@ -1137,9 +1206,17 @@ async function loadSheet() {
     $('g-health').textContent = '5/9 activos';
     $('m-health').textContent = adsets.length ? `${adsets.filter(a=>a.status==='ACTIVE').length} ad sets activos` : '4/7 activos';
 
+    // Actualizar prompts de IA con datos reales del periodo
+    updateAIPrompts({ per: per||`${mes} ${anio}`, inv, gSpend, mSpend, gClks, gCTR, gConv, mReach, wa, cwa, cpl, citas, sql });
+
   } catch(err) {
     console.warn('[ARQ]', err.message);
     $('conn-dot').style.background = 'var(--red)';
+    const banner2 = $('data-banner');
+    if (banner2) {
+      banner2.style.cssText = 'border-radius:var(--r);padding:10px 14px;margin-bottom:16px;font-size:12px;display:flex;align-items:flex-start;gap:10px;border:1px solid rgba(204,41,41,.2);background:rgba(204,41,41,.07)';
+      banner2.innerHTML = `<span style="font-size:14px;margin-top:1px">✗</span><div><strong style="color:var(--red)">Error al conectar</strong> — ${err.message}</div>`;
+    }
   }
 }
 
@@ -1212,13 +1289,28 @@ async function loadPS() {
 
 /* ══ AI ══ */
 const DONE_AI = {};
-const PROMPTS = {
+
+// Datos base que se actualizan con información real del sheet
+let AI_DATA = {
+  per:'este mes', inv:48200, gSpend:28000, mSpend:20200,
+  gClks:4820, gCTR:6.2, gConv:0, mReach:2362, wa:287,
+  cwa:48, cpl:168, citas:77, sql:127
+};
+
+function updateAIPrompts(d) {
+  AI_DATA = { ...AI_DATA, ...d };
+}
+
+function buildPrompts() {
+  const D = AI_DATA;
+  const visitas = Math.round(D.gClks * 0.7);
+  return {
   full:`Eres experto en marketing digital para arquitectura residencial premium en México.
-Analiza el funnel de Casa Club ARQ (diseño+construcción llave en mano):
-- Google: ARQ_2025_B → 4,820 clics, CTR 6.2%, CPC $5.80, inversión $28k MXN. CPA Toluca $560 vs QRO $394.
-- Sitio: casaclubarq.com. 3,374 visitas, 30% pérdida en landing page.
-- Meta: "2024, ARQ, QRO" → 2,362 alcanzados, 287 WA, CPL retargeting $48.
-- WA: 44.3% → SQL (127). 26.8% → cita (34). Inversión total $48,200 MXN/mes. CPL blended $379.
+Analiza el funnel de Casa Club ARQ (diseño+construcción llave en mano) para el periodo: ${D.per}.
+- Google Ads ARQ_2025_B → ${D.gClks.toLocaleString('es-MX')} clics, CTR ${D.gCTR.toFixed(1)}%, inversión $${D.gSpend.toLocaleString('es-MX')} MXN.
+- Sitio casaclubarq.com: ~${visitas.toLocaleString('es-MX')} visitas estimadas, ~30% pérdida en landing.
+- Meta Ads "2024, ARQ, QRO" → ${D.mReach.toLocaleString('es-MX')} alcanzados, ${D.wa} convs. WA, CPL $${D.cwa} MXN.
+- WA: 44.3% → SQL (~${D.sql} leads calificados). 26.8% → cita (~${D.citas} citas). Inversión total $${D.inv.toLocaleString('es-MX')} MXN/mes. CPL blended $${D.cpl} MXN.
 - Mercados: QRO, CDMX, Toluca, Metepec, San Miguel de Allende, Guanajuato.
 En 4 párrafos específicos: (1) qué está funcionando bien, (2) los 3 problemas más urgentes, (3) cómo escalar a SMA y Bajío, (4) proyección a 90 días si se ejecutan las correcciones. Con números. En español.`,
 
@@ -1237,17 +1329,19 @@ Analiza y da recomendaciones concretas en 4 puntos:
 4. ¿Qué páginas faltan (por ciudad, por tipo de proyecto) que deberían existir?
 Muy accionable, en español.`,
 
-  budget:`Estratega de marketing. Casa Club ARQ: $28k Google + $20.2k Meta = $48.2k MXN/mes.
-CPL retargeting Meta $48 vs Google $394. 287 WA/mes, 34 citas, 26.8% conversión.
+  budget:`Estratega de marketing. Casa Club ARQ periodo ${D.per}: Google $${D.gSpend.toLocaleString('es-MX')} + Meta $${D.mSpend.toLocaleString('es-MX')} = $${D.inv.toLocaleString('es-MX')} MXN/mes.
+CPL retargeting Meta $${D.cwa} vs Google ~$${Math.round(D.gSpend/Math.max(D.wa,1))} MXN. ${D.wa} WA/mes, ${D.citas} citas, 26.8% conversión WA→cita.
 Dame plan de redistribución de presupuesto para maximizar leads en QRO, CDMX, Toluca, Metepec y SMA en los próximos 3 meses. Con números específicos y justificación.`,
 
-  toluca:`Experto Google Ads. ARQ_2025_B tiene CPA $560 Toluca/Metepec vs $394 Querétaro — gap 42%.
+  toluca:`Experto Google Ads. ARQ_2025_B en periodo ${D.per}.
+CPA estimado Toluca/Metepec vs Querétaro — analiza gap y propón corrección.
 Diagnóstico completo y plan de acción: bid adjustments, keywords específicas a agregar/pausar para Toluca, cambios de segmentación demográfica, qué anuncios RSA crear para esa zona. Con números y tiempos.`,
 
   sma:`Experto en Meta y Google Ads para mercados premium México.
-Casa Club ARQ quiere entrar a San Miguel de Allende, Guanajuato y Bajío.
+Casa Club ARQ quiere entrar a San Miguel de Allende, Guanajuato y Bajío. Presupuesto disponible referencia: $${D.inv.toLocaleString('es-MX')} MXN/mes actual.
 Diseña la estrategia completa: (1) campaña Meta "2024, ARQ, SMA" — audiencias, creativos, presupuesto, (2) campaña Google para SMA — keywords, anuncios, bid strategy, (3) landing page necesaria, (4) CPL y volumen esperado. Muy específico.`
-};
+  }; // cierra return
+} // cierra buildPrompts
 
 async function runAI(type) {
   if (DONE_AI[type]) return;
@@ -1260,7 +1354,8 @@ async function runAI(type) {
   outEl.innerHTML = '<div class="aiload">✦ Generando análisis...</div>';
   if (btnEl) btnEl.disabled = true;
   try {
-    const body = {model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:PROMPTS[type]}]};
+    const prompts = buildPrompts(); // usa datos reales actualizados
+    const body = {model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompts[type]}]};
     if (type==='site') body.tools=[{type:'web_search_20250305',name:'web_search'}];
     const r = await fetch(CLAUDE,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
     const data = await r.json();
@@ -1368,8 +1463,9 @@ function crmToggleView(){
 
 /* ══ INIT ══ */
 document.addEventListener('DOMContentLoaded',()=>{
+  initPeriodSelector(); // ← primero fija mes/año corriente en los selects
   initMissions();
-  loadSheet();
+  loadSheet();          // ← ya usa el mes corriente automáticamente
   loadPS();
   runAI('full');
   runAI('site');
