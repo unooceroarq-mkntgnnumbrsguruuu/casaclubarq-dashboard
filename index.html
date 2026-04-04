@@ -98,6 +98,10 @@ body{font-family:var(--fb);font-size:14px;line-height:1.5;background:var(--bg);c
 .stage-toggle{font-family:var(--fm);font-size:11px;color:var(--t3);flex-shrink:0}
 
 .stage-body{border-top:1px solid var(--ln)}
+.mission-followup{border-left:3px solid var(--grn) !important;animation:slideDown .35s ease}
+@keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.mission.resolving{animation:flashGreen .6s ease}
+@keyframes flashGreen{0%{background:var(--grn-l)}100%{background:transparent}}
 
 /* ── STAGE BODY GRID ── */
 .stage-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
@@ -596,11 +600,11 @@ body{font-family:var(--fb);font-size:14px;line-height:1.5;background:var(--bg);c
         <div class="diag-item diag-ok"><span class="diag-icon d-ok">✓</span><span class="diag-txt">CPC $5.80 MXN — competitivo para arquitectura en CDMX/QRO</span><span class="diag-val">ok</span></div>
         <div class="diag-item diag-ok"><span class="diag-icon d-ok">✓</span><span class="diag-txt">Sitelinks · Callouts · Extensión llamada activos</span><span class="diag-val">✓ activas</span></div>
         <div class="diag-item diag-warn"><span class="diag-icon d-warn">!</span><span class="diag-txt">CPA Toluca $560 vs $394 en QRO — gap del 42%, investigar segmentación y landing</span><span class="diag-val">↑ 42%</span></div>
-        <div class="diag-item diag-warn"><span class="diag-icon d-warn">!</span><span class="diag-txt">Structured Snippets incompletas — faltan tipos de proyecto relevantes</span><span class="diag-val">revisar</span></div>
-        <div class="diag-item diag-warn"><span class="diag-icon d-warn">!</span><span class="diag-txt">Segmentación geográfica activa — verificar cobertura de Metepec, Valle de Bravo, Guanajuato y Bajío</span><span class="diag-val">revisar</span></div>
-        <div class="diag-item diag-bad"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Keywords como "software arquitectura", "escuela arquitectura" generando clics irrelevantes</span><span class="diag-val">$1,960/mes</span></div>
-        <div class="diag-item diag-bad"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Lead Form Extension inactiva — pérdida de leads directos desde Google</span><span class="diag-val">-18 leads/mes</span></div>
-        <div class="diag-item diag-bad"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Image Extensions sin activar — CTR potencial no aprovechado</span><span class="diag-val">sin foto</span></div>
+        <div class="diag-item diag-warn" id="gd-snippets"><span class="diag-icon d-warn">!</span><span class="diag-txt">Structured Snippets incompletas — faltan tipos de proyecto relevantes</span><span class="diag-val">revisar</span></div>
+        <div class="diag-item diag-warn" id="gd-geo"><span class="diag-icon d-warn">!</span><span class="diag-txt">Segmentación geográfica activa — verificar cobertura de Metepec, Valle de Bravo, Guanajuato y Bajío</span><span class="diag-val">revisar</span></div>
+        <div class="diag-item diag-bad" id="gd-neg-kw"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Keywords como "software arquitectura", "escuela arquitectura" generando clics irrelevantes</span><span class="diag-val">$1,960/mes</span></div>
+        <div class="diag-item diag-bad" id="gd-lead-form"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Lead Form Extension inactiva — pérdida de leads directos desde Google</span><span class="diag-val">-18 leads/mes</span></div>
+        <div class="diag-item diag-bad" id="gd-img-ext"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Image Extensions sin activar — CTR potencial no aprovechado</span><span class="diag-val">sin foto</span></div>
       </div>
     </div>
     <!-- OPPORTUNITIES -->
@@ -743,11 +747,11 @@ body{font-family:var(--fb);font-size:14px;line-height:1.5;background:var(--bg);c
       <div class="diag-items">
         <div class="diag-item diag-ok"><span class="diag-icon d-ok">✓</span><span class="diag-txt">Pixel Meta PageView disparando en sitio</span><span class="diag-val">✓ activo</span></div>
         <div class="diag-item diag-ok"><span class="diag-icon d-ok">✓</span><span class="diag-txt">Google Tag Manager instalado y activo</span><span class="diag-val">✓ activo</span></div>
-        <div class="diag-item diag-warn"><span class="diag-icon d-warn">!</span><span class="diag-txt">Pixel Meta ViewContent — verificar disparo en cada página del portafolio</span><span class="diag-val">⚠ revisar</span></div>
-        <div class="diag-item diag-warn"><span class="diag-icon d-warn">!</span><span class="diag-txt">GA4 eventos clave — confirmar que contacto y clic WA se registran correctamente</span><span class="diag-val">⚠ verificar</span></div>
-        <div class="diag-item diag-bad"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin heatmap (Clarity/Hotjar) — sin datos de comportamiento de los visitantes</span><span class="diag-val">ciego</span></div>
-        <div class="diag-item diag-bad"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin CTA WhatsApp flotante en portafolio — fricción innecesaria para contactar</span><span class="diag-val">-conv.</span></div>
-        <div class="diag-item diag-bad"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin landing pages por ciudad — mismo contenido para QRO, CDMX, SMA, Metepec, GTO</span><span class="diag-val">QS bajo</span></div>
+        <div class="diag-item diag-warn" id="wd-vc"><span class="diag-icon d-warn">!</span><span class="diag-txt">Pixel Meta ViewContent — verificar disparo en cada página del portafolio</span><span class="diag-val">⚠ revisar</span></div>
+        <div class="diag-item diag-warn" id="wd-ga4"><span class="diag-icon d-warn">!</span><span class="diag-txt">GA4 eventos clave — confirmar que contacto y clic WA se registran correctamente</span><span class="diag-val">⚠ verificar</span></div>
+        <div class="diag-item diag-bad" id="wd-clarity"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin heatmap (Clarity/Hotjar) — sin datos de comportamiento de los visitantes</span><span class="diag-val">ciego</span></div>
+        <div class="diag-item diag-bad" id="wd-wa-cta"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin CTA WhatsApp flotante en portafolio — fricción innecesaria para contactar</span><span class="diag-val">-conv.</span></div>
+        <div class="diag-item diag-bad" id="wd-landing"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin landing pages por ciudad — mismo contenido para QRO, CDMX, SMA, Metepec, GTO</span><span class="diag-val">QS bajo</span></div>
       </div>
     </div>
     <!-- PageSpeed -->
@@ -902,11 +906,11 @@ body{font-family:var(--fb);font-size:14px;line-height:1.5;background:var(--bg);c
       <div class="diag-items" id="meta-diag">
         <div class="diag-item diag-ok"><span class="diag-icon d-ok">✓</span><span class="diag-txt">Retargeting 0–7 días: CPL $48 — mejor ad set, por debajo del benchmark del sector ($70)</span><span class="diag-val">↑ best</span></div>
         <div class="diag-item diag-ok"><span class="diag-icon d-ok">✓</span><span class="diag-txt">Retargeting 8–30 días: CPL $62 · Lookalike 1%: CPL $88 — ambos activos</span><span class="diag-val">✓ activos</span></div>
-        <div class="diag-item diag-warn"><span class="diag-icon d-warn">!</span><span class="diag-txt">Ad set "Intereses Arq." con CPL $124 — auditar audiencia, posible overlap con retargeting</span><span class="diag-val">$124 CPL</span></div>
-        <div class="diag-item diag-warn"><span class="diag-icon d-warn">!</span><span class="diag-txt">Verificar configuración de públicos: tamaño óptimo, exclusiones y overlap entre ad sets</span><span class="diag-val">⚠ auditar</span></div>
-        <div class="diag-item diag-bad"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin videos testimoniales — formato de mayor conversión en arquitectura premium</span><span class="diag-val">pendiente</span></div>
-        <div class="diag-item diag-bad"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin campaña para San Miguel de Allende, Guanajuato ni Bajío — mercados sin cubrir</span><span class="diag-val">0 leads</span></div>
-        <div class="diag-item diag-bad"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Pixel ViewContent sin verificar en portafolio — retargeting basado en audiencia incompleta</span><span class="diag-val">revisar</span></div>
+        <div class="diag-item diag-warn" id="md-int"><span class="diag-icon d-warn">!</span><span class="diag-txt">Ad set "Intereses Arq." con CPL $124 — auditar audiencia, posible overlap con retargeting</span><span class="diag-val">$124 CPL</span></div>
+        <div class="diag-item diag-warn" id="md-pub"><span class="diag-icon d-warn">!</span><span class="diag-txt">Verificar configuración de públicos: tamaño óptimo, exclusiones y overlap entre ad sets</span><span class="diag-val">⚠ auditar</span></div>
+        <div class="diag-item diag-bad" id="md-vid"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin videos testimoniales — formato de mayor conversión en arquitectura premium</span><span class="diag-val">pendiente</span></div>
+        <div class="diag-item diag-bad" id="md-sma"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin campaña para San Miguel de Allende, Guanajuato ni Bajío — mercados sin cubrir</span><span class="diag-val">0 leads</span></div>
+        <div class="diag-item diag-bad" id="md-pix-vc"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Pixel ViewContent sin verificar en portafolio — retargeting basado en audiencia incompleta</span><span class="diag-val">revisar</span></div>
       </div>
     </div>
     <div style="padding:14px 18px;border-top:1px solid var(--ln)">
@@ -1010,11 +1014,11 @@ body{font-family:var(--fb);font-size:14px;line-height:1.5;background:var(--bg);c
       <div class="diag-items">
         <div class="diag-item diag-ok"><span class="diag-icon d-ok">✓</span><span class="diag-txt">Tasa WA → SQL 44.3% — excelente, top del sector en arquitectura</span><span class="diag-val">↑ top 10%</span></div>
         <div class="diag-item diag-ok"><span class="diag-icon d-ok">✓</span><span class="diag-txt">Click-to-WA activo desde Meta Ads — flujo directo campaña → conversación</span><span class="diag-val">✓ ok</span></div>
-        <div class="diag-item diag-warn"><span class="diag-icon d-warn">!</span><span class="diag-txt">Script de calificación no documentado — proceso depende de una sola persona</span><span class="diag-val">riesgo</span></div>
-        <div class="diag-item diag-warn"><span class="diag-icon d-warn">!</span><span class="diag-txt">Mensaje de bienvenida pendiente de optimización para calificar desde el primer contacto</span><span class="diag-val">revisar</span></div>
-        <div class="diag-item diag-bad"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin bot nocturno — leads que escriben de noche se pierden hasta el día siguiente</span><span class="diag-val">-leads</span></div>
-        <div class="diag-item diag-bad"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin etiquetas por etapa — sin visibilidad del pipeline dentro de WA Business</span><span class="diag-val">ciego</span></div>
-        <div class="diag-item diag-bad"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin seguimiento sistematizado a 48h — oportunidad de recuperar 15+ citas/mes</span><span class="diag-val">-15/mes</span></div>
+        <div class="diag-item diag-warn" id="wad-script"><span class="diag-icon d-warn">!</span><span class="diag-txt">Script de calificación no documentado — proceso depende de una sola persona</span><span class="diag-val">riesgo</span></div>
+        <div class="diag-item diag-warn" id="wad-welcome"><span class="diag-icon d-warn">!</span><span class="diag-txt">Mensaje de bienvenida pendiente de optimización para calificar desde el primer contacto</span><span class="diag-val">revisar</span></div>
+        <div class="diag-item diag-bad" id="wad-bot"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin bot nocturno — leads que escriben de noche se pierden hasta el día siguiente</span><span class="diag-val">-leads</span></div>
+        <div class="diag-item diag-bad" id="wad-tags"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin etiquetas por etapa — sin visibilidad del pipeline dentro de WA Business</span><span class="diag-val">ciego</span></div>
+        <div class="diag-item diag-bad" id="wad-followup"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin seguimiento sistematizado a 48h — oportunidad de recuperar 15+ citas/mes</span><span class="diag-val">-15/mes</span></div>
       </div>
     </div>
     <!-- MINI QUICK LEAD -->
@@ -1249,13 +1253,216 @@ function loadMissions() {
 }
 function saveMissions(m) { localStorage.setItem(MISS_KEY, JSON.stringify(m)); }
 
+/* ── Mission intelligence data ── */
+const MISSION_STAGE = {
+  'm-g1':'sec-google','m-g2':'sec-google','m-g-conc':'sec-google',
+  'm-g-geo':'sec-google','m-g4':'sec-google','m-g3':'sec-google',
+  'm-g5':'sec-google','m-g6':'sec-google','m-g7':'sec-google',
+  'm-g-rlsa':'sec-google','m-g-qs':'sec-google','m-g-demo2':'sec-google',
+  'm-w1':'sec-web','m-w2':'sec-web','m-w3':'sec-web','m-w4':'sec-web',
+  'm-w5':'sec-web','m-w6':'sec-web','m-w-pixel':'sec-web','m-w-ga4':'sec-web',
+  'm-w-wix':'sec-web','m-w-ps':'sec-web','m-w-heat':'sec-web','m-w-schema':'sec-web',
+  'm-m1':'sec-meta','m-m2':'sec-meta','m-m3':'sec-meta','m-m4':'sec-meta',
+  'm-m5':'sec-meta','m-m6':'sec-meta','m-m-audit':'sec-meta','m-m-pix':'sec-meta',
+  'm-m-aud':'sec-meta','m-m-freq':'sec-meta',
+  'm-wa1':'sec-wa','m-wa2':'sec-wa','m-wa3':'sec-wa','m-wa4':'sec-wa',
+  'm-wa5':'sec-wa','m-wa-msg':'sec-wa','m-wa-tags':'sec-wa','m-wa-bot':'sec-wa'
+};
+
+const STAGE_CRITS = {
+  'sec-google': ['m-g1','m-g2','m-g-conc','m-g-geo'],
+  'sec-web':    ['m-w1','m-w-pixel','m-w-ga4'],
+  'sec-meta':   ['m-m1','m-m2','m-m-audit','m-m-pix'],
+  'sec-wa':     ['m-wa1','m-wa2','m-wa-msg']
+};
+
+const STAGE_HEALTH_IDS = {
+  'sec-google':'g-health','sec-web':'w-health','sec-meta':'m-health','sec-wa':'wa-health'
+};
+
+/* What each mission resolves in the diagnosis strip */
+const MISSION_EFFECTS = {
+  'm-g1':     [{id:'gd-lead-form', txt:'Lead Form Extension configurada — captando leads directos desde Google', val:'✓ activa'}],
+  'm-g2':     [{id:'gd-neg-kw',    txt:'Keywords negativas agregadas — ahorrando ~$1,960/mes en clics irrelevantes', val:'✓ ok'}],
+  'm-g3':     [{id:'gd-img-ext',   txt:'Image Extensions activas — CTR visual mejorado', val:'✓ activas'}],
+  'm-g5':     [{id:'gd-snippets',  txt:'Structured Snippets completas — tipos de proyecto incluidos', val:'✓ ok'}],
+  'm-g-geo':  [{id:'gd-geo',       txt:'Segmentación geográfica verificada — todos los mercados cubiertos', val:'✓ ok'}],
+  'm-w1':     [{id:'wd-vc',        txt:'Pixel Meta ViewContent verificado en portafolio', val:'✓ ok'}],
+  'm-w-pixel':[{id:'wd-vc',        txt:'Pixel Meta auditado — todos los eventos verificados con Pixel Helper', val:'✓ ok'},
+               {id:'md-pix-vc',    txt:'Pixel ViewContent verificado — retargeting sobre audiencia real del portafolio', val:'✓ ok'}],
+  'm-w-ga4':  [{id:'wd-ga4',       txt:'GA4 eventos verificados — contacto y clic WA registrándose correctamente', val:'✓ ok'}],
+  'm-w2':     [{id:'wd-clarity',   txt:'Microsoft Clarity instalado — heatmaps y grabaciones activas', val:'✓ activo'}],
+  'm-w-heat': [{id:'wd-clarity',   txt:'Microsoft Clarity instalado — heatmaps y grabaciones activas', val:'✓ activo'}],
+  'm-w3':     [{id:'wd-wa-cta',    txt:'Botón WhatsApp flotante activo en portafolio — contacto con un clic', val:'✓ ok'}],
+  'm-w5':     [{id:'wd-landing',   txt:'Landing QRO activa — copy + proyectos locales. Pendiente: SMA, Metepec', val:'parcial'}],
+  'm-m1':     [{id:'md-vid',       txt:'Videos testimoniales activos — formato de mayor conversión en Meta', val:'✓ ok'}],
+  'm-m2':     [{id:'md-sma',       txt:'Campaña SMA activa — mercado Bajío siendo captado', val:'✓ activa'}],
+  'm-m-audit':[{id:'md-int',       txt:'Ad set Intereses Arq. auditado — overlap corregido, CPL bajando', val:'✓ ok'},
+               {id:'md-pub',       txt:'Configuración de públicos verificada — targeting optimizado', val:'✓ ok'}],
+  'm-m-pix':  [{id:'md-pix-vc',    txt:'Pixel ViewContent verificado — retargeting basado en audiencia real', val:'✓ ok'}],
+  'm-wa1':    [{id:'wad-script',   txt:'Script documentado y fijo en WA Business — proceso estandarizado', val:'✓ ok'}],
+  'm-wa-msg': [{id:'wad-welcome',  txt:'Mensaje de bienvenida optimizado — califica desde el primer contacto', val:'✓ ok'}],
+  'm-wa2':    [{id:'wad-welcome',  txt:'Respuesta automática fuera de horario configurada — cero leads perdidos', val:'✓ ok'}],
+  'm-wa3':    [{id:'wad-tags',     txt:'Etiquetas configuradas en WA Business — pipeline visible', val:'✓ ok'}],
+  'm-wa-tags':[{id:'wad-tags',     txt:'Sistema de etiquetas activo — pipeline visible en WA Business', val:'✓ ok'}],
+  'm-wa4':    [{id:'wad-followup', txt:'Template 48h activo — recuperando leads sin respuesta', val:'✓ ok'}],
+  'm-wa-bot': [{id:'wad-bot',      txt:'Bot nocturno configurado — cero leads perdidos fuera de horario', val:'✓ ok'}]
+};
+
+/* Original states to restore on uncheck */
+const DIAG_ORIGINALS = {
+  'gd-lead-form':{ cls:'diag-bad',  ic:'d-bad',  sym:'✗', txt:'Lead Form Extension inactiva — pérdida de leads directos desde Google', val:'-18 leads/mes' },
+  'gd-neg-kw':   { cls:'diag-bad',  ic:'d-bad',  sym:'✗', txt:'Keywords como "software arquitectura", "escuela arquitectura" generando clics irrelevantes', val:'$1,960/mes' },
+  'gd-img-ext':  { cls:'diag-bad',  ic:'d-bad',  sym:'✗', txt:'Image Extensions sin activar — CTR potencial no aprovechado', val:'sin foto' },
+  'gd-snippets': { cls:'diag-warn', ic:'d-warn', sym:'!', txt:'Structured Snippets incompletas — faltan tipos de proyecto relevantes', val:'revisar' },
+  'gd-geo':      { cls:'diag-warn', ic:'d-warn', sym:'!', txt:'Segmentación geográfica activa — verificar cobertura de Metepec, Valle de Bravo, Guanajuato y Bajío', val:'revisar' },
+  'wd-vc':       { cls:'diag-warn', ic:'d-warn', sym:'!', txt:'Pixel Meta ViewContent — verificar disparo en cada página del portafolio', val:'⚠ revisar' },
+  'wd-ga4':      { cls:'diag-warn', ic:'d-warn', sym:'!', txt:'GA4 eventos clave — confirmar que contacto y clic WA se registran correctamente', val:'⚠ verificar' },
+  'wd-clarity':  { cls:'diag-bad',  ic:'d-bad',  sym:'✗', txt:'Sin heatmap (Clarity/Hotjar) — sin datos de comportamiento de los visitantes', val:'ciego' },
+  'wd-wa-cta':   { cls:'diag-bad',  ic:'d-bad',  sym:'✗', txt:'Sin CTA WhatsApp flotante en portafolio — fricción innecesaria para contactar', val:'-conv.' },
+  'wd-landing':  { cls:'diag-bad',  ic:'d-bad',  sym:'✗', txt:'Sin landing pages por ciudad — mismo contenido para QRO, CDMX, SMA, Metepec, GTO', val:'QS bajo' },
+  'md-int':      { cls:'diag-warn', ic:'d-warn', sym:'!', txt:'Ad set "Intereses Arq." con CPL $124 — auditar audiencia, posible overlap con retargeting', val:'$124 CPL' },
+  'md-pub':      { cls:'diag-warn', ic:'d-warn', sym:'!', txt:'Verificar configuración de públicos: tamaño óptimo, exclusiones y overlap entre ad sets', val:'⚠ auditar' },
+  'md-vid':      { cls:'diag-bad',  ic:'d-bad',  sym:'✗', txt:'Sin videos testimoniales — formato de mayor conversión en arquitectura premium', val:'pendiente' },
+  'md-sma':      { cls:'diag-bad',  ic:'d-bad',  sym:'✗', txt:'Sin campaña para San Miguel de Allende, Guanajuato ni Bajío — mercados sin cubrir', val:'0 leads' },
+  'md-pix-vc':   { cls:'diag-bad',  ic:'d-bad',  sym:'✗', txt:'Pixel ViewContent sin verificar en portafolio — retargeting basado en audiencia incompleta', val:'revisar' },
+  'wad-script':  { cls:'diag-warn', ic:'d-warn', sym:'!', txt:'Script de calificación no documentado — proceso depende de una sola persona', val:'riesgo' },
+  'wad-welcome': { cls:'diag-warn', ic:'d-warn', sym:'!', txt:'Mensaje de bienvenida pendiente de optimización para calificar desde el primer contacto', val:'revisar' },
+  'wad-bot':     { cls:'diag-bad',  ic:'d-bad',  sym:'✗', txt:'Sin bot nocturno — leads que escriben de noche se pierden hasta el día siguiente', val:'-leads' },
+  'wad-tags':    { cls:'diag-bad',  ic:'d-bad',  sym:'✗', txt:'Sin etiquetas por etapa — sin visibilidad del pipeline dentro de WA Business', val:'ciego' },
+  'wad-followup':{ cls:'diag-bad',  ic:'d-bad',  sym:'✗', txt:'Sin seguimiento sistematizado a 48h — oportunidad de recuperar 15+ citas/mes', val:'-15/mes' }
+};
+
+/* Follow-up missions unlocked when trigger missions are all done */
+const FOLLOWUPS = [
+  {
+    trigger:['m-w-pixel','m-w-ga4'], id:'mfu-retarget', stage:'sec-meta', pri:'m-imp', plat:'mp-m',
+    title:'Crear audiencia de retargeting "ViewContent" en Meta Ads Manager — pixel verificado, ahora aprovéchalo al máximo con audience específica de visitantes del portafolio',
+    time:'20 min', impact:'Retargeting ultra-preciso · CPL -22%'
+  },
+  {
+    trigger:['m-g1'], id:'mfu-lf-check', stage:'sec-google', pri:'m-imp', plat:'mp-g',
+    title:'Lead Form activa — verificar que la conversión aparece en Google Ads y activar "Formulario Lead" como conversión principal para optimización de pujas',
+    time:'15 min', impact:'Smart Bidding optimiza hacia leads reales'
+  },
+  {
+    trigger:['m-m2'], id:'mfu-sma-lp', stage:'sec-web', pri:'m-imp', plat:'mp-s',
+    title:'Campaña SMA lanzada — crear landing page San Miguel de Allende / Bajío para mejorar QS y bajar CPL desde el día 1',
+    time:'3 h', impact:'QS +1 · CPL SMA -15% · bounce -20%'
+  },
+  {
+    trigger:['m-wa3','m-wa-tags'], id:'mfu-crm-sync', stage:'sec-wa', pri:'m-opp', plat:'mp-w',
+    title:'Etiquetas WA activas — evaluar sincronización con CRM liviano (HubSpot Free / Notion) para trazabilidad completa sin perder leads entre etapas',
+    time:'1 sem investigar', impact:'Pipeline 100% visible · escalable'
+  }
+];
+
+/* ── Diag helpers ── */
+function setDiagOk(id, txt, val) {
+  const el = $(id); if (!el) return;
+  el.className = 'diag-item diag-ok';
+  const ic = el.querySelector('.diag-icon');
+  const te = el.querySelector('.diag-txt');
+  const ve = el.querySelector('.diag-val');
+  if (ic) { ic.className='diag-icon d-ok'; ic.textContent='✓'; }
+  if (te) te.textContent = txt;
+  if (ve) ve.textContent = val;
+}
+
+function resetDiag(id) {
+  const o = DIAG_ORIGINALS[id]; const el = $(id);
+  if (!el || !o) return;
+  el.className = 'diag-item ' + o.cls;
+  const ic = el.querySelector('.diag-icon');
+  const te = el.querySelector('.diag-txt');
+  const ve = el.querySelector('.diag-val');
+  if (ic) { ic.className='diag-icon '+o.ic; ic.textContent=o.sym; }
+  if (te) te.textContent = o.txt;
+  if (ve) ve.textContent = o.val;
+}
+
+function reapplyAllEffects() {
+  Object.keys(DIAG_ORIGINALS).forEach(id => resetDiag(id));
+  const m = loadMissions();
+  Object.entries(MISSION_EFFECTS).forEach(([mId, effects]) => {
+    if (!m[mId]) return;
+    effects.forEach(fx => setDiagOk(fx.id, fx.txt, fx.val));
+  });
+}
+
+function applyMissionEffects(missionId, isDone) {
+  if (isDone) {
+    (MISSION_EFFECTS[missionId] || []).forEach(fx => {
+      setDiagOk(fx.id, fx.txt, fx.val);
+      const el = $(fx.id);
+      if (el) { el.classList.add('resolving'); setTimeout(()=>el.classList.remove('resolving'), 700); }
+    });
+  } else {
+    reapplyAllEffects();
+  }
+}
+
+/* ── Stage health badge ── */
+function updateStageHealth(stageId, missions) {
+  const crits = STAGE_CRITS[stageId] || [];
+  const done  = crits.filter(id => !!missions[id]).length;
+  const total = crits.length;
+  const ratio = total > 0 ? done / total : 0;
+  const el    = $(STAGE_HEALTH_IDS[stageId]);
+  if (!el) return;
+  el.className = 'stage-health ' + (ratio >= 1 ? 'sh-good' : ratio >= 0.5 ? 'sh-warn' : 'sh-bad');
+  // Only rewrite text for non-data-driven badges
+  if (stageId === 'sec-web' || stageId === 'sec-wa') {
+    el.textContent = ratio >= 1 ? '✓ Configurado' : ratio >= 0.5 ? `${done}/${total} críticas ok` : el.textContent;
+  } else if (ratio >= 1) {
+    el.textContent = '✓ Optimizando';
+  }
+}
+
+/* ── Follow-up mission injection ── */
+function checkFollowups(missions) {
+  FOLLOWUPS.forEach(fu => {
+    const triggered = fu.trigger.every(t => !!missions[t]);
+    const existing  = $(fu.id);
+    if (triggered && !existing) {
+      const stageBody = $('body-' + fu.stage);
+      if (!stageBody) return;
+      const ml = stageBody.querySelector('.mission-list');
+      if (!ml) return;
+      const div = document.createElement('div');
+      div.className = `mission ${fu.pri} mission-followup`;
+      div.id = fu.id;
+      div.setAttribute('onclick', `toggleMission('${fu.id}')`);
+      div.innerHTML = `<div class="m-check"></div>
+        <div class="m-body">
+          <div class="m-title"><span style="font-family:var(--fm);font-size:8px;background:var(--grn);color:#fff;padding:1px 6px;border-radius:3px;margin-right:6px;vertical-align:middle">NEW</span>${fu.title}</div>
+          <div class="m-meta"><span class="m-plat ${fu.plat}">${fu.plat.replace('mp-','').toUpperCase()}</span><span class="m-time">${fu.time}</span><span class="m-impact">${fu.impact}</span></div>
+        </div>`;
+      ml.insertBefore(div, ml.firstChild);
+      // Track this in MISSION_STAGE so health calc works
+      MISSION_STAGE[fu.id] = fu.stage;
+    } else if (!triggered && existing && existing.classList.contains('mission-followup')) {
+      existing.remove();
+    }
+  });
+}
+
+/* ── Main toggle ── */
 function toggleMission(id) {
   const el = $(id);
   if (!el) return;
   const m = loadMissions();
   m[id] = !m[id];
   saveMissions(m);
-  el.classList.toggle('done', m[id]);
+  const isDone = m[id];
+  el.classList.toggle('done', isDone);
+  // Apply diagnostic effects
+  applyMissionEffects(id, isDone);
+  // Update stage health badge
+  const stageId = MISSION_STAGE[id];
+  if (stageId) updateStageHealth(stageId, m);
+  // Check for newly triggered follow-up missions
+  checkFollowups(m);
   updatePendingBadge();
 }
 
@@ -1264,6 +1471,12 @@ function initMissions() {
   document.querySelectorAll('.mission').forEach(el => {
     if (m[el.id]) el.classList.add('done');
   });
+  // Restore saved diag states
+  reapplyAllEffects();
+  // Re-inject any follow-up missions that were unlocked
+  checkFollowups(m);
+  // Update all health badges
+  Object.keys(STAGE_CRITS).forEach(sId => updateStageHealth(sId, m));
   updatePendingBadge();
 }
 
