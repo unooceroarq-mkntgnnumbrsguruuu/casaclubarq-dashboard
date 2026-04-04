@@ -298,6 +298,70 @@ body{font-family:var(--fb);font-size:14px;line-height:1.5;background:var(--bg);c
 .period-sel select option{background:var(--bg3);color:var(--t1)}
 .period-dot{width:5px;height:5px;border-radius:50%;background:var(--amb);flex-shrink:0;margin:0 2px}
 
+/* ── STAGE LABEL CHIP ── */
+.stage-label{font-family:var(--fm);font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:2px 7px;border-radius:2px;white-space:nowrap;margin-right:4px}
+.sl-top{background:var(--red-l);color:var(--red)}
+.sl-s2{background:var(--amb-l);color:var(--amb)}
+.sl-s3{background:var(--blu-l);color:var(--blu)}
+.sl-fb{background:var(--grn-l);color:var(--grn)}
+
+/* ── MONTHLY COMPARISON CARD ── */
+.monthly-card{border:1px solid var(--ln);border-radius:var(--r);overflow:hidden;background:var(--bg2);margin-top:8px}
+.monthly-hd{padding:13px 18px;border-bottom:1px solid var(--ln);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.monthly-tbl-wrap{overflow-x:auto}
+.monthly-tbl{width:100%;border-collapse:collapse;font-size:11px;min-width:860px}
+.monthly-tbl th{padding:9px 12px;font-family:var(--fh);font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);border-bottom:1px solid var(--ln);text-align:right;white-space:nowrap}
+.monthly-tbl th:first-child{text-align:left}
+.monthly-tbl td{padding:9px 12px;border-bottom:1px solid var(--ln);text-align:right;color:var(--t2);font-family:var(--fm);font-size:11px;white-space:nowrap}
+.monthly-tbl td:first-child{text-align:left;font-family:var(--fh);font-size:12px;font-weight:600;color:var(--t1)}
+.monthly-tbl tr:last-child td{border-bottom:none}
+.monthly-tbl tr.cur-month td{background:rgba(204,41,41,.04)}
+.monthly-tbl tr.cur-month td:first-child{color:var(--red)}
+.delta{font-size:9px;margin-left:3px}
+.du{color:var(--grn)}.dd{color:var(--red)}.df{color:var(--t3)}
+.m-load{font-family:var(--fm);font-size:11px;color:var(--t3);padding:20px 18px;text-align:center}
+
+/* ── QUICK LEAD FORM ── */
+.ql-wrap{background:var(--bg3);border:1px solid var(--ln);border-left:3px solid var(--grn);border-radius:4px;padding:14px 16px;margin-top:10px}
+.ql-title{font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--grn);margin-bottom:10px;display:flex;align-items:center;gap:8px;cursor:pointer}
+.ql-body{display:none}
+.ql-body.open{display:block}
+.ql-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:8px}
+.ql-field label{font-family:var(--fh);font-size:8px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);display:block;margin-bottom:3px}
+.ql-field input,.ql-field select{width:100%;padding:6px 8px;border:1px solid var(--ln2);border-radius:2px;background:var(--bg4);color:var(--t1);font-family:var(--fb);font-size:12px;outline:none;transition:border-color .15s}
+.ql-field input:focus,.ql-field select:focus{border-color:var(--grn)}
+.ql-btn{width:100%;padding:8px;background:var(--grn);color:#fff;border:none;border-radius:2px;font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .14s;margin-top:4px}
+.ql-btn:hover{background:#256b46}
+.ql-ok{font-family:var(--fm);font-size:10px;color:var(--grn);text-align:center;padding:6px;display:none}
+
+/* ── DATA CARD (tarjeta unificada de datos) ── */
+.data-card{border:1px solid var(--ln);border-radius:var(--r);overflow:hidden;background:var(--bg2)}
+.dc-hd{padding:13px 18px;border-bottom:1px solid var(--ln);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.dc-hd-title{font-family:var(--fh);font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t1)}
+.dc-hd-sync{font-family:var(--fm);font-size:10px;color:var(--t3)}
+.dc-plat-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid var(--ln)}
+.dc-plat{padding:16px 18px;border-right:1px solid var(--ln)}
+.dc-plat:last-child{border-right:none}
+.dc-plat-hd{font-family:var(--fh);font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--t3);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.dc-plat-hd::after{content:'';flex:1;height:1px;background:var(--ln)}
+.dc-badge-g{background:var(--red);font-family:var(--fpx);font-size:11px;font-weight:700;width:20px;height:20px;border-radius:3px;display:inline-flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
+.dc-badge-m{background:var(--blu);font-family:var(--fpx);font-size:11px;font-weight:700;width:20px;height:20px;border-radius:3px;display:inline-flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
+.dc-nums{display:grid;grid-template-columns:repeat(auto-fill,minmax(115px,1fr));gap:8px}
+.dc-num{background:var(--bg3);border:1px solid var(--ln);border-radius:4px;padding:10px 12px}
+.dc-num-lbl{font-family:var(--fh);font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);margin-bottom:4px}
+.dc-num-val{font-family:var(--fpx);font-size:22px;color:var(--t1);line-height:1}
+.dc-hist{padding:14px 18px;border-top:1px solid var(--ln)}
+.dc-hist-title{font-family:var(--fh);font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--t3);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.dc-hist-title::after{content:'';flex:1;height:1px;background:var(--ln)}
+.dc-hist-tbl{width:100%;border-collapse:collapse;font-size:11px;min-width:760px}
+.dc-hist-tbl th{text-align:right;padding:8px 10px;font-family:var(--fh);font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);border-bottom:1px solid var(--ln);white-space:nowrap}
+.dc-hist-tbl th:first-child{text-align:left}
+.dc-hist-tbl td{padding:9px 10px;border-bottom:1px solid var(--ln);text-align:right;color:var(--t2);font-family:var(--fm);font-size:11px;white-space:nowrap}
+.dc-hist-tbl td:first-child{text-align:left;font-family:var(--fh);font-size:12px;font-weight:600;color:var(--t1)}
+.dc-hist-tbl tr:last-child td{border-bottom:none}
+.dc-hist-tbl tr.dc-cur td{background:rgba(204,41,41,.04)}
+.dc-hist-tbl tr.dc-cur td:first-child{color:var(--red)}
+
 /* ── RESPONSIVE ── */
 @media(max-width:900px){
   .stage-grid{grid-template-columns:1fr}
@@ -405,47 +469,32 @@ body{font-family:var(--fb);font-size:14px;line-height:1.5;background:var(--bg);c
     <span class="ff-val" id="ff4">—</span>
     <span class="ff-rate">convs. · 44.3% SQL</span>
   </a>
-  <div class="ff-conv">→</div>
-  <a class="ff" href="#sec-cita" onclick="scrollTo('sec-cita')">
-    <div class="ff-dot" style="background:var(--grn)"></div>
-    <span class="ff-lbl">Cita agendada</span>
-    <span class="ff-val" id="ff5">—</span>
-    <span class="ff-rate">citas · CPL <span id="ff5b">$—</span></span>
-  </a>
 </div>
 
-<!-- ════ STAGE 1: GOOGLE ADS ════ -->
+<!-- ════ STAGE 1: TOP DEL FUNNEL · GOOGLE ADS ════ -->
 <div class="stage-sec" id="sec-google">
   <div class="stage-hd" onclick="toggleStage('sec-google')">
     <div class="stage-color" style="background:var(--red)"></div>
     <div class="stage-hd-inner">
       <span class="stage-icon" style="color:var(--red)">G</span>
       <div>
-        <div class="stage-title">Google Ads</div>
-        <div class="stage-camp">ARQ_2025_B · CDMX / QRO / Toluca / Metepec</div>
+        <div class="stage-title"><span class="stage-label sl-top">TOP DEL FUNNEL</span>Google Ads</div>
+        <div class="stage-camp">Campaña ARQ_2025_B · QRO · CDMX · Toluca · Metepec · Valle de Bravo · SMA · GTO</div>
       </div>
       <div class="stage-hd-r">
         <div class="stage-metric"><span class="stage-metric-val" id="g-clics">—</span><span class="stage-metric-lbl">clics</span></div>
-        <span class="stage-health sh-warn" id="g-health">5/8 activos</span>
+        <span class="stage-health sh-warn" id="g-health">Activa</span>
         <span class="stage-toggle" id="tog-sec-google">▾</span>
       </div>
     </div>
   </div>
   <div class="stage-body" id="body-sec-google">
     <div class="stage-grid">
-      <!-- ASSETS -->
+      <!-- ASSET REAL -->
       <div class="stage-col">
-        <div class="stage-col-title">Activos configurados</div>
+        <div class="stage-col-title">Activo</div>
         <div class="asset-list">
           <div class="asset"><div class="a-dot dot-on"></div><span class="a-name">Campaña ARQ_2025_B</span><span class="a-st ast-on">activa</span></div>
-          <div class="asset"><div class="a-dot dot-on"></div><span class="a-name">Segmentación QRO / CDMX / Toluca</span><span class="a-st ast-on">ok</span></div>
-          <div class="asset"><div class="a-dot dot-on"></div><span class="a-name">Sitelinks</span><span class="a-st ast-on">activa</span></div>
-          <div class="asset"><div class="a-dot dot-on"></div><span class="a-name">Callouts</span><span class="a-st ast-on">activa</span></div>
-          <div class="asset"><div class="a-dot dot-on"></div><span class="a-name">Extensión de llamada</span><span class="a-st ast-on">activa</span></div>
-          <div class="asset"><div class="a-dot dot-warn"></div><span class="a-name">Structured Snippets</span><span class="a-st ast-warn">incompleta</span></div>
-          <div class="asset"><div class="a-dot dot-off"></div><span class="a-name">Lead Form Extension</span><span class="a-st ast-off">⚠ sin configurar</span></div>
-          <div class="asset"><div class="a-dot dot-off"></div><span class="a-name">Image Extensions</span><span class="a-st ast-off">sin activar</span></div>
-          <div class="asset"><div class="a-dot dot-off"></div><span class="a-name">Performance Max</span><span class="a-st ast-off">oportunidad</span></div>
         </div>
       </div>
       <!-- MISSIONS -->
@@ -462,57 +511,96 @@ body{font-family:var(--fb);font-size:14px;line-height:1.5;background:var(--bg);c
           <div class="mission m-crit" id="m-g2" onclick="toggleMission('m-g2')">
             <div class="m-check"></div>
             <div class="m-body">
-              <div class="m-title">Agregar 15 palabras clave negativas (proveedores, estudiantes)</div>
+              <div class="m-title">Agregar palabras clave negativas (software, escuela, estudiantil, proveedores)</div>
               <div class="m-meta"><span class="m-plat mp-g">Google Ads</span><span class="m-time">20 min</span><span class="m-impact">Ahorra $1,960 MXN/mes</span></div>
             </div>
           </div>
-          <div class="mission m-imp" id="m-g3" onclick="toggleMission('m-g3')">
+          <div class="mission m-crit" id="m-g-conc" onclick="toggleMission('m-g-conc')">
             <div class="m-check"></div>
             <div class="m-body">
-              <div class="m-title">Activar Image Extensions con fotos reales de proyectos</div>
-              <div class="m-meta"><span class="m-plat mp-g">Google Ads</span><span class="m-time">45 min</span><span class="m-impact">CTR +1.5%</span></div>
+              <div class="m-title">Auditar concordancia entre palabras clave y anuncios RSA — revisar QS de cada keyword</div>
+              <div class="m-meta"><span class="m-plat mp-g">Google Ads</span><span class="m-time">45 min</span><span class="m-impact">CTR +1–2% · QS mejora</span></div>
+            </div>
+          </div>
+          <div class="mission m-imp" id="m-g-geo" onclick="toggleMission('m-g-geo')">
+            <div class="m-check"></div>
+            <div class="m-body">
+              <div class="m-title">Verificar segmentación geográfica: QRO · CDMX · Toluca · Metepec · Valle de Bravo · SMA · Guanajuato</div>
+              <div class="m-meta"><span class="m-plat mp-g">Google Ads</span><span class="m-time">20 min</span><span class="m-impact">Cobertura total de mercados objetivo</span></div>
             </div>
           </div>
           <div class="mission m-imp" id="m-g4" onclick="toggleMission('m-g4')">
             <div class="m-check"></div>
             <div class="m-body">
-              <div class="m-title">Bid adjustment +20% para 35–54 años, -30% para 18–24</div>
-              <div class="m-meta"><span class="m-plat mp-g">Google Ads</span><span class="m-time">10 min</span><span class="m-impact">CPA -15%</span></div>
+              <div class="m-title">Segmentación demográfica: +20% bid ajuste 35–54 años, -30% para 18–24, excluir HHI Bottom 50%</div>
+              <div class="m-meta"><span class="m-plat mp-g">Google Ads</span><span class="m-time">15 min</span><span class="m-impact">CPA -15% · calidad leads +20%</span></div>
+            </div>
+          </div>
+          <div class="mission m-imp" id="m-g3" onclick="toggleMission('m-g3')">
+            <div class="m-check"></div>
+            <div class="m-body">
+              <div class="m-title">Activar Image Extensions con fotos reales de proyectos terminados</div>
+              <div class="m-meta"><span class="m-plat mp-g">Google Ads</span><span class="m-time">45 min</span><span class="m-impact">CTR +1.5%</span></div>
             </div>
           </div>
           <div class="mission m-imp" id="m-g5" onclick="toggleMission('m-g5')">
             <div class="m-check"></div>
             <div class="m-body">
-              <div class="m-title">Completar Structured Snippets (Remodelaciones, Extensiones)</div>
+              <div class="m-title">Completar Structured Snippets (Remodelaciones, Extensiones, Llave en Mano)</div>
               <div class="m-meta"><span class="m-plat mp-g">Google Ads</span><span class="m-time">15 min</span><span class="m-impact">CTR +0.8%</span></div>
             </div>
           </div>
           <div class="mission m-opp" id="m-g6" onclick="toggleMission('m-g6')">
             <div class="m-check"></div>
             <div class="m-body">
-              <div class="m-title">Excluir HHI Bottom 50% en segmentación demográfica</div>
-              <div class="m-meta"><span class="m-plat mp-g">Google Ads</span><span class="m-time">10 min</span><span class="m-impact">Calidad leads +20%</span></div>
+              <div class="m-title">Crear campaña Google Ads para Valle de Bravo y Guanajuato — keywords específicas por mercado</div>
+              <div class="m-meta"><span class="m-plat mp-g">Google Ads</span><span class="m-time">2 h</span><span class="m-impact">Cobertura nuevos mercados premium</span></div>
             </div>
           </div>
           <div class="mission m-opp" id="m-g7" onclick="toggleMission('m-g7')">
             <div class="m-check"></div>
             <div class="m-body">
-              <div class="m-title">Crear campaña Performance Max con assets de foto y video</div>
-              <div class="m-meta"><span class="m-plat mp-g">Google Ads</span><span class="m-time">2 h</span><span class="m-impact">Cobertura Search+Display+YouTube</span></div>
+              <div class="m-title">Crear campaña Performance Max con assets de foto + video + copy por ciudad</div>
+              <div class="m-meta"><span class="m-plat mp-g">Google Ads</span><span class="m-time">2 h</span><span class="m-impact">Search + Display + YouTube + Maps</span></div>
+            </div>
+          </div>
+          <div class="mission m-opp" id="m-g-rlsa" onclick="toggleMission('m-g-rlsa')">
+            <div class="m-check"></div>
+            <div class="m-body">
+              <div class="m-title">Activar RLSA (remarketing lists for search) para visitantes del sitio</div>
+              <div class="m-meta"><span class="m-plat mp-g">Google Ads</span><span class="m-time">30 min</span><span class="m-impact">Conv. rate +35% en búsquedas de retorno</span></div>
+            </div>
+          </div>
+          <div class="mission m-imp" id="m-g-qs" onclick="toggleMission('m-g-qs')">
+            <div class="m-check"></div>
+            <div class="m-body">
+              <div class="m-title">Monitorear Quality Score semanalmente — identificar keywords con QS &lt;6 y ajustar concordancia con anuncio</div>
+              <div class="m-meta"><span class="m-plat mp-g">Google Ads</span><span class="m-time">20 min/sem</span><span class="m-impact">QS alto = CPC más bajo + mejor posición</span></div>
+            </div>
+          </div>
+          <div class="mission m-imp" id="m-g-demo2" onclick="toggleMission('m-g-demo2')">
+            <div class="m-check"></div>
+            <div class="m-body">
+              <div class="m-title">Analizar segmentación demográfica actual por ciudad: verificar edad y HHI óptimo para QRO · CDMX · SMA · Metepec</div>
+              <div class="m-meta"><span class="m-plat mp-g">Google Ads</span><span class="m-time">30 min</span><span class="m-impact">CPA -12% al filtrar demo incorrecta</span></div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- DIAGNOSTICS -->
+    <!-- ANÁLISIS -->
     <div class="diag-strip">
-      <div class="diag-title">Diagnóstico · datos reales</div>
+      <div class="diag-title">Análisis · rendimiento + configuración</div>
       <div class="diag-items" id="g-diag">
         <div class="diag-item diag-ok"><span class="diag-icon d-ok">✓</span><span class="diag-txt">CTR 6.2% — por encima del benchmark del sector (3–4%)</span><span class="diag-val">↑ bueno</span></div>
         <div class="diag-item diag-ok"><span class="diag-icon d-ok">✓</span><span class="diag-txt">CPC $5.80 MXN — competitivo para arquitectura en CDMX/QRO</span><span class="diag-val">ok</span></div>
-        <div class="diag-item diag-warn"><span class="diag-icon d-warn">!</span><span class="diag-txt">CPA Toluca $560 vs $394 en QRO — gap del 42% sin justificación de presupuesto</span><span class="diag-val">↑ 42%</span></div>
+        <div class="diag-item diag-ok"><span class="diag-icon d-ok">✓</span><span class="diag-txt">Sitelinks · Callouts · Extensión llamada activos</span><span class="diag-val">✓ activas</span></div>
+        <div class="diag-item diag-warn"><span class="diag-icon d-warn">!</span><span class="diag-txt">CPA Toluca $560 vs $394 en QRO — gap del 42%, investigar segmentación y landing</span><span class="diag-val">↑ 42%</span></div>
+        <div class="diag-item diag-warn"><span class="diag-icon d-warn">!</span><span class="diag-txt">Structured Snippets incompletas — faltan tipos de proyecto relevantes</span><span class="diag-val">revisar</span></div>
+        <div class="diag-item diag-warn"><span class="diag-icon d-warn">!</span><span class="diag-txt">Segmentación geográfica activa — verificar cobertura de Metepec, Valle de Bravo, Guanajuato y Bajío</span><span class="diag-val">revisar</span></div>
         <div class="diag-item diag-bad"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Keywords como "software arquitectura", "escuela arquitectura" generando clics irrelevantes</span><span class="diag-val">$1,960/mes</span></div>
         <div class="diag-item diag-bad"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Lead Form Extension inactiva — pérdida de leads directos desde Google</span><span class="diag-val">-18 leads/mes</span></div>
+        <div class="diag-item diag-bad"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Image Extensions sin activar — CTR potencial no aprovechado</span><span class="diag-val">sin foto</span></div>
       </div>
     </div>
     <!-- OPPORTUNITIES -->
@@ -541,8 +629,8 @@ body{font-family:var(--fb);font-size:14px;line-height:1.5;background:var(--bg);c
     <div class="stage-hd-inner">
       <span class="stage-icon" style="color:var(--amb)">W</span>
       <div>
-        <div class="stage-title">Sitio Web</div>
-        <div class="stage-camp">casaclubarq.com · Wix · Pixel Meta instalado</div>
+        <div class="stage-title"><span class="stage-label sl-s2">STEP 2</span>Sitio Web</div>
+        <div class="stage-camp">casaclubarq.com · Wix · Pixel Meta · GTM · GA4</div>
       </div>
       <div class="stage-hd-r">
         <div class="stage-metric"><span class="stage-metric-val" id="w-visits">—</span><span class="stage-metric-lbl">visitas</span></div>
@@ -554,17 +642,9 @@ body{font-family:var(--fb);font-size:14px;line-height:1.5;background:var(--bg);c
   <div class="stage-body" id="body-sec-web">
     <div class="stage-grid">
       <div class="stage-col">
-        <div class="stage-col-title">Activos configurados</div>
+        <div class="stage-col-title">Activo</div>
         <div class="asset-list">
-          <div class="asset"><div class="a-dot dot-on"></div><span class="a-name">Sitio web online</span><span class="a-st ast-on">activo</span></div>
-          <div class="asset"><div class="a-dot dot-on"></div><span class="a-name">Pixel Meta — PageView</span><span class="a-st ast-on">disparando</span></div>
-          <div class="asset"><div class="a-dot dot-on"></div><span class="a-name">Google Tag Manager</span><span class="a-st ast-on">activo</span></div>
-          <div class="asset"><div class="a-dot dot-warn"></div><span class="a-name">Pixel Meta — ViewContent</span><span class="a-st ast-warn">⚠ verificar portafolio</span></div>
-          <div class="asset"><div class="a-dot dot-warn"></div><span class="a-name">GA4 — eventos clave</span><span class="a-st ast-warn">verificar</span></div>
-          <div class="asset"><div class="a-dot dot-off"></div><span class="a-name">Heatmap (Clarity / Hotjar)</span><span class="a-st ast-off">sin instalar</span></div>
-          <div class="asset"><div class="a-dot dot-off"></div><span class="a-name">Landing page por ciudad</span><span class="a-st ast-off">sin crear</span></div>
-          <div class="asset"><div class="a-dot dot-off"></div><span class="a-name">CTA WhatsApp flotante</span><span class="a-st ast-off">falta en portafolio</span></div>
-          <div class="asset"><div class="a-dot dot-off"></div><span class="a-name">Schema markup (SEO local)</span><span class="a-st ast-off">sin implementar</span></div>
+          <div class="asset"><div class="a-dot dot-on"></div><span class="a-name">casaclubarq.com (Wix)</span><span class="a-st ast-on">online</span></div>
         </div>
       </div>
       <div class="stage-col">
@@ -612,7 +692,62 @@ body{font-family:var(--fb);font-size:14px;line-height:1.5;background:var(--bg);c
               <div class="m-meta"><span class="m-plat mp-s">Web / SEO</span><span class="m-time">3 h</span><span class="m-impact">Soporte campaña SMA nueva</span></div>
             </div>
           </div>
+          <div class="mission m-crit" id="m-w-pixel" onclick="toggleMission('m-w-pixel')">
+            <div class="m-check"></div>
+            <div class="m-body">
+              <div class="m-title">Auditar todos los eventos del Pixel Meta en Wix: PageView · ViewContent · Lead · Contact — verificar con Meta Pixel Helper</div>
+              <div class="m-meta"><span class="m-plat mp-m">Meta / Wix</span><span class="m-time">1 h</span><span class="m-impact">Retargeting más preciso = CPL -22%</span></div>
+            </div>
+          </div>
+          <div class="mission m-crit" id="m-w-ga4" onclick="toggleMission('m-w-ga4')">
+            <div class="m-check"></div>
+            <div class="m-body">
+              <div class="m-title">Verificar eventos GA4 en Wix: contacto · clic WA · formulario · tiempo en portafolio — usar DebugView</div>
+              <div class="m-meta"><span class="m-plat mp-s">GA4 / Wix</span><span class="m-time">45 min</span><span class="m-impact">Datos de comportamiento confiables</span></div>
+            </div>
+          </div>
+          <div class="mission m-imp" id="m-w-wix" onclick="toggleMission('m-w-wix')">
+            <div class="m-check"></div>
+            <div class="m-body">
+              <div class="m-title">Analizar Wix Analytics: páginas más visitadas, tiempo promedio, tasa de rebote y flujo de usuarios entre secciones</div>
+              <div class="m-meta"><span class="m-plat mp-s">Wix</span><span class="m-time">30 min</span><span class="m-impact">Identifica dónde se pierden los visitantes</span></div>
+            </div>
+          </div>
+          <div class="mission m-imp" id="m-w-ps" onclick="toggleMission('m-w-ps')">
+            <div class="m-check"></div>
+            <div class="m-body">
+              <div class="m-title">Revisar PageSpeed Insights mobile/desktop — comprimir imágenes del portafolio y activar lazy load en Wix</div>
+              <div class="m-meta"><span class="m-plat mp-s">Web</span><span class="m-time">1 h</span><span class="m-impact">LCP móvil -2s · QS Google +1</span></div>
+            </div>
+          </div>
+          <div class="mission m-opp" id="m-w-heat" onclick="toggleMission('m-w-heat')">
+            <div class="m-check"></div>
+            <div class="m-body">
+              <div class="m-title">Instalar Microsoft Clarity (heatmaps y grabaciones de sesión gratis) para ver cómo navegan los usuarios reales</div>
+              <div class="m-meta"><span class="m-plat mp-s">Web</span><span class="m-time">20 min</span><span class="m-impact">Identifica por qué se van sin contactar</span></div>
+            </div>
+          </div>
+          <div class="mission m-opp" id="m-w-schema" onclick="toggleMission('m-w-schema')">
+            <div class="m-check"></div>
+            <div class="m-body">
+              <div class="m-title">Implementar Schema markup de "LocalBusiness Arquitecto" en Wix para SEO local en QRO · CDMX · Metepec · SMA</div>
+              <div class="m-meta"><span class="m-plat mp-s">SEO / Wix</span><span class="m-time">2 h</span><span class="m-impact">Visibilidad orgánica local</span></div>
+            </div>
+          </div>
         </div>
+      </div>
+    </div>
+    <!-- Análisis configuraciones -->
+    <div class="diag-strip">
+      <div class="diag-title">Análisis · configuraciones del sitio</div>
+      <div class="diag-items">
+        <div class="diag-item diag-ok"><span class="diag-icon d-ok">✓</span><span class="diag-txt">Pixel Meta PageView disparando en sitio</span><span class="diag-val">✓ activo</span></div>
+        <div class="diag-item diag-ok"><span class="diag-icon d-ok">✓</span><span class="diag-txt">Google Tag Manager instalado y activo</span><span class="diag-val">✓ activo</span></div>
+        <div class="diag-item diag-warn"><span class="diag-icon d-warn">!</span><span class="diag-txt">Pixel Meta ViewContent — verificar disparo en cada página del portafolio</span><span class="diag-val">⚠ revisar</span></div>
+        <div class="diag-item diag-warn"><span class="diag-icon d-warn">!</span><span class="diag-txt">GA4 eventos clave — confirmar que contacto y clic WA se registran correctamente</span><span class="diag-val">⚠ verificar</span></div>
+        <div class="diag-item diag-bad"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin heatmap (Clarity/Hotjar) — sin datos de comportamiento de los visitantes</span><span class="diag-val">ciego</span></div>
+        <div class="diag-item diag-bad"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin CTA WhatsApp flotante en portafolio — fricción innecesaria para contactar</span><span class="diag-val">-conv.</span></div>
+        <div class="diag-item diag-bad"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin landing pages por ciudad — mismo contenido para QRO, CDMX, SMA, Metepec, GTO</span><span class="diag-val">QS bajo</span></div>
       </div>
     </div>
     <!-- PageSpeed -->
@@ -668,8 +803,8 @@ body{font-family:var(--fb);font-size:14px;line-height:1.5;background:var(--bg);c
     <div class="stage-hd-inner">
       <span class="stage-icon" style="color:var(--blu)">M</span>
       <div>
-        <div class="stage-title">Meta Ads</div>
-        <div class="stage-camp">2024, ARQ, QRO · Retargeting post-visita · WhatsApp</div>
+        <div class="stage-title"><span class="stage-label sl-s3">STEP 3</span>Meta Ads</div>
+        <div class="stage-camp">2024, ARQ, QRO · Retargeting + Lookalike · Click-to-WhatsApp</div>
       </div>
       <div class="stage-hd-r">
         <div class="stage-metric"><span class="stage-metric-val" id="m-wa">—</span><span class="stage-metric-lbl">convs. WA</span></div>
@@ -681,16 +816,9 @@ body{font-family:var(--fb);font-size:14px;line-height:1.5;background:var(--bg);c
   <div class="stage-body" id="body-sec-meta">
     <div class="stage-grid">
       <div class="stage-col">
-        <div class="stage-col-title">Activos configurados</div>
+        <div class="stage-col-title">Activo</div>
         <div class="asset-list">
           <div class="asset"><div class="a-dot dot-on"></div><span class="a-name">Campaña "2024, ARQ, QRO"</span><span class="a-st ast-on">activa</span></div>
-          <div class="asset"><div class="a-dot dot-on"></div><span class="a-name">Retargeting visitantes 0–7 días</span><span class="a-st ast-on">CPL $48</span></div>
-          <div class="asset"><div class="a-dot dot-on"></div><span class="a-name">Retargeting visitantes 8–30 días</span><span class="a-st ast-on">CPL $62</span></div>
-          <div class="asset"><div class="a-dot dot-on"></div><span class="a-name">Lookalike 1% de conversores</span><span class="a-st ast-on">CPL $88</span></div>
-          <div class="asset"><div class="a-dot dot-warn"></div><span class="a-name">Videos testimoniales</span><span class="a-st ast-warn">⚡ por crear</span></div>
-          <div class="asset"><div class="a-dot dot-off"></div><span class="a-name">Campaña SMA / Bajío</span><span class="a-st ast-off">pendiente crear</span></div>
-          <div class="asset"><div class="a-dot dot-off"></div><span class="a-name">Reels Ads</span><span class="a-st ast-off">sin activar</span></div>
-          <div class="asset"><div class="a-dot dot-off"></div><span class="a-name">Meta Advantage+ AI</span><span class="a-st ast-off">sin activar</span></div>
         </div>
       </div>
       <div class="stage-col">
@@ -738,16 +866,47 @@ body{font-family:var(--fb);font-size:14px;line-height:1.5;background:var(--bg);c
               <div class="m-meta"><span class="m-plat mp-m">Meta Ads</span><span class="m-time">2 h</span><span class="m-impact">CPA Toluca estimado $390 vs $560</span></div>
             </div>
           </div>
+          <div class="mission m-crit" id="m-m-audit" onclick="toggleMission('m-m-audit')">
+            <div class="m-check"></div>
+            <div class="m-body">
+              <div class="m-title">Auditar públicos actuales en cada ad set: verificar tamaño, overlap y si estamos llegando al perfil correcto (35–55 años, HHI alto, interés en vivienda)</div>
+              <div class="m-meta"><span class="m-plat mp-m">Meta Ads</span><span class="m-time">45 min</span><span class="m-impact">Leads más calificados · CPL bajo</span></div>
+            </div>
+          </div>
+          <div class="mission m-crit" id="m-m-pix" onclick="toggleMission('m-m-pix')">
+            <div class="m-check"></div>
+            <div class="m-body">
+              <div class="m-title">Verificar configuración completa del Pixel de Meta: revisar eventos activos, confirmar ViewContent en portafolio y Lead en formularios con Meta Pixel Helper</div>
+              <div class="m-meta"><span class="m-plat mp-m">Meta / Pixel</span><span class="m-time">1 h</span><span class="m-impact">Retargeting preciso = CPL -22%</span></div>
+            </div>
+          </div>
+          <div class="mission m-imp" id="m-m-aud" onclick="toggleMission('m-m-aud')">
+            <div class="m-check"></div>
+            <div class="m-body">
+              <div class="m-title">Analizar Audience Insights: ver quién realmente interactúa con los anuncios — edad, ciudad, género, intereses. Comparar con cliente ideal</div>
+              <div class="m-meta"><span class="m-plat mp-m">Meta Ads</span><span class="m-time">30 min</span><span class="m-impact">Ajuste de targeting basado en datos reales</span></div>
+            </div>
+          </div>
+          <div class="mission m-imp" id="m-m-freq" onclick="toggleMission('m-m-freq')">
+            <div class="m-check"></div>
+            <div class="m-body">
+              <div class="m-title">Monitorear frecuencia de anuncios en retargeting — si supera 4x/semana, rotar creativos o ampliar audiencia</div>
+              <div class="m-meta"><span class="m-plat mp-m">Meta Ads</span><span class="m-time">15 min/sem</span><span class="m-impact">Evita fatiga de anuncio y CPL alto</span></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <div class="diag-strip">
-      <div class="diag-title">Diagnóstico · ad sets reales</div>
+      <div class="diag-title">Análisis · ad sets y configuración</div>
       <div class="diag-items" id="meta-diag">
-        <div class="diag-item diag-ok"><span class="diag-icon d-ok">✓</span><span class="diag-txt">Retargeting 0–7 días es el mejor ad set: CPL $48 vs promedio $70 del sector</span><span class="diag-val">↑ 3.5×</span></div>
-        <div class="diag-item diag-warn"><span class="diag-icon d-warn">!</span><span class="diag-txt">Ad set "Intereses Arq." con CPL $124 — candidato a pausar o restructurar audiencia</span><span class="diag-val">$124 CPL</span></div>
-        <div class="diag-item diag-bad"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin videos testimoniales — el formato que más convierte en arquitectura premium</span><span class="diag-val">pendiente</span></div>
-        <div class="diag-item diag-bad"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin campaña para San Miguel de Allende — mercado de alta demanda sin cubrir</span><span class="diag-val">0 leads SMA</span></div>
+        <div class="diag-item diag-ok"><span class="diag-icon d-ok">✓</span><span class="diag-txt">Retargeting 0–7 días: CPL $48 — mejor ad set, por debajo del benchmark del sector ($70)</span><span class="diag-val">↑ best</span></div>
+        <div class="diag-item diag-ok"><span class="diag-icon d-ok">✓</span><span class="diag-txt">Retargeting 8–30 días: CPL $62 · Lookalike 1%: CPL $88 — ambos activos</span><span class="diag-val">✓ activos</span></div>
+        <div class="diag-item diag-warn"><span class="diag-icon d-warn">!</span><span class="diag-txt">Ad set "Intereses Arq." con CPL $124 — auditar audiencia, posible overlap con retargeting</span><span class="diag-val">$124 CPL</span></div>
+        <div class="diag-item diag-warn"><span class="diag-icon d-warn">!</span><span class="diag-txt">Verificar configuración de públicos: tamaño óptimo, exclusiones y overlap entre ad sets</span><span class="diag-val">⚠ auditar</span></div>
+        <div class="diag-item diag-bad"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin videos testimoniales — formato de mayor conversión en arquitectura premium</span><span class="diag-val">pendiente</span></div>
+        <div class="diag-item diag-bad"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin campaña para San Miguel de Allende, Guanajuato ni Bajío — mercados sin cubrir</span><span class="diag-val">0 leads</span></div>
+        <div class="diag-item diag-bad"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Pixel ViewContent sin verificar en portafolio — retargeting basado en audiencia incompleta</span><span class="diag-val">revisar</span></div>
       </div>
     </div>
     <div style="padding:14px 18px;border-top:1px solid var(--ln)">
@@ -764,8 +923,8 @@ body{font-family:var(--fb);font-size:14px;line-height:1.5;background:var(--bg);c
     <div class="stage-hd-inner">
       <span class="stage-icon" style="color:var(--grn);font-size:10px">WA</span>
       <div>
-        <div class="stage-title">WhatsApp + Calificación</div>
-        <div class="stage-camp">Click-to-WA desde Meta · Calificación manual · 44.3% → SQL</div>
+        <div class="stage-title"><span class="stage-label sl-fb">FINAL BOSS</span>WhatsApp</div>
+        <div class="stage-camp">Click-to-WA desde Meta · Calificación · 44.3% → SQL · Registro de leads</div>
       </div>
       <div class="stage-hd-r">
         <div class="stage-metric"><span class="stage-metric-val" id="wa-sql">—</span><span class="stage-metric-lbl">SQLs</span></div>
@@ -777,16 +936,10 @@ body{font-family:var(--fb);font-size:14px;line-height:1.5;background:var(--bg);c
   <div class="stage-body" id="body-sec-wa">
     <div class="stage-grid">
       <div class="stage-col">
-        <div class="stage-col-title">Activos configurados</div>
+        <div class="stage-col-title">Activo</div>
         <div class="asset-list">
           <div class="asset"><div class="a-dot dot-on"></div><span class="a-name">WhatsApp Business</span><span class="a-st ast-on">activo</span></div>
           <div class="asset"><div class="a-dot dot-on"></div><span class="a-name">Click-to-WA desde Meta</span><span class="a-st ast-on">configurado</span></div>
-          <div class="asset"><div class="a-dot dot-warn"></div><span class="a-name">Mensaje de bienvenida</span><span class="a-st ast-warn">revisar texto</span></div>
-          <div class="asset"><div class="a-dot dot-warn"></div><span class="a-name">Script de calificación</span><span class="a-st ast-warn">no documentado</span></div>
-          <div class="asset"><div class="a-dot dot-off"></div><span class="a-name">Bot fuera de horario</span><span class="a-st ast-off">sin configurar</span></div>
-          <div class="asset"><div class="a-dot dot-off"></div><span class="a-name">Etiquetas por etapa</span><span class="a-st ast-off">sin usar</span></div>
-          <div class="asset"><div class="a-dot dot-off"></div><span class="a-name">Seguimiento automático 48h</span><span class="a-st ast-off">manual</span></div>
-          <div class="asset"><div class="a-dot dot-off"></div><span class="a-name">Calendly para citas</span><span class="a-st ast-off">sin integrar</span></div>
         </div>
       </div>
       <div class="stage-col">
@@ -827,16 +980,89 @@ body{font-family:var(--fb);font-size:14px;line-height:1.5;background:var(--bg);c
               <div class="m-meta"><span class="m-plat mp-w">WA / Cal</span><span class="m-time">1 h</span><span class="m-impact">SQL→Cita +12% estimado</span></div>
             </div>
           </div>
+          <div class="mission m-crit" id="m-wa-msg" onclick="toggleMission('m-wa-msg')">
+            <div class="m-check"></div>
+            <div class="m-body">
+              <div class="m-title">Revisar y optimizar mensaje de bienvenida automático — que filtre y califique desde el primer contacto</div>
+              <div class="m-meta"><span class="m-plat mp-w">WhatsApp</span><span class="m-time">30 min</span><span class="m-impact">SQL rate +5% en primer mensaje</span></div>
+            </div>
+          </div>
+          <div class="mission m-imp" id="m-wa-tags" onclick="toggleMission('m-wa-tags')">
+            <div class="m-check"></div>
+            <div class="m-body">
+              <div class="m-title">Crear sistema de etiquetas en WA Business: Nuevo · Calificando · SQL · Cita · Proyecto · Perdido — para tener pipeline visible</div>
+              <div class="m-meta"><span class="m-plat mp-w">WhatsApp</span><span class="m-time">20 min</span><span class="m-impact">Pipeline visible sin CRM externo</span></div>
+            </div>
+          </div>
+          <div class="mission m-opp" id="m-wa-bot" onclick="toggleMission('m-wa-bot')">
+            <div class="m-check"></div>
+            <div class="m-body">
+              <div class="m-title">Evaluar bot de calificación automática (Leadsales / WATI) para manejo nocturno y weekends sin perder leads</div>
+              <div class="m-meta"><span class="m-plat mp-w">WhatsApp</span><span class="m-time">1 sem investigar</span><span class="m-impact">Cero leads perdidos fuera de horario</span></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    <!-- ANÁLISIS WA -->
     <div class="diag-strip">
-      <div class="diag-title">Diagnóstico</div>
+      <div class="diag-title">Análisis · configuración y rendimiento</div>
       <div class="diag-items">
         <div class="diag-item diag-ok"><span class="diag-icon d-ok">✓</span><span class="diag-txt">Tasa WA → SQL 44.3% — excelente, top del sector en arquitectura</span><span class="diag-val">↑ top 10%</span></div>
-        <div class="diag-item diag-warn"><span class="diag-icon d-warn">!</span><span class="diag-txt">El script de calificación no está documentado — depende de una persona</span><span class="diag-val">riesgo</span></div>
-        <div class="diag-item diag-bad"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin bot nocturno — leads que escriben de noche se pierden o esperan hasta el día siguiente</span><span class="diag-val">-leads</span></div>
+        <div class="diag-item diag-ok"><span class="diag-icon d-ok">✓</span><span class="diag-txt">Click-to-WA activo desde Meta Ads — flujo directo campaña → conversación</span><span class="diag-val">✓ ok</span></div>
+        <div class="diag-item diag-warn"><span class="diag-icon d-warn">!</span><span class="diag-txt">Script de calificación no documentado — proceso depende de una sola persona</span><span class="diag-val">riesgo</span></div>
+        <div class="diag-item diag-warn"><span class="diag-icon d-warn">!</span><span class="diag-txt">Mensaje de bienvenida pendiente de optimización para calificar desde el primer contacto</span><span class="diag-val">revisar</span></div>
+        <div class="diag-item diag-bad"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin bot nocturno — leads que escriben de noche se pierden hasta el día siguiente</span><span class="diag-val">-leads</span></div>
+        <div class="diag-item diag-bad"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin etiquetas por etapa — sin visibilidad del pipeline dentro de WA Business</span><span class="diag-val">ciego</span></div>
         <div class="diag-item diag-bad"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin seguimiento sistematizado a 48h — oportunidad de recuperar 15+ citas/mes</span><span class="diag-val">-15/mes</span></div>
+      </div>
+    </div>
+    <!-- MINI QUICK LEAD -->
+    <div style="padding:14px 18px;border-top:1px solid var(--ln)">
+      <div class="ql-wrap">
+        <div class="ql-title" onclick="this.nextElementSibling.classList.toggle('open')">
+          ⚡ Registrar lead rápido — viene de WA <span style="margin-left:auto;font-size:9px;color:var(--t3)">clic para abrir/cerrar</span>
+        </div>
+        <div class="ql-body">
+          <div class="ql-grid">
+            <div class="ql-field"><label>Nombre</label><input type="text" id="ql-name" placeholder="ej. Carlos García"></div>
+            <div class="ql-field"><label>Teléfono / WA</label><input type="tel" id="ql-phone" placeholder="442 123 4567"></div>
+          </div>
+          <div class="ql-grid">
+            <div class="ql-field"><label>Ciudad</label>
+              <select id="ql-city">
+                <option>Querétaro</option><option>CDMX</option><option>Toluca</option>
+                <option>Metepec</option><option>Valle de Bravo</option>
+                <option>San Miguel de Allende</option><option>Guanajuato</option><option>Bajío</option><option>Otra</option>
+              </select>
+            </div>
+            <div class="ql-field"><label>Fuente</label>
+              <select id="ql-source">
+                <option value="m">Meta Ads</option><option value="g">Google Ads</option>
+                <option value="r">Referido</option><option value="o">Orgánico</option>
+              </select>
+            </div>
+          </div>
+          <div class="ql-grid">
+            <div class="ql-field"><label>Presupuesto aprox.</label>
+              <select id="ql-budget">
+                <option value="">Sin definir</option><option value="<1M">&lt;$1M MXN</option>
+                <option value="1-2M">$1M–$2M</option><option value="2-4M">$2M–$4M</option>
+                <option value=">4M">&gt;$4M</option>
+              </select>
+            </div>
+            <div class="ql-field"><label>Terreno</label>
+              <select id="ql-land">
+                <option value="">No sé aún</option>
+                <option value="propio">Tiene terreno propio</option>
+                <option value="busca">Busca terreno</option>
+              </select>
+            </div>
+          </div>
+          <div class="ql-field" style="margin-bottom:8px"><label>Nota rápida</label><input type="text" id="ql-note" placeholder="ej. QRO Norte, 200m², timeline 2026, muy interesado..."></div>
+          <button class="ql-btn" onclick="quickLead()">+ Guardar lead en CRM</button>
+          <div class="ql-ok" id="ql-ok">✓ Lead guardado — ve al tab CRM para verlo</div>
+        </div>
       </div>
     </div>
     <div class="opp-strip">
@@ -844,112 +1070,63 @@ body{font-family:var(--fb);font-size:14px;line-height:1.5;background:var(--bg);c
       <div class="opp-chips">
         <span class="opp-chip oc-w">+ Bot IA de calificación (Leadsales / WATI)</span>
         <span class="opp-chip oc-w">+ Catálogo de servicios en WA Business</span>
-        <span class="opp-chip oc-w">+ Encuesta de satisfacción post-cita</span>
-        <span class="opp-chip oc-s">+ Video de bienvenida al cliente nuevo</span>
+        <span class="opp-chip oc-w">+ Encuesta post-cita para testimoniales</span>
+        <span class="opp-chip oc-s">+ Agendado automático vía Calendly</span>
+        <span class="opp-chip oc-s">+ Seguimiento 48h con template WA</span>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ════ STAGE 5: CITA ════ -->
-<div class="stage-sec" id="sec-cita">
-  <div class="stage-hd" onclick="toggleStage('sec-cita')">
-    <div class="stage-color" style="background:#2E8B57"></div>
-    <div class="stage-hd-inner">
-      <span class="stage-icon" style="color:var(--grn);font-size:10px">CITA</span>
-      <div>
-        <div class="stage-title">Cita Agendada</div>
-        <div class="stage-camp">Inicio del proceso de venta · 26.8% SQL → Cita · meta: 38%</div>
-      </div>
-      <div class="stage-hd-r">
-        <div class="stage-metric"><span class="stage-metric-val" id="cita-n">—</span><span class="stage-metric-lbl">citas / período</span></div>
-        <span class="stage-health sh-warn" id="cita-health">Manual · mejorable</span>
-        <span class="stage-toggle" id="tog-sec-cita">▾</span>
-      </div>
-    </div>
-  </div>
-  <div class="stage-body" id="body-sec-cita">
-    <div class="stage-grid">
-      <div class="stage-col">
-        <div class="stage-col-title">Activos configurados</div>
-        <div class="asset-list">
-          <div class="asset"><div class="a-dot dot-on"></div><span class="a-name">Google Calendar</span><span class="a-st ast-on">activo</span></div>
-          <div class="asset"><div class="a-dot dot-warn"></div><span class="a-name">Recordatorio pre-cita</span><span class="a-st ast-warn">manual</span></div>
-          <div class="asset"><div class="a-dot dot-off"></div><span class="a-name">Calendly / agendado online</span><span class="a-st ast-off">sin integrar</span></div>
-          <div class="asset"><div class="a-dot dot-off"></div><span class="a-name">Portafolio pre-cita enviado</span><span class="a-st ast-off">sin proceso</span></div>
-          <div class="asset"><div class="a-dot dot-off"></div><span class="a-name">Encuesta post-cita</span><span class="a-st ast-off">sin configurar</span></div>
-          <div class="asset"><div class="a-dot dot-off"></div><span class="a-name">Seguimiento post-cita WA</span><span class="a-st ast-off">sin template</span></div>
-        </div>
-      </div>
-      <div class="stage-col">
-        <div class="stage-col-title">Micromisiones</div>
-        <div class="mission-list">
-          <div class="mission m-crit" id="m-c1" onclick="toggleMission('m-c1')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Configurar Calendly con duración, preguntas pre-cita y link en WA</div>
-              <div class="m-meta"><span class="m-plat mp-w">WA / Cal</span><span class="m-time">1 h</span><span class="m-impact">Auto-agendado · SQL→Cita +12%</span></div>
-            </div>
-          </div>
-          <div class="mission m-imp" id="m-c2" onclick="toggleMission('m-c2')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Activar recordatorio automático 24h antes via WA Business</div>
-              <div class="m-meta"><span class="m-plat mp-w">WhatsApp</span><span class="m-time">30 min</span><span class="m-impact">No-show -30%</span></div>
-            </div>
-          </div>
-          <div class="mission m-imp" id="m-c3" onclick="toggleMission('m-c3')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Enviar portafolio relevante por ciudad 24h antes de cada cita</div>
-              <div class="m-meta"><span class="m-plat mp-w">WhatsApp</span><span class="m-time">1 h proceso</span><span class="m-impact">Cierre en cita +15%</span></div>
-            </div>
-          </div>
-          <div class="mission m-opp" id="m-c4" onclick="toggleMission('m-c4')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Encuesta post-cita para capturar testimoniales y detectar objeciones</div>
-              <div class="m-meta"><span class="m-plat mp-s">Web / WA</span><span class="m-time">45 min</span><span class="m-impact">Content para ads + mejora proceso</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="diag-strip">
-      <div class="diag-title">Diagnóstico</div>
-      <div class="diag-items">
-        <div class="diag-item diag-warn"><span class="diag-icon d-warn">!</span><span class="diag-txt">Tasa SQL → Cita 26.8% — mejorable a 38% con seguimiento sistematizado de 48h</span><span class="diag-val">meta: 38%</span></div>
-        <div class="diag-item diag-bad"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin Calendly — el cliente depende de que el equipo responda para agendar</span><span class="diag-val">fricción</span></div>
-        <div class="diag-item diag-bad"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin portafolio pre-cita sistematizado — oportunidad de calentar al cliente antes de reunirse</span><span class="diag-val">-conv.</span></div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- ════ INVERSIÓN (BOTTOM) ════ -->
-<div style="margin-top:8px">
-  <div style="font-family:var(--fh);font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--t3);margin-bottom:10px;display:flex;align-items:center;gap:8px">
-    Inversión y métricas <span style="flex:1;height:1px;background:var(--ln);display:block"></span>
+<!-- ════ TARJETA DE DATOS UNIFICADA ════ -->
+<div class="data-card" style="margin-top:8px">
+  <div class="dc-hd">
+    <div class="dc-hd-title">Datos del período · <span id="dc-period">—</span></div>
+    <div class="dc-hd-sync">Sync: <span id="dc-sync">—</span></div>
   </div>
-  <div class="metrics-band">
-    <div class="met"><div class="met-lbl">Inversión total</div><div class="met-val" id="inv-total">$—</div><div class="met-sub m-fl">MXN / período</div></div>
-    <div class="met"><div class="met-lbl">Inversión Google</div><div class="met-val" id="inv-google">$—</div><div class="met-sub m-fl">ARQ_2025_B</div></div>
-    <div class="met"><div class="met-lbl">Inversión Meta</div><div class="met-val" id="inv-meta">$—</div><div class="met-sub m-fl">2024, ARQ, QRO</div></div>
-    <div class="met"><div class="met-lbl">CPL blended</div><div class="met-val" id="cpl-total">$—</div><div class="met-sub m-fl">por conv. WA</div></div>
-    <div class="met"><div class="met-lbl">ROAS estimado</div><div class="met-val" id="roas-val">—</div><div class="met-sub m-up">↑ proyectado</div></div>
-  </div>
-  <!-- AI Global -->
-  <div class="ai-card">
-    <span class="ai-tag">✦ Análisis estratégico del funnel completo</span>
-    <div class="ai-out" id="ai-full-out"><div class="aiload">Cargando análisis...</div></div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
-      <button class="ai-btn" id="ai-full-btn" onclick="runAI('full')">⟳ Regenerar</button>
-      <button class="ai-btn" onclick="runAI('budget')">✦ Redistribución de presupuesto</button>
-      <button class="ai-btn" onclick="runAI('toluca')">✦ Optimizar CPA Toluca</button>
-      <button class="ai-btn" onclick="runAI('sma')">✦ Plan campaña SMA / Bajío</button>
+
+  <!-- Google + Meta en paralelo -->
+  <div class="dc-plat-grid">
+    <div class="dc-plat">
+      <div class="dc-plat-hd"><span class="dc-badge-g">G</span> Google Ads · ARQ_2025_B</div>
+      <div class="dc-nums">
+        <div class="dc-num"><div class="dc-num-lbl">Inversión</div><div class="dc-num-val" id="dc-ginv">$—</div></div>
+        <div class="dc-num"><div class="dc-num-lbl">Impresiones</div><div class="dc-num-val" id="dc-gimp">—</div></div>
+        <div class="dc-num"><div class="dc-num-lbl">Clics</div><div class="dc-num-val" id="dc-gclk">—</div></div>
+        <div class="dc-num"><div class="dc-num-lbl">CTR</div><div class="dc-num-val" id="dc-gctr">—</div></div>
+        <div class="dc-num"><div class="dc-num-lbl">$ × clic</div><div class="dc-num-val" id="dc-gcpc">$—</div></div>
+      </div>
     </div>
-    <div class="ai-out" id="ai-extra-out" style="display:none;margin-top:12px;padding-top:12px;border-top:1px solid rgba(204,41,41,.15)"></div>
+    <div class="dc-plat">
+      <div class="dc-plat-hd"><span class="dc-badge-m">M</span> Meta Ads · 2024, ARQ, QRO</div>
+      <div class="dc-nums">
+        <div class="dc-num"><div class="dc-num-lbl">Inversión</div><div class="dc-num-val" id="dc-minv">$—</div></div>
+        <div class="dc-num"><div class="dc-num-lbl">Conversaciones WA</div><div class="dc-num-val" id="dc-mwa">—</div></div>
+        <div class="dc-num"><div class="dc-num-lbl">$ × conversación</div><div class="dc-num-val" id="dc-mcwa">$—</div></div>
+      </div>
+    </div>
   </div>
+
+  <!-- Comparativo mensual -->
+  <div class="dc-hist">
+    <div class="dc-hist-title">Comparativo mensual</div>
+    <div class="tw" id="dc-hist-table"><div class="aiload">Cargando histórico...</div></div>
+  </div>
+</div>
+
+<!-- AI Global -->
+<div class="ai-card" style="margin-top:14px">
+  <span class="ai-tag">✦ Análisis estratégico del funnel completo</span>
+  <div class="ai-out" id="ai-full-out"><div class="aiload">Cargando análisis...</div></div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+    <button class="ai-btn" id="ai-full-btn" onclick="runAI('full')">⟳ Regenerar</button>
+    <button class="ai-btn" onclick="runAI('budget')">✦ Redistribución de presupuesto</button>
+    <button class="ai-btn" onclick="runAI('toluca')">✦ Optimizar CPA Toluca</button>
+    <button class="ai-btn" onclick="runAI('sma')">✦ Plan campaña SMA / Bajío</button>
+  </div>
+  <div class="ai-out" id="ai-extra-out" style="display:none;margin-top:12px;padding-top:12px;border-top:1px solid rgba(204,41,41,.15)"></div>
 </div>
 
 </div><!-- /wrap -->
@@ -1006,7 +1183,7 @@ body{font-family:var(--fb);font-size:14px;line-height:1.5;background:var(--bg);c
     <div class="field"><label>Nombre</label><input type="text" id="crm-f-name" placeholder="ej. Carlos García"></div>
     <div class="row2">
       <div class="field"><label>Ciudad</label>
-        <select id="crm-f-city"><option>Querétaro</option><option>CDMX</option><option>Toluca</option><option>Metepec</option><option>San Miguel de Allende</option><option>Guanajuato</option><option>Otra</option></select>
+        <select id="crm-f-city"><option>Querétaro</option><option>CDMX</option><option>Toluca</option><option>Metepec</option><option>Valle de Bravo</option><option>San Miguel de Allende</option><option>Guanajuato</option><option>Bajío</option><option>Otra</option></select>
       </div>
       <div class="field"><label>Fuente</label>
         <select id="crm-f-source"><option value="g">Google Ads</option><option value="m">Meta Ads</option><option value="r">Referido</option><option value="o">Otro</option></select>
@@ -1147,18 +1324,20 @@ async function loadSheet() {
       return;
     }
 
-    const inv    = +(d['Total Spend']        ||d.total_spend       ||0);
-    const gSpend = +(d['Google Spend']       ||d.google_spend      ||0);
-    const mSpend = +(d['Meta Spend']         ||d.meta_spend        ||0);
-    const gClks  = +(d['Google Clicks']      ||d.google_clicks     ||0);
-    const gCTR   = +(d['Google CTR']         ||d.google_ctr        ||0);
-    const gConv  = +(d['Google Conversiones']||d.google_conversions||0);
-    const mReach = +(d['Meta Reach']         ||d.meta_reach        ||0);
-    const wa     = +(d['Meta WA Convs']      ||d.meta_wa_convs     ||0);
-    const cwa    = +(d['Meta Costo WA']      ||d.meta_cost_per_wa  ||0);
-    const mCPM   = +(d['Meta CPM']           ||d.meta_cpm          ||0);
-    const kws    = d['Google Keywords']     ||d.google_keywords    ||[];
-    const adsets = d['Meta Ad Sets']        ||d.meta_ad_sets       ||[];
+    const inv    = +(d['Total Spend']        ||d.total_spend         ||0);
+    const gSpend = +(d['Google Spend']       ||d.google_spend        ||0);
+    const mSpend = +(d['Meta Spend']         ||d.meta_spend          ||0);
+    const gClks  = +(d['Google Clicks']      ||d.google_clicks       ||0);
+    const gImpr  = +(d['Google Impresiones'] ||d.google_impressions  ||0);
+    const gCTR   = +(d['Google CTR']         ||d.google_ctr          ||0);
+    const gCPC   = +(d['Google CPC']         ||d.google_cpc          ||(gClks>0&&gSpend>0?gSpend/gClks:0));
+    const gConv  = +(d['Google Conversiones']||d.google_conversions  ||0);
+    const mReach = +(d['Meta Reach']         ||d.meta_reach          ||0);
+    const wa     = +(d['Meta WA Convs']      ||d.meta_wa_convs       ||0);
+    const cwa    = +(d['Meta Costo WA']      ||d.meta_cost_per_wa    ||0);
+    const mCPM   = +(d['Meta CPM']           ||d.meta_cpm            ||0);
+    const kws    = d['Google Keywords']     ||d.google_keywords      ||[];
+    const adsets = d['Meta Ad Sets']        ||d.meta_ad_sets         ||[];
     const per    = ((d['Mes']||d.mes||'')+' '+(d['Anio']||d.anio||'')).trim();
     const cpl    = wa>0 ? Math.round(inv/wa) : 0;
     const citas  = Math.round(wa*0.268);
@@ -1179,22 +1358,29 @@ async function loadSheet() {
     setVal('ff3', mReach.toLocaleString('es-MX'));
     setVal('ff3b', cwa>0?mxn(cwa):'$48');
     setVal('ff4', wa.toLocaleString('es-MX'));
-    setVal('ff5', citas.toLocaleString('es-MX'));
-    setVal('ff5b', cpl>0?mxn(cpl):'$—');
 
-    // Stage metrics
+    // Stage header metrics
     setVal('g-clics', gClks.toLocaleString('es-MX'));
     setVal('m-wa', wa.toLocaleString('es-MX'));
     setVal('wa-sql', sql.toLocaleString('es-MX'));
-    setVal('cita-n', citas.toLocaleString('es-MX'));
     setVal('w-visits', Math.round(gClks*.7).toLocaleString('es-MX'));
 
-    // Metrics bottom
-    setVal('inv-total',  mxn(inv));
-    setVal('inv-google', mxn(gSpend));
-    setVal('inv-meta',   mxn(mSpend));
-    setVal('cpl-total',  cpl>0?mxn(cpl):'—');
-    setVal('roas-val',   inv>0?(gConv*15000/inv).toFixed(1)+'x':'—');
+    // Tarjeta de datos unificada
+    const periodLabel = per || `${mes} ${anio}`;
+    const syncLabel = ts ? new Date(ts).toLocaleString('es-MX',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}) : 'hoy';
+    setVal('dc-period', periodLabel);
+    setVal('dc-sync',   syncLabel);
+    setVal('dc-ginv',   gSpend>0 ? mxn(gSpend) : '$—');
+    setVal('dc-gimp',   gImpr>0  ? gImpr.toLocaleString('es-MX') : '—');
+    setVal('dc-gclk',   gClks>0  ? gClks.toLocaleString('es-MX') : '—');
+    setVal('dc-gctr',   gCTR>0   ? pct(gCTR) : '—');
+    setVal('dc-gcpc',   gCPC>0   ? mxn(gCPC) : '$—');
+    setVal('dc-minv',   mSpend>0 ? mxn(mSpend) : '$—');
+    setVal('dc-mwa',    wa>0     ? wa.toLocaleString('es-MX') : '—');
+    setVal('dc-mcwa',   cwa>0    ? mxn(cwa) : '—');
+
+    // Comparativo mensual — usa todos los datos devueltos por el Sheet
+    renderHistTable(json.data || []);
 
     // Keywords table
     renderKwTable(kws);
@@ -1203,8 +1389,8 @@ async function loadSheet() {
     renderAdSets(adsets);
 
     // Update health badges
-    $('g-health').textContent = '5/9 activos';
-    $('m-health').textContent = adsets.length ? `${adsets.filter(a=>a.status==='ACTIVE').length} ad sets activos` : '4/7 activos';
+    $('g-health').textContent = 'Activa';
+    $('m-health').textContent = adsets.length ? `${adsets.filter(a=>a.status==='ACTIVE').length} ad sets activos` : '4 ad sets activos';
 
     // Actualizar prompts de IA con datos reales del periodo
     updateAIPrompts({ per: per||`${mes} ${anio}`, inv, gSpend, mSpend, gClks, gCTR, gConv, mReach, wa, cwa, cpl, citas, sql });
@@ -1234,6 +1420,70 @@ function renderKwTable(kws) {
         <td>${(k.clicks||0).toLocaleString('es-MX')}</td><td>${pct(k.ctr||0)}</td>
         <td>${mxn(k.spend||0)}</td><td>${k.conversions||0}</td><td>${diag}</td></tr>`;
     }).join('')}</tbody></table>`);
+}
+
+function renderHistTable(rows) {
+  const el = $('dc-hist-table');
+  if (!el) return;
+  if (!rows || !rows.length) {
+    el.innerHTML = '<div style="font-size:11px;color:var(--t3);padding:4px 0">Sin histórico aún — los datos aparecerán aquí a medida que se acumulen meses.</div>';
+    return;
+  }
+  const MESES_IDX = {Enero:1,Febrero:2,Marzo:3,Abril:4,Mayo:5,Junio:6,
+                     Julio:7,Agosto:8,Septiembre:9,Octubre:10,Noviembre:11,Diciembre:12};
+  // Más reciente primero
+  const sorted = [...rows].sort((a, b) => {
+    const ya = +(a['Anio']||0), yb = +(b['Anio']||0);
+    if (ya !== yb) return yb - ya;
+    return (MESES_IDX[b['Mes']]||0) - (MESES_IDX[a['Mes']]||0);
+  });
+  // Referencia para deltas: el mes anterior al más reciente
+  const prev = sorted[1] || null;
+  const delta = (cur, prv, field) => {
+    if (!prv) return '';
+    const c = +(cur[field]||0), p = +(prv[field]||0);
+    if (!p) return '';
+    const d = ((c - p) / p * 100).toFixed(0);
+    const cls = c >= p ? 'du' : 'dd';
+    return ` <span class="delta ${cls}">${c>=p?'↑':'↓'}${Math.abs(d)}%</span>`;
+  };
+  el.innerHTML = `<div class="tw"><table class="dc-hist-tbl">
+    <thead><tr>
+      <th style="text-align:left">Período</th>
+      <th>Inv. Google</th>
+      <th>Inv. Meta</th>
+      <th>Impresiones G</th>
+      <th>Clics G</th>
+      <th>CTR</th>
+      <th>$ × Clic</th>
+      <th>Conv. WA</th>
+      <th>$ × Conv.</th>
+    </tr></thead>
+    <tbody>
+      ${sorted.map((r, i) => {
+        const gS  = +(r['Google Spend']||0);
+        const mS  = +(r['Meta Spend']||0);
+        const gI  = +(r['Google Impresiones']||0);
+        const gC  = +(r['Google Clicks']||0);
+        const gT  = +(r['Google CTR']||0);
+        const gP  = +(r['Google CPC']||(gC>0&&gS>0?gS/gC:0));
+        const wa  = +(r['Meta WA Convs']||0);
+        const cwa = +(r['Meta Costo WA']||0);
+        const isCurr = i === 0;
+        return `<tr${isCurr?' class="dc-cur"':''}>
+          <td>${r['Mes']||'—'} ${r['Anio']||''}</td>
+          <td>${gS>0?mxn(gS):'—'}${isCurr?delta(r,prev,'Google Spend'):''}</td>
+          <td>${mS>0?mxn(mS):'—'}${isCurr?delta(r,prev,'Meta Spend'):''}</td>
+          <td>${gI>0?gI.toLocaleString('es-MX'):'—'}${isCurr?delta(r,prev,'Google Impresiones'):''}</td>
+          <td>${gC>0?gC.toLocaleString('es-MX'):'—'}${isCurr?delta(r,prev,'Google Clicks'):''}</td>
+          <td>${gT>0?pct(gT):'—'}${isCurr?delta(r,prev,'Google CTR'):''}</td>
+          <td>${gP>0?mxn(gP):'—'}</td>
+          <td>${wa>0?wa:'—'}${isCurr?delta(r,prev,'Meta WA Convs'):''}</td>
+          <td>${cwa>0?mxn(cwa):'—'}${isCurr?delta(r,prev,'Meta Costo WA'):''}</td>
+        </tr>`;
+      }).join('')}
+    </tbody>
+  </table></div>`;
 }
 
 function renderAdSets(adsets) {
@@ -1452,6 +1702,33 @@ function crmSave(){
 function crmDel(id){
   if(!confirm('¿Eliminar este lead?')) return;
   crmStore(crmLoad().filter(l=>l.id!==id)); crmRender();
+}
+
+/* ══ QUICK LEAD (mini-form en FINAL BOSS) ══ */
+function quickLead(){
+  const name=$('ql-name').value.trim();
+  if(!name){ $('ql-name').focus(); $('ql-name').style.borderColor='var(--red)'; return; }
+  $('ql-name').style.borderColor='';
+  const leads=crmLoad();
+  const landNote=$('ql-land').value?'Terreno: '+$('ql-land').value+'. ':'';
+  const lead={
+    id:'crm-'+Date.now(),
+    name,
+    city:$('ql-city').value,
+    source:$('ql-source').value,
+    stage:'wa',
+    phone:$('ql-phone').value.trim(),
+    budget:$('ql-budget').value,
+    notes:landNote+($('ql-note').value.trim()),
+    date:new Date().toISOString()
+  };
+  leads.push(lead);
+  crmStore(leads); crmRender();
+  /* feedback visual */
+  const ok=$('ql-ok'); ok.style.display='block';
+  $('ql-name').value=''; $('ql-phone').value=''; $('ql-note').value='';
+  $('ql-budget').selectedIndex=0; $('ql-land').selectedIndex=0;
+  setTimeout(()=>{ ok.style.display='none'; },4000);
 }
 
 function crmToggleView(){
