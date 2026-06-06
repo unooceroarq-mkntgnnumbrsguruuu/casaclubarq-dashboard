@@ -258,16 +258,14 @@ function setPeriod(p,btn){
 async function loadData(){
   const url = getUrl();
   if(!url){ openSetup(); return; }
+  document.getElementById('main').innerHTML='<div class="loading" id="loading">cargando...</div>';
   setConn('wait');
-  document.getElementById('loading').style.display='block';
-  document.getElementById('loading').textContent='cargando...';
   try{
     const r = await fetch(url+'?nc='+Date.now());
     if(!r.ok) throw new Error('HTTP '+r.status);
     const j = await r.json();
     DATA = parsePayload(j);
     setConn('ok');
-    document.getElementById('loading').style.display='none';
     render();
   }catch(e){
     setConn('err');
