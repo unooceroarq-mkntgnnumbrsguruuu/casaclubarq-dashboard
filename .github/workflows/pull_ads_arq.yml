@@ -2,18 +2,13 @@ name: Pull ARQ Ads Data
 
 on:
   schedule:
-    - cron: "0 13 * * *"
+    - cron: "0 13 * * *"   # 07:00 AM CDMX (UTC-6)
   workflow_dispatch:
-    inputs:
-      mes:
-        description: "Mes a procesar (YYYY-MM, dejar vacio = mes actual)"
-        required: false
-        default: ""
 
 jobs:
   pull_ads:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
 
     steps:
       - name: Checkout repo
@@ -25,20 +20,11 @@ jobs:
           python-version: "3.11"
 
       - name: Instalar dependencias
-        run: |
-          pip install google-ads requests pyyaml
-
-      - name: Escribir google-ads.yaml
-        run: |
-          echo "${{ secrets.GOOGLE_ADS_YAML }}" > ~/google-ads.yaml
+        run: pip install google-ads requests pyyaml
 
       - name: Ejecutar pull de datos ARQ
         env:
+          GOOGLE_ADS_YAML:   ${{ secrets.GOOGLE_ADS_YAML }}
           META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
-          GOOGLE_ADS_YAML: ${{ secrets.GOOGLE_ADS_YAML }}
-        run: |
-          if [ -n "${{ github.event.inputs.mes }}" ]; then
-            python3 pull_ads_arq.py "${{ github.event.inputs.mes }}"
-          else
-            python3 pull_ads_arq.py
-          fi
+          SHEET_API_URL_ARQ: ${{ secrets.SHEET_API_URL_ARQ }}
+        run: python3 pull_ads_arq.py

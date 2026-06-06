@@ -1,109 +1,118 @@
-# Casa Club ARQ — Dashboard de Marketing
+# e.ARGAMA — Marketing Intelligence Dashboard v2
 
-Dashboard en tiempo real que jala datos de **Google Ads** (campaña `ARQ_2025_B`)
-y **Meta Ads** (campaña `2024, ARQ, QRO`) hacia un Google Sheet,
-que el dashboard HTML lee para mostrar métricas reales.
+Dashboard en tiempo real del funnel de marketing de e.ARGAMA (despacho de arquitectura, Querétaro).
+
+**Funnel:** Google Ads `ARQ_QRO_2026` → landing page → Meta Ads `2026_ARQ_QRO` → WhatsApp → leads calificados
 
 ---
 
 ## Arquitectura
 
 ```
-GitHub Actions (cron diario 7am CDMX)
+GitHub Actions (cron 07:00 AM CDMX)
     └── pull_ads_arq.py
-        ├── Google Ads API → métricas de ARQ_2025_B
-        └── Meta Marketing API → métricas de 2024, ARQ, QRO
-              └── Google Apps Script (Code.gs)
-                      └── Google Sheet "CasaClubARQ - Marketing Data"
-                              └── index.html (dashboard) lo lee via fetch()
-                                      └── Netlify lo sirve (accesible desde celular)
+        ├── Google Ads API  → 4 periodos: HOY / 7D / 30D / 90D
+        │   └── métricas + keywords + search terms + impression share + saldo cuenta
+        └── Meta Ads API    → 4 periodos: HOY / 7D / 30D / 90D
+            └── métricas + frecuencia + ad sets + saldo cuenta
+                └── alertas automáticas (CPC, frecuencia, conversiones)
+                    └── Google Apps Script (Code.gs)
+                            └── Google Sheet "CasaClubARQ - Marketing Data"
+                                    └── index.html lo lee via fetch()
+                                            └── Netlify lo sirve (accesible desde celular)
 ```
 
 ---
 
-## PASO 1 — Google Apps Script
+## IDs de cuenta
 
-1. Ve a [script.google.com](https://script.google.com)
-2. **Nuevo proyecto** → nombra: `CasaClubARQ - Dashboard API`
+| Plataforma | ID                        | Campaña        |
+|------------|---------------------------|----------------|
+| Google Ads | `3248545148`              | `ARQ_QRO_2026` |
+| Meta Ads   | `act_286249402372299`     | `2026_ARQ_QRO` |
+
+---
+
+## Umbrales de alerta
+
+| Alerta              | Umbral             | Nivel    |
+|---------------------|--------------------|----------|
+| CPC Google          | > $18 MXN          | warning  |
+| Frecuencia Meta     | > 5.0              | critical |
+| 0 conversiones      | 7 días con gasto   | urgent   |
+| IS perdida (presp.) | > 30%              | warning  |
+| 0 WA conversations  | 7 días con gasto   | warning  |
+
+---
+
+## Secrets de GitHub requeridos
+
+Ve a **Settings → Secrets and variables → Actions** y verifica que existen:
+
+| Secret              | Descripción                                      |
+|---------------------|--------------------------------------------------|
+| `GOOGLE_ADS_YAML`   | Contenido del archivo `google-ads.yaml`          |
+| `META_ACCESS_TOKEN` | Token de acceso de la Meta Marketing API         |
+| `SHEET_API_URL_ARQ` | URL del Google Apps Script (`/exec`)             |
+
+---
+
+## Setup inicial
+
+### Paso 1 — Google Apps Script
+
+1. Ve a [script.google.com](https://script.google.com) → **Nuevo proyecto**
+2. Nombra el proyecto: `CasaClubARQ - Dashboard API`
 3. Borra el código default y pega el contenido de `Code.gs`
 4. Guarda (Ctrl+S)
 5. **Implementar → Nueva implementación**
    - Tipo: `Aplicación web`
    - Ejecutar como: `Yo (tu cuenta de Google)`
-   - Quien tiene acceso: `Cualquier persona`
-6. Autoriza los permisos que te pida
-7. **Copia la URL** que termina en `/exec` — la necesitas para el Paso 2
+   - Quién tiene acceso: `Cualquier persona`
+6. Autoriza los permisos
+7. Copia la URL que termina en `/exec`
+
+### Paso 2 — Agregar secret en GitHub
+
+1. Ve a **Settings → Secrets → Actions** en este repo
+2. Agrega `SHEET_API_URL_ARQ` con la URL del Apps Script del Paso 1
+
+### Paso 3 — Netlify
+
+1. [netlify.com](https://netlify.com) → **Add new site → Import an existing project**
+2. Conecta GitHub → selecciona `casaclubarq-dashboard`
+3. Build command: *(vacío)* | Publish directory: `.`
+4. Deploy
+
+### Paso 4 — Conectar dashboard al Sheet
+
+La primera vez que abras el dashboard te pedirá la URL del Apps Script.
+Pégala y guarda. Se almacena en `localStorage` del navegador.
+
+Si necesitas cambiarla: botón **⚙ config** en el header.
 
 ---
 
-## PASO 2 — Secrets de GitHub en este repo
+## Ejecutar manualmente
 
-Ve a **Settings → Secrets and variables → Actions** en este repo y agrega:
+**GitHub → Actions → Pull ARQ Ads Data → Run workflow**
 
-| Secret | Valor |
-|--------|-------|
-| `GOOGLE_ADS_YAML` | El mismo que ya tienes en `marketing-guru` |
-| `META_ACCESS_TOKEN` | El mismo que ya tienes en `marketing-guru` |
-| `SHEET_API_URL_ARQ` | La URL del Apps Script del Paso 1 |
-
-Para copiar los secrets del repo `marketing-guru`:
-- No puedes copiar el valor (GitHub los oculta), pero puedes crear nuevos con el mismo valor
-- El `google-ads.yaml` lo tienes guardado en tu máquina o en el repo original
-
----
-
-## PASO 3 — Netlify
-
-1. Ve a [netlify.com](https://netlify.com) → **Add new site → Import an existing project**
-2. Conecta con GitHub y selecciona `casaclubarq-dashboard`
-3. Configuración del build:
-   - Branch: `main`
-   - Build command: (dejar vacío)
-   - Publish directory: `.`
-4. **Deploy site**
-5. Netlify te da una URL tipo `https://casaclubarq-XXXXX.netlify.app`
-   — esa URL funciona desde cualquier celular
-
----
-
-## PASO 4 — Conectar el dashboard al Sheet
-
-Una vez desplegado en Netlify, abre el dashboard y en la consola del navegador ejecuta:
-
-```javascript
-setSheetUrl("URL_DEL_APPS_SCRIPT_AQUI")
-```
-
-O directamente en el código: edita `index.html`, busca:
-```javascript
-const SHEET_API_URL = localStorage.getItem('arq-sheet-url') || '';
-```
-y reemplaza `''` con tu URL entre comillas.
-
----
-
-## PASO 5 — Prueba manual
-
-En GitHub → **Actions → Pull ARQ Ads Data → Run workflow**
-
-Esto ejecuta el script ahora mismo y escribe los datos al Sheet.
-Luego recarga el dashboard y deberías ver datos reales.
+Esto ejecuta el script inmediatamente. Los datos aparecen en el dashboard al recargar.
 
 ---
 
 ## Ejecución automática
 
-El workflow corre todos los días a las **7:00 AM hora México**.
-Puedes cambiarlo editando la línea `cron` en `.github/workflows/pull_ads_arq.yml`.
+Todos los días a las **07:00 AM CDMX** vía cron en GitHub Actions.
 
 ---
 
 ## Archivos del repo
 
-| Archivo | Descripción |
-|---------|-------------|
-| `index.html` | Dashboard completo (HTML/CSS/JS) |
-| `pull_ads_arq.py` | Script Python que jala los datos de las APIs |
-| `.github/workflows/pull_ads_arq.yml` | Workflow de GitHub Actions |
-| `Code.gs` | Google Apps Script (copiar a script.google.com) |
-| `netlify.toml` | Configuración de Netlify |
+| Archivo                                  | Descripción                                      |
+|------------------------------------------|--------------------------------------------------|
+| `pull_ads_arq.py`                        | Script Python: pull de Google Ads + Meta Ads     |
+| `index.html`                             | Dashboard (dark terminal, sin gráficas)          |
+| `Code.gs`                                | Google Apps Script: guarda y sirve los datos     |
+| `.github/workflows/pull_ads_arq.yml`     | GitHub Actions: cron diario 07:00 AM CDMX        |
+| `netlify.toml`                           | Configuración de Netlify                         |

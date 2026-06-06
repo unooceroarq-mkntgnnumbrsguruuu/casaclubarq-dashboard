@@ -2,1964 +2,485 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Casa Club ARQ — Intelligence</title>
-<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;700&family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>e.ARGAMA // MKT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --red:#CC2929;--red-l:rgba(204,41,41,.10);
-  --grn:#2E8B57;--grn-l:rgba(46,139,87,.10);
-  --amb:#B07830;--amb-l:rgba(176,120,48,.10);
-  --blu:#2860B4;--blu-l:rgba(40,96,180,.10);
-  --fpx:'Pixelify Sans',monospace;
-  --fh:'Barlow Condensed',sans-serif;
-  --fb:'Barlow',sans-serif;
-  --fm:'JetBrains Mono',monospace;
-  --r:6px;
-  --bg:#ECEAE6;--bg2:#F4F2EE;--bg3:#FAFAF8;--bg4:#FFFFFF;
-  --ln:rgba(0,0,0,.07);--ln2:rgba(0,0,0,.13);
-  --t1:#1A1917;--t2:#5A5854;--t3:#9A9894;
-}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--fb);font-size:14px;line-height:1.5;background:var(--bg);color:var(--t1);min-height:100dvh;overflow-x:hidden}
-::-webkit-scrollbar{width:3px;height:3px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--ln2);border-radius:2px}
+:root{
+  --bg:    #0D0F12;
+  --bg2:   #13171E;
+  --bg3:   #1C2028;
+  --bd:    #252B35;
+  --bd2:   #353D4A;
+  --txt:   #BFC7D2;
+  --dim:   #4E5764;
+  --grn:   #39D353;
+  --red:   #F85149;
+  --yel:   #E3B341;
+  --blu:   #79C0FF;
+  --pur:   #BC8CFF;
+  --mono:  'JetBrains Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
+}
+body{
+  background:var(--bg);color:var(--txt);font-family:var(--mono);
+  font-size:13px;line-height:1.6;min-height:100dvh;
+}
 
 /* ── HEADER ── */
-.hdr{background:var(--bg2);border-bottom:1px solid var(--ln);padding:0 20px;height:52px;
-  display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200}
-.brand{display:flex;align-items:center;gap:10px}
-.mark{width:30px;height:30px;background:var(--red);border-radius:4px;display:flex;align-items:center;
-  justify-content:center;font-family:var(--fpx);font-size:12px;color:#fff;flex-shrink:0}
-.hdr-name{font-family:var(--fh);font-size:15px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
-.hdr-sub{font-family:var(--fm);font-size:9px;letter-spacing:.12em;color:var(--red);text-transform:uppercase;display:block}
-.hdr-r{display:flex;align-items:center;gap:8px}
-.conn-dot{width:7px;height:7px;border-radius:50%;background:var(--amb);flex-shrink:0}
-.hdr-per{font-family:var(--fm);font-size:11px;color:var(--t3)}
-.pending-badge{font-family:var(--fm);font-size:10px;background:var(--red);color:#fff;
-  padding:2px 8px;border-radius:20px;cursor:pointer;white-space:nowrap}
-.hdr-btn{font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  padding:6px 12px;border-radius:2px;border:1.5px solid var(--ln2);background:transparent;
-  color:var(--t2);cursor:pointer;transition:all .14s;white-space:nowrap}
-.hdr-btn:hover{border-color:var(--red);color:var(--red)}
-.hdr-btn.p{background:var(--red);color:#fff;border-color:var(--red)}
-.hdr-btn.p:hover{background:#b52020}
+.hdr{
+  background:var(--bg2);border-bottom:1px solid var(--bd);
+  padding:10px 16px;display:flex;align-items:center;
+  justify-content:space-between;position:sticky;top:0;z-index:100;
+  gap:12px;flex-wrap:wrap;
+}
+.hdr-brand{display:flex;align-items:center;gap:10px}
+.hdr-dot{width:8px;height:8px;background:var(--red);border-radius:50%;flex-shrink:0}
+.hdr-name{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.hdr-sub{font-size:9px;color:var(--dim);letter-spacing:.08em;display:block;margin-top:1px}
+.hdr-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.conn{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--dim)}
+.conn-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.conn-dot.ok{background:var(--grn)}
+.conn-dot.wait{background:var(--yel);animation:pulse 1.2s infinite}
+.conn-dot.err{background:var(--red)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.ts{font-size:10px;color:var(--dim)}
+.btn{
+  background:transparent;border:1px solid var(--bd2);color:var(--dim);
+  font-family:var(--mono);font-size:10px;padding:5px 11px;cursor:pointer;
+  text-transform:uppercase;letter-spacing:.08em;
+}
+.btn:hover{border-color:var(--txt);color:var(--txt)}
 
 /* ── TABS ── */
-.tabs{background:var(--bg2);border-bottom:1px solid var(--ln);display:flex;padding:0 20px;
-  position:sticky;top:52px;z-index:190;overflow-x:auto;scrollbar-width:none}
+.tabs{
+  background:var(--bg2);border-bottom:1px solid var(--bd);
+  display:flex;padding:0 16px;overflow-x:auto;scrollbar-width:none;
+  position:sticky;top:49px;z-index:90;
+}
 .tabs::-webkit-scrollbar{display:none}
-.tab{display:flex;align-items:center;gap:6px;padding:11px 16px;border:none;
-  border-bottom:2px solid transparent;background:transparent;color:var(--t3);
-  font-family:var(--fh);font-size:13px;font-weight:700;letter-spacing:.08em;
-  text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:color .15s,border-color .15s}
-.tab:hover{color:var(--t2)}
-.tab.on{color:var(--t1);border-bottom-color:var(--red)}
+.tab{
+  background:transparent;border:none;
+  border-bottom:2px solid transparent;
+  color:var(--dim);font-family:var(--mono);font-size:11px;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;padding:10px 14px;
+  cursor:pointer;white-space:nowrap;
+}
+.tab:hover{color:var(--txt)}
+.tab.on{color:var(--blu);border-bottom-color:var(--blu)}
 
-/* ── PANELS ── */
-.panel{display:none}.panel.on{display:block}
-.wrap{padding:20px;max-width:1400px;margin:0 auto;padding-bottom:60px}
+/* ── MAIN ── */
+.main{padding:16px;max-width:960px;margin:0 auto;padding-bottom:60px}
 
-/* ── FUNNEL FLOW BAR ── */
-.funnel-bar{display:flex;margin-bottom:20px;background:var(--bg2);
-  border:1px solid var(--ln);border-radius:var(--r);overflow:hidden}
-.ff{flex:1;padding:11px 14px;border-right:1px solid var(--ln);cursor:pointer;
-  transition:background .15s;text-decoration:none;display:block}
-.ff:last-child{border-right:none}
-.ff:hover{background:var(--bg3)}
-.ff-dot{width:7px;height:7px;border-radius:50%;margin-bottom:5px}
-.ff-lbl{font-family:var(--fh);font-size:8px;font-weight:700;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--t3);display:block;margin-bottom:2px}
-.ff-val{font-family:var(--fpx);font-size:17px;color:var(--t1);line-height:1;display:block}
-.ff-rate{font-family:var(--fm);font-size:9px;color:var(--t3);display:block;margin-top:2px}
-.ff-conv{display:flex;align-items:center;justify-content:center;
-  padding:0 3px;font-family:var(--fm);font-size:9px;color:var(--t3);flex-shrink:0}
+/* ── SECTION ── */
+.sec{margin-bottom:22px}
+.sec-hd{
+  font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--dim);padding:0 0 7px 0;border-bottom:1px solid var(--bd);
+  margin-bottom:12px;display:flex;align-items:center;gap:8px;
+}
+.sec-hd-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
 
-/* ── STAGE SECTION ── */
-.stage-sec{border:1px solid var(--ln);border-radius:var(--r);overflow:hidden;
-  background:var(--bg2);margin-bottom:14px}
-.stage-hd{display:flex;align-items:center;gap:0;cursor:pointer;transition:background .15s}
-.stage-hd:hover{background:var(--bg3)}
-.stage-color{width:4px;align-self:stretch;flex-shrink:0}
-.stage-hd-inner{flex:1;display:flex;align-items:center;gap:12px;padding:13px 16px}
-.stage-icon{font-family:var(--fpx);font-size:13px;font-weight:700;width:28px;text-align:center;flex-shrink:0}
-.stage-title{font-family:var(--fh);font-size:14px;font-weight:700;letter-spacing:.04em;
-  text-transform:uppercase;color:var(--t1)}
-.stage-camp{font-family:var(--fm);font-size:9px;color:var(--t3);margin-top:1px}
-.stage-hd-r{display:flex;align-items:center;gap:8px;margin-left:auto;padding-right:14px}
-.stage-metric{text-align:right}
-.stage-metric-val{font-family:var(--fpx);font-size:18px;color:var(--t1);line-height:1;display:block}
-.stage-metric-lbl{font-family:var(--fm);font-size:8px;color:var(--t3);display:block}
-.stage-health{font-family:var(--fm);font-size:10px;padding:2px 8px;border-radius:12px;white-space:nowrap}
-.sh-good{background:var(--grn-l);color:var(--grn)}
-.sh-warn{background:var(--amb-l);color:var(--amb)}
-.sh-bad{background:var(--red-l);color:var(--red)}
-.stage-toggle{font-family:var(--fm);font-size:11px;color:var(--t3);flex-shrink:0}
+/* ── ALERTS ── */
+.alert-row{
+  padding:9px 12px;margin-bottom:6px;border-left:3px solid;
+  font-size:12px;background:var(--bg2);
+}
+.alert-row.urgent {border-color:var(--red);background:rgba(248,81,73,.06)}
+.alert-row.critical{border-color:var(--red);background:rgba(248,81,73,.04)}
+.alert-row.warning {border-color:var(--yel);background:rgba(227,179,65,.04)}
+.alert-level{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:2px}
+.urgent  .alert-level,.critical .alert-level{color:var(--red)}
+.warning .alert-level{color:var(--yel)}
+.alert-msg{color:var(--txt);line-height:1.4}
+.alert-detail{font-size:10px;color:var(--dim);margin-top:3px}
+.no-alerts{
+  font-size:11px;color:var(--grn);padding:8px 12px;
+  border-left:3px solid var(--grn);background:rgba(57,211,83,.04);
+}
 
-.stage-body{border-top:1px solid var(--ln)}
-.mission-followup{border-left:3px solid var(--grn) !important;animation:slideDown .35s ease}
-@keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
-.mission.resolving{animation:flashGreen .6s ease}
-@keyframes flashGreen{0%{background:var(--grn-l)}100%{background:transparent}}
+/* ── METRIC GRID ── */
+.mrows{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1px solid var(--bd)}
+@media(min-width:600px){.mrows{grid-template-columns:repeat(3,1fr)}}
+.mrow{
+  padding:10px 12px;border-right:1px solid var(--bd);border-bottom:1px solid var(--bd);
+  display:flex;flex-direction:column;gap:2px;
+}
+.mrow:nth-child(2n)  {border-right:none}
+@media(min-width:600px){
+  .mrow:nth-child(2n){border-right:1px solid var(--bd)}
+  .mrow:nth-child(3n){border-right:none}
+}
+.mrow-lbl{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.mrow-val{font-size:18px;font-weight:700;color:var(--txt);line-height:1.1}
+.mrow-val.red{color:var(--red)}
+.mrow-val.yel{color:var(--yel)}
+.mrow-val.grn{color:var(--grn)}
+.mrow-note{font-size:9px;color:var(--dim)}
+.mrow-note.red{color:var(--red)}
+.mrow-note.yel{color:var(--yel)}
+.mrow-note.grn{color:var(--grn)}
 
-/* ── STAGE BODY GRID ── */
-.stage-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
-.stage-col{padding:16px 18px;border-right:1px solid var(--ln)}
-.stage-col:last-child{border-right:none}
-.stage-col-title{font-family:var(--fh);font-size:9px;font-weight:700;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--t3);margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.stage-col-title::after{content:'';flex:1;height:1px;background:var(--ln)}
+/* ── BADGE ── */
+.badge{
+  font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:2px 7px;border-radius:2px;display:inline-block;
+}
+.badge.ok {background:rgba(57,211,83,.12);color:var(--grn)}
+.badge.err{background:rgba(248,81,73,.12);color:var(--red)}
+.badge.act{background:rgba(121,192,255,.12);color:var(--blu)}
+.badge.pau{background:rgba(78,87,100,.15);color:var(--dim)}
 
-/* ── ASSETS ── */
-.asset-list{display:flex;flex-direction:column;gap:5px}
-.asset{display:flex;align-items:center;gap:8px;padding:6px 10px;
-  background:var(--bg3);border:1px solid var(--ln);border-radius:4px;font-size:11px}
-.a-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.dot-on{background:var(--grn);box-shadow:0 0 5px rgba(46,139,87,.4)}
-.dot-warn{background:var(--amb)}
-.dot-off{background:transparent;border:1.5px solid var(--t3)}
-.a-name{flex:1;color:var(--t2);min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.a-st{font-family:var(--fm);font-size:9px;flex-shrink:0}
-.ast-on{color:var(--grn)}.ast-warn{color:var(--amb)}.ast-off{color:var(--t3)}
-
-/* ── MICRO-MISSIONS ── */
-.mission-list{display:flex;flex-direction:column;gap:6px}
-.mission{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;
-  background:var(--bg3);border:1px solid var(--ln);border-left:3px solid;
-  border-radius:4px;transition:opacity .25s;cursor:pointer}
-.mission:hover{background:var(--bg4)}
-.mission.done{opacity:.45}
-.mission.done .m-title{text-decoration:line-through;color:var(--t3)}
-.m-crit{border-left-color:var(--red)}
-.m-imp{border-left-color:var(--amb)}
-.m-opp{border-left-color:var(--blu)}
-.m-check{width:16px;height:16px;border:1.5px solid var(--ln2);border-radius:3px;
-  background:var(--bg4);flex-shrink:0;display:flex;align-items:center;justify-content:center;
-  margin-top:1px;transition:all .15s}
-.mission.done .m-check{background:var(--grn);border-color:var(--grn)}
-.mission.done .m-check::after{content:'';width:8px;height:5px;
-  border-left:1.5px solid #fff;border-bottom:1.5px solid #fff;
-  transform:rotate(-45deg) translateY(-1px);display:block}
-.m-body{flex:1;min-width:0}
-.m-title{font-size:12px;font-weight:500;color:var(--t1);margin-bottom:4px;line-height:1.4}
-.m-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.m-plat{font-family:var(--fh);font-size:8px;font-weight:700;letter-spacing:.1em;
-  text-transform:uppercase;padding:1px 5px;border-radius:2px}
-.mp-g{background:var(--red-l);color:var(--red)}
-.mp-m{background:var(--blu-l);color:var(--blu)}
-.mp-w{background:var(--grn-l);color:var(--grn)}
-.mp-s{background:var(--amb-l);color:var(--amb)}
-.m-time{font-family:var(--fm);font-size:9px;color:var(--t3)}
-.m-impact{font-family:var(--fm);font-size:9px;color:var(--grn);font-weight:600}
-
-/* ── DIAGNOSTICS STRIP ── */
-.diag-strip{padding:12px 18px;border-top:1px solid var(--ln);background:var(--bg3)}
-.diag-title{font-family:var(--fh);font-size:9px;font-weight:700;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--t3);margin-bottom:8px;display:flex;align-items:center;gap:6px}
-.diag-title::after{content:'';flex:1;height:1px;background:var(--ln)}
-.diag-items{display:flex;flex-direction:column;gap:4px}
-.diag-item{display:flex;align-items:flex-start;gap:8px;padding:6px 10px;
-  border-radius:4px;font-size:11px}
-.diag-ok{background:var(--grn-l);border:1px solid rgba(46,139,87,.15)}
-.diag-warn{background:var(--amb-l);border:1px solid rgba(176,120,48,.15)}
-.diag-bad{background:var(--red-l);border:1px solid rgba(204,41,41,.15)}
-.diag-icon{font-family:var(--fm);font-size:10px;font-weight:700;flex-shrink:0;width:14px}
-.d-ok{color:var(--grn)}.d-warn{color:var(--amb)}.d-bad{color:var(--red)}
-.diag-txt{flex:1;color:var(--t1);line-height:1.4}
-.diag-val{font-family:var(--fm);font-size:10px;flex-shrink:0;color:var(--t3)}
-
-/* ── OPPORTUNITIES ── */
-.opp-strip{padding:12px 18px;border-top:1px solid var(--ln)}
-.opp-chips{display:flex;flex-wrap:wrap;gap:5px}
-.opp-chip{font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.06em;
-  padding:4px 10px;border-radius:2px;border:1px solid;cursor:default}
-.oc-g{background:var(--red-l);border-color:rgba(204,41,41,.2);color:var(--red)}
-.oc-m{background:var(--blu-l);border-color:rgba(40,96,180,.2);color:var(--blu)}
-.oc-w{background:var(--grn-l);border-color:rgba(46,139,87,.2);color:var(--grn)}
-.oc-s{background:var(--amb-l);border-color:rgba(176,120,48,.2);color:var(--amb)}
-
-/* ── PAGESPEED ── */
-.ps-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:8px}
-.ps-m{background:var(--bg4);border:1px solid var(--ln);border-radius:4px;padding:8px;text-align:center}
-.ps-v{font-family:var(--fpx);font-size:20px;line-height:1;margin-bottom:2px}
-.ps-l{font-family:var(--fh);font-size:8px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--t3)}
-.ps-g{color:var(--grn)}.ps-a{color:var(--amb)}.ps-b{color:var(--red)}
-
-/* ── METRICS BOTTOM ── */
-.metrics-band{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--ln);
-  border:1px solid var(--ln);border-radius:var(--r);overflow:hidden;margin-bottom:14px}
-.met{background:var(--bg2);padding:14px 16px}
-.met-lbl{font-family:var(--fh);font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--t3);margin-bottom:6px}
-.met-val{font-family:var(--fpx);font-size:24px;color:var(--t1);line-height:1;margin-bottom:4px}
-.met-sub{font-family:var(--fm);font-size:10px}
-.m-up{color:var(--grn)}.m-dn{color:var(--red)}.m-fl{color:var(--t3)}
+/* ── COLLAPSIBLE ── */
+.coll-wrap{margin-top:12px}
+.coll-btn{
+  background:transparent;border:none;color:var(--dim);font-family:var(--mono);
+  font-size:10px;cursor:pointer;padding:4px 0;display:flex;align-items:center;gap:6px;
+  letter-spacing:.06em;
+}
+.coll-btn:hover{color:var(--txt)}
+.coll-body{display:none}
+.coll-body.open{display:block;margin-top:6px}
 
 /* ── TABLE ── */
-.tw{overflow-x:auto}
-.tbl{width:100%;border-collapse:collapse;font-size:12px}
-.tbl th{text-align:left;padding:8px 10px;font-family:var(--fh);font-size:9px;font-weight:700;
-  letter-spacing:.15em;text-transform:uppercase;color:var(--t3);border-bottom:1px solid var(--ln);white-space:nowrap}
-.tbl td{padding:9px 10px;border-bottom:1px solid var(--ln);color:var(--t2);vertical-align:middle}
+.tbl{width:100%;border-collapse:collapse;font-size:11px}
+.tbl th{
+  font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);
+  text-align:left;padding:5px 8px;border-bottom:1px solid var(--bd);font-weight:400;
+}
+.tbl td{padding:5px 8px;border-bottom:1px solid rgba(37,43,53,.8);color:var(--txt);vertical-align:top}
 .tbl tr:last-child td{border-bottom:none}
 .tbl tr:hover td{background:var(--bg3)}
-.tdm{color:var(--t1)!important;font-weight:500}
-.b{display:inline-flex;align-items:center;padding:2px 6px;border-radius:2px;
-  font-family:var(--fh);font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
-.br{background:var(--red-l);color:var(--red)}.bg{background:var(--grn-l);color:var(--grn)}
-.ba{background:var(--amb-l);color:var(--amb)}.bb{background:var(--blu-l);color:var(--blu)}
+.tbl .r{text-align:right;font-variant-numeric:tabular-nums}
+.tbl .red{color:var(--red)}
+.tbl .yel{color:var(--yel)}
+.tbl .grn{color:var(--grn)}
+.tbl .dim{color:var(--dim)}
 
-/* ── AI ── */
-.ai-card{border:1px solid rgba(204,41,41,.2);border-left:3px solid var(--red);
-  border-radius:var(--r);padding:14px 16px;background:var(--bg2);margin-bottom:12px}
-.ai-tag{font-family:var(--fh);font-size:9px;font-weight:700;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--red);margin-bottom:8px;display:block}
-.ai-out{font-size:12px;color:var(--t2);line-height:1.75}
-.ai-out strong{color:var(--t1);font-weight:500}
-.aiload{font-family:var(--fpx);font-size:11px;color:var(--t3);letter-spacing:.08em;animation:pulse 1.2s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
-.ai-btn{margin-top:10px;font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.14em;
-  text-transform:uppercase;padding:6px 12px;border:1.5px solid var(--red);border-radius:2px;
-  background:transparent;color:var(--red);cursor:pointer;transition:all .14s}
-.ai-btn:hover{background:var(--red);color:#fff}
-.ai-btn:disabled{opacity:.4;cursor:default}
-
-/* ── CRM ── */
-.crm-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px}
-.crm-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--ln);
-  border:1px solid var(--ln);border-radius:var(--r);overflow:hidden;margin-bottom:16px}
-.crm-stat{background:var(--bg2);padding:12px 14px;text-align:center}
-.crm-stat-dot{width:8px;height:8px;border-radius:50%;margin:0 auto 4px}
-.crm-stat-n{font-family:var(--fpx);font-size:22px;color:var(--t1);line-height:1}
-.crm-stat-lbl{font-family:var(--fh);font-size:8px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);margin-top:2px}
-.crm-board{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px}
-.crm-col{background:var(--bg2);border:1px solid var(--ln);border-radius:var(--r);overflow:hidden}
-.crm-col-hd{display:flex;align-items:center;gap:7px;padding:9px 12px;border-bottom:1px solid var(--ln)}
-.crm-col-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.crm-col-name{font-family:var(--fh);font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--t2);flex:1}
-.crm-col-cnt{font-family:var(--fm);font-size:9px;color:var(--t3)}
-.crm-cards{padding:6px;display:flex;flex-direction:column;gap:5px;min-height:48px}
-.crm-card{background:var(--bg3);border:1px solid var(--ln);border-radius:4px;padding:9px 11px;
-  cursor:pointer;position:relative;transition:border-color .15s}
-.crm-card:hover{border-color:var(--ln2);background:var(--bg4)}
-.crm-card-name{font-family:var(--fh);font-size:12px;font-weight:600;color:var(--t1);
-  margin-bottom:4px;padding-right:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.crm-card-meta{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
-.crm-tag{font-family:var(--fm);font-size:8px;color:var(--t3);background:var(--bg2);
-  border:1px solid var(--ln);padding:1px 5px;border-radius:2px}
-.crm-src{font-family:var(--fh);font-size:8px;font-weight:700;letter-spacing:.08em;
-  text-transform:uppercase;padding:1px 5px;border-radius:2px}
-.cs-g{background:var(--red-l);color:var(--red)}.cs-m{background:var(--blu-l);color:var(--blu)}
-.cs-r{background:var(--grn-l);color:var(--grn)}.cs-o{background:var(--bg4);color:var(--t3)}
-.crm-card-note{font-size:10px;color:var(--t3);margin-top:4px;
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.4}
-.crm-card-del{position:absolute;top:5px;right:5px;width:14px;height:14px;border:none;
-  background:transparent;color:var(--t3);font-size:12px;cursor:pointer;display:flex;
-  align-items:center;justify-content:center;border-radius:2px;padding:0;line-height:1}
-.crm-card-del:hover{background:var(--red-l);color:var(--red)}
-.crm-add-btn{width:calc(100% - 10px);margin:0 5px 6px;padding:6px;border:1px dashed var(--ln2);
-  border-radius:3px;background:transparent;color:var(--t3);font-family:var(--fh);font-size:9px;
-  font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .15s}
-.crm-add-btn:hover{border-color:var(--red);color:var(--red);background:var(--red-l)}
-.crm-empty{font-family:var(--fh);font-size:9px;font-weight:700;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--t3);text-align:center;padding:10px 8px}
-
-/* ── MODAL ── */
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:500;
-  align-items:center;justify-content:center}
-.modal-bg.open{display:flex}
-.modal{background:var(--bg3);border:1px solid var(--ln2);border-radius:var(--r);
-  padding:22px;width:100%;max-width:440px;max-height:90vh;overflow-y:auto}
-.modal-title{font-family:var(--fpx);font-size:16px;color:var(--t1);margin-bottom:16px}
-.field{margin-bottom:11px}
-.field label{display:block;font-family:var(--fh);font-size:9px;font-weight:700;
-  letter-spacing:.15em;text-transform:uppercase;color:var(--t3);margin-bottom:4px}
-.field input,.field select,.field textarea{width:100%;padding:8px 10px;border:1px solid var(--ln2);
-  border-radius:2px;background:var(--bg4);color:var(--t1);font-family:var(--fb);font-size:13px;outline:none;transition:border-color .15s}
-.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--red)}
-.field textarea{resize:vertical;min-height:60px;font-size:12px;line-height:1.5}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.modal-btns{display:flex;gap:8px;margin-top:14px}
-.btn-save{flex:1;padding:9px;background:var(--red);color:#fff;border:none;border-radius:2px;
-  font-family:var(--fh);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
-.btn-save:hover{background:#b52020}
-.btn-cancel{padding:9px 14px;background:transparent;border:1px solid var(--ln2);border-radius:2px;
-  font-family:var(--fh);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);cursor:pointer}
-.btn-cancel:hover{border-color:var(--t2);color:var(--t2)}
-
-/* ── DATA BANNER ── */
-.banner{border-radius:var(--r);padding:10px 14px;margin-bottom:16px;font-size:12px;
-  display:flex;align-items:flex-start;gap:10px;border-left:3px solid var(--amb);
-  background:rgba(176,120,48,.07);border:1px solid rgba(176,120,48,.2)}
-
-/* ── PERIOD SELECTOR ── */
-.period-sel{display:flex;align-items:center;gap:4px}
-.period-sel select{font-family:var(--fm);font-size:11px;color:var(--t3);background:transparent;
-  border:none;outline:none;cursor:pointer;padding:2px 4px;border-radius:2px;
-  -webkit-appearance:none;-moz-appearance:none;appearance:none;
-  transition:color .15s,background .15s}
-.period-sel select:hover{color:var(--t1);background:var(--ln)}
-.period-sel select option{background:var(--bg3);color:var(--t1)}
-.period-dot{width:5px;height:5px;border-radius:50%;background:var(--amb);flex-shrink:0;margin:0 2px}
-
-/* ── STAGE LABEL CHIP ── */
-.stage-label{font-family:var(--fm);font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:2px 7px;border-radius:2px;white-space:nowrap;margin-right:4px}
-.sl-top{background:var(--red-l);color:var(--red)}
-.sl-s2{background:var(--amb-l);color:var(--amb)}
-.sl-s3{background:var(--blu-l);color:var(--blu)}
-.sl-fb{background:var(--grn-l);color:var(--grn)}
-
-/* ── MONTHLY COMPARISON CARD ── */
-.monthly-card{border:1px solid var(--ln);border-radius:var(--r);overflow:hidden;background:var(--bg2);margin-top:8px}
-.monthly-hd{padding:13px 18px;border-bottom:1px solid var(--ln);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
-.monthly-tbl-wrap{overflow-x:auto}
-.monthly-tbl{width:100%;border-collapse:collapse;font-size:11px;min-width:860px}
-.monthly-tbl th{padding:9px 12px;font-family:var(--fh);font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);border-bottom:1px solid var(--ln);text-align:right;white-space:nowrap}
-.monthly-tbl th:first-child{text-align:left}
-.monthly-tbl td{padding:9px 12px;border-bottom:1px solid var(--ln);text-align:right;color:var(--t2);font-family:var(--fm);font-size:11px;white-space:nowrap}
-.monthly-tbl td:first-child{text-align:left;font-family:var(--fh);font-size:12px;font-weight:600;color:var(--t1)}
-.monthly-tbl tr:last-child td{border-bottom:none}
-.monthly-tbl tr.cur-month td{background:rgba(204,41,41,.04)}
-.monthly-tbl tr.cur-month td:first-child{color:var(--red)}
-.delta{font-size:9px;margin-left:3px}
-.du{color:var(--grn)}.dd{color:var(--red)}.df{color:var(--t3)}
-.m-load{font-family:var(--fm);font-size:11px;color:var(--t3);padding:20px 18px;text-align:center}
-
-/* ── QUICK LEAD FORM ── */
-.ql-wrap{background:var(--bg3);border:1px solid var(--ln);border-left:3px solid var(--grn);border-radius:4px;padding:14px 16px;margin-top:10px}
-.ql-title{font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--grn);margin-bottom:10px;display:flex;align-items:center;gap:8px;cursor:pointer}
-.ql-body{display:none}
-.ql-body.open{display:block}
-.ql-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:8px}
-.ql-field label{font-family:var(--fh);font-size:8px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);display:block;margin-bottom:3px}
-.ql-field input,.ql-field select{width:100%;padding:6px 8px;border:1px solid var(--ln2);border-radius:2px;background:var(--bg4);color:var(--t1);font-family:var(--fb);font-size:12px;outline:none;transition:border-color .15s}
-.ql-field input:focus,.ql-field select:focus{border-color:var(--grn)}
-.ql-btn{width:100%;padding:8px;background:var(--grn);color:#fff;border:none;border-radius:2px;font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .14s;margin-top:4px}
-.ql-btn:hover{background:#256b46}
-.ql-ok{font-family:var(--fm);font-size:10px;color:var(--grn);text-align:center;padding:6px;display:none}
-
-/* ── DATA CARD (tarjeta unificada de datos) ── */
-.data-card{border:1px solid var(--ln);border-radius:var(--r);overflow:hidden;background:var(--bg2)}
-.dc-hd{padding:13px 18px;border-bottom:1px solid var(--ln);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
-.dc-hd-title{font-family:var(--fh);font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t1)}
-.dc-hd-sync{font-family:var(--fm);font-size:10px;color:var(--t3)}
-.dc-plat-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid var(--ln)}
-.dc-plat{padding:16px 18px;border-right:1px solid var(--ln)}
-.dc-plat:last-child{border-right:none}
-.dc-plat-hd{font-family:var(--fh);font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--t3);margin-bottom:10px;display:flex;align-items:center;gap:8px}
-.dc-plat-hd::after{content:'';flex:1;height:1px;background:var(--ln)}
-.dc-badge-g{background:var(--red);font-family:var(--fpx);font-size:11px;font-weight:700;width:20px;height:20px;border-radius:3px;display:inline-flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
-.dc-badge-m{background:var(--blu);font-family:var(--fpx);font-size:11px;font-weight:700;width:20px;height:20px;border-radius:3px;display:inline-flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
-.dc-nums{display:grid;grid-template-columns:repeat(auto-fill,minmax(115px,1fr));gap:8px}
-.dc-num{background:var(--bg3);border:1px solid var(--ln);border-radius:4px;padding:10px 12px}
-.dc-num-lbl{font-family:var(--fh);font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);margin-bottom:4px}
-.dc-num-val{font-family:var(--fpx);font-size:22px;color:var(--t1);line-height:1}
-.dc-hist{padding:14px 18px;border-top:1px solid var(--ln)}
-.dc-hist-title{font-family:var(--fh);font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--t3);margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.dc-hist-title::after{content:'';flex:1;height:1px;background:var(--ln)}
-.dc-hist-tbl{width:100%;border-collapse:collapse;font-size:11px;min-width:760px}
-.dc-hist-tbl th{text-align:right;padding:8px 10px;font-family:var(--fh);font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);border-bottom:1px solid var(--ln);white-space:nowrap}
-.dc-hist-tbl th:first-child{text-align:left}
-.dc-hist-tbl td{padding:9px 10px;border-bottom:1px solid var(--ln);text-align:right;color:var(--t2);font-family:var(--fm);font-size:11px;white-space:nowrap}
-.dc-hist-tbl td:first-child{text-align:left;font-family:var(--fh);font-size:12px;font-weight:600;color:var(--t1)}
-.dc-hist-tbl tr:last-child td{border-bottom:none}
-.dc-hist-tbl tr.dc-cur td{background:rgba(204,41,41,.04)}
-.dc-hist-tbl tr.dc-cur td:first-child{color:var(--red)}
-
-/* ── RESPONSIVE ── */
-@media(max-width:900px){
-  .stage-grid{grid-template-columns:1fr}
-  .stage-col{border-right:none;border-bottom:1px solid var(--ln)}
-  .stage-col:last-child{border-bottom:none}
-  .metrics-band{grid-template-columns:1fr 1fr}
-  .crm-board{grid-template-columns:1fr 1fr}
-  .crm-stats{grid-template-columns:repeat(3,1fr)}
-  .funnel-bar{flex-wrap:wrap}
-  .ff{min-width:calc(33% - 2px)}
-  .row2{grid-template-columns:1fr}
-  .ps-row{grid-template-columns:1fr 1fr}
+/* ── BALANCE CHIP ── */
+.bal-chip{
+  display:inline-flex;align-items:center;gap:8px;margin-top:10px;
+  font-size:10px;padding:5px 10px;border:1px solid var(--bd);background:var(--bg3);
 }
-@media(max-width:600px){
-  .hdr{padding:0 14px}
-  .wrap{padding:14px}
-  .hdr-sub{display:none}
-  .metrics-band{grid-template-columns:1fr 1fr}
-  .crm-board{grid-template-columns:1fr}
+.bal-chip-lbl{color:var(--dim);letter-spacing:.08em;text-transform:uppercase}
+.bal-chip-val{font-weight:700}
+.bal-chip-val.ok {color:var(--grn)}
+.bal-chip-val.low{color:var(--yel)}
+.bal-chip-val.neg{color:var(--red)}
+
+/* ── STATES ── */
+.loading{padding:60px 16px;text-align:center;color:var(--dim);font-size:12px}
+.setup-wrap{padding:40px 16px;text-align:center;max-width:480px;margin:0 auto}
+.setup-wrap h2{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blu);margin-bottom:16px}
+.setup-wrap p{font-size:10px;color:var(--dim);margin-bottom:14px;line-height:1.8}
+.setup-wrap input{
+  background:var(--bg3);border:1px solid var(--bd2);color:var(--txt);
+  font-family:var(--mono);font-size:11px;padding:9px 12px;width:100%;margin-bottom:10px;
 }
+.setup-wrap input:focus{outline:none;border-color:var(--blu)}
 </style>
 </head>
 <body>
 
 <!-- HEADER -->
 <header class="hdr">
-  <div class="brand">
-    <div class="mark">CA</div>
+  <div class="hdr-brand">
+    <div class="hdr-dot"></div>
     <div>
-      <div class="hdr-name">Casa Club ARQ</div>
-      <span class="hdr-sub">Marketing Intelligence</span>
+      <div class="hdr-name">e.ARGAMA</div>
+      <span class="hdr-sub">marketing intelligence v2</span>
     </div>
   </div>
-  <div class="hdr-r">
-    <div class="conn-dot" id="conn-dot"></div>
-    <div class="period-sel" title="Periodo analizado — cambia para ver otros meses">
-      <select id="sel-mes" onchange="onPeriodChange()">
-        <option value="Enero">Enero</option>
-        <option value="Febrero">Febrero</option>
-        <option value="Marzo">Marzo</option>
-        <option value="Abril">Abril</option>
-        <option value="Mayo">Mayo</option>
-        <option value="Junio">Junio</option>
-        <option value="Julio">Julio</option>
-        <option value="Agosto">Agosto</option>
-        <option value="Septiembre">Septiembre</option>
-        <option value="Octubre">Octubre</option>
-        <option value="Noviembre">Noviembre</option>
-        <option value="Diciembre">Diciembre</option>
-      </select>
-      <select id="sel-anio" onchange="onPeriodChange()">
-        <option value="2024">2024</option>
-        <option value="2025">2025</option>
-        <option value="2026">2026</option>
-      </select>
+  <div class="hdr-right">
+    <div class="conn">
+      <div class="conn-dot wait" id="conn-dot"></div>
+      <span id="ts-lbl">—</span>
     </div>
-    <span class="pending-badge" id="pending-badge">— pendientes</span>
-    <button class="hdr-btn p" onclick="crmOpenModal()">+ Lead</button>
-    <button class="hdr-btn" onclick="runAI('full')">✦ IA Global</button>
+    <button class="btn" onclick="loadData()">&#8635; refresh</button>
+    <button class="btn" onclick="openSetup()">&#9881; config</button>
   </div>
 </header>
 
-<!-- TABS -->
-<div class="tabs">
-  <button class="tab on" onclick="sw('dash',this)">◎ Dashboard</button>
-  <button class="tab" onclick="sw('crm',this)">◉ CRM <span id="crm-tab-cnt" style="font-family:var(--fm);font-size:9px;background:var(--blu-l);color:var(--blu);padding:1px 5px;border-radius:10px;margin-left:2px">0</span></button>
-</div>
+<!-- PERIOD TABS -->
+<nav class="tabs">
+  <button class="tab on" data-p="7d"    onclick="setPeriod('7d',this)">7D</button>
+  <button class="tab"    data-p="30d"   onclick="setPeriod('30d',this)">30D</button>
+  <button class="tab"    data-p="90d"   onclick="setPeriod('90d',this)">90D</button>
+  <button class="tab"    data-p="today" onclick="setPeriod('today',this)">HOY</button>
+</nav>
 
-<!-- ════════════════ DASHBOARD ════════════════ -->
-<div class="panel on" id="panel-dash">
-<div class="wrap">
-
-<!-- DATA BANNER -->
-<div class="banner" id="data-banner">
-  <span style="font-size:14px;margin-top:1px">⟳</span>
-  <div><strong style="color:var(--amb)">Cargando datos reales</strong> — conectando con ARQ_2025_B + 2024, ARQ, QRO...</div>
-</div>
-
-<!-- FUNNEL FLOW BAR -->
-<div class="funnel-bar">
-  <a class="ff" href="#sec-google" onclick="scrollTo('sec-google')">
-    <div class="ff-dot" style="background:var(--red)"></div>
-    <span class="ff-lbl">Google Ads</span>
-    <span class="ff-val" id="ff1">—</span>
-    <span class="ff-rate">clics · CTR <span id="ff1b">—</span></span>
-  </a>
-  <div class="ff-conv">→</div>
-  <a class="ff" href="#sec-web" onclick="scrollTo('sec-web')">
-    <div class="ff-dot" style="background:var(--amb)"></div>
-    <span class="ff-lbl">Sitio web</span>
-    <span class="ff-val" id="ff2">—</span>
-    <span class="ff-rate">visitas · 30% pérdida</span>
-  </a>
-  <div class="ff-conv">→</div>
-  <a class="ff" href="#sec-meta" onclick="scrollTo('sec-meta')">
-    <div class="ff-dot" style="background:var(--blu)"></div>
-    <span class="ff-lbl">Meta Ads</span>
-    <span class="ff-val" id="ff3">—</span>
-    <span class="ff-rate">alcance · CPL <span id="ff3b">$48</span></span>
-  </a>
-  <div class="ff-conv">→</div>
-  <a class="ff" href="#sec-wa" onclick="scrollTo('sec-wa')">
-    <div class="ff-dot" style="background:var(--grn)"></div>
-    <span class="ff-lbl">WhatsApp</span>
-    <span class="ff-val" id="ff4">—</span>
-    <span class="ff-rate">convs. · 44.3% SQL</span>
-  </a>
-</div>
-
-<!-- ════ STAGE 1: TOP DEL FUNNEL · GOOGLE ADS ════ -->
-<div class="stage-sec" id="sec-google">
-  <div class="stage-hd" onclick="toggleStage('sec-google')">
-    <div class="stage-color" style="background:var(--red)"></div>
-    <div class="stage-hd-inner">
-      <span class="stage-icon" style="color:var(--red)">G</span>
-      <div>
-        <div class="stage-title"><span class="stage-label sl-top">TOP DEL FUNNEL</span>Google Ads</div>
-        <div class="stage-camp">Campaña ARQ_2025_B · QRO · CDMX · Toluca · Metepec · Valle de Bravo · SMA · GTO</div>
-      </div>
-      <div class="stage-hd-r">
-        <div class="stage-metric"><span class="stage-metric-val" id="g-clics">—</span><span class="stage-metric-lbl">clics</span></div>
-        <span class="stage-health sh-warn" id="g-health">Activa</span>
-        <span class="stage-toggle" id="tog-sec-google">▾</span>
-      </div>
-    </div>
-  </div>
-  <div class="stage-body" id="body-sec-google">
-    <div class="stage-grid">
-      <!-- ASSET REAL -->
-      <div class="stage-col">
-        <div class="stage-col-title">Activo</div>
-        <div class="asset-list">
-          <div class="asset"><div class="a-dot dot-on"></div><span class="a-name">Campaña ARQ_2025_B</span><span class="a-st ast-on">activa</span></div>
-        </div>
-      </div>
-      <!-- MISSIONS -->
-      <div class="stage-col">
-        <div class="stage-col-title">Micromisiones</div>
-        <div class="mission-list">
-          <div class="mission m-crit" id="m-g1" onclick="toggleMission('m-g1')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Configurar Lead Form Extension en ARQ_2025_B</div>
-              <div class="m-meta"><span class="m-plat mp-g">Google Ads</span><span class="m-time">30 min</span><span class="m-impact">+18 leads/mes gratis</span></div>
-            </div>
-          </div>
-          <div class="mission m-crit" id="m-g2" onclick="toggleMission('m-g2')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Agregar palabras clave negativas (software, escuela, estudiantil, proveedores)</div>
-              <div class="m-meta"><span class="m-plat mp-g">Google Ads</span><span class="m-time">20 min</span><span class="m-impact">Ahorra $1,960 MXN/mes</span></div>
-            </div>
-          </div>
-          <div class="mission m-crit" id="m-g-conc" onclick="toggleMission('m-g-conc')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Auditar concordancia entre palabras clave y anuncios RSA — revisar QS de cada keyword</div>
-              <div class="m-meta"><span class="m-plat mp-g">Google Ads</span><span class="m-time">45 min</span><span class="m-impact">CTR +1–2% · QS mejora</span></div>
-            </div>
-          </div>
-          <div class="mission m-imp" id="m-g-geo" onclick="toggleMission('m-g-geo')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Verificar segmentación geográfica: QRO · CDMX · Toluca · Metepec · Valle de Bravo · SMA · Guanajuato</div>
-              <div class="m-meta"><span class="m-plat mp-g">Google Ads</span><span class="m-time">20 min</span><span class="m-impact">Cobertura total de mercados objetivo</span></div>
-            </div>
-          </div>
-          <div class="mission m-imp" id="m-g4" onclick="toggleMission('m-g4')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Segmentación demográfica: +20% bid ajuste 35–54 años, -30% para 18–24, excluir HHI Bottom 50%</div>
-              <div class="m-meta"><span class="m-plat mp-g">Google Ads</span><span class="m-time">15 min</span><span class="m-impact">CPA -15% · calidad leads +20%</span></div>
-            </div>
-          </div>
-          <div class="mission m-imp" id="m-g3" onclick="toggleMission('m-g3')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Activar Image Extensions con fotos reales de proyectos terminados</div>
-              <div class="m-meta"><span class="m-plat mp-g">Google Ads</span><span class="m-time">45 min</span><span class="m-impact">CTR +1.5%</span></div>
-            </div>
-          </div>
-          <div class="mission m-imp" id="m-g5" onclick="toggleMission('m-g5')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Completar Structured Snippets (Remodelaciones, Extensiones, Llave en Mano)</div>
-              <div class="m-meta"><span class="m-plat mp-g">Google Ads</span><span class="m-time">15 min</span><span class="m-impact">CTR +0.8%</span></div>
-            </div>
-          </div>
-          <div class="mission m-opp" id="m-g6" onclick="toggleMission('m-g6')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Crear campaña Google Ads para Valle de Bravo y Guanajuato — keywords específicas por mercado</div>
-              <div class="m-meta"><span class="m-plat mp-g">Google Ads</span><span class="m-time">2 h</span><span class="m-impact">Cobertura nuevos mercados premium</span></div>
-            </div>
-          </div>
-          <div class="mission m-opp" id="m-g7" onclick="toggleMission('m-g7')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Crear campaña Performance Max con assets de foto + video + copy por ciudad</div>
-              <div class="m-meta"><span class="m-plat mp-g">Google Ads</span><span class="m-time">2 h</span><span class="m-impact">Search + Display + YouTube + Maps</span></div>
-            </div>
-          </div>
-          <div class="mission m-opp" id="m-g-rlsa" onclick="toggleMission('m-g-rlsa')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Activar RLSA (remarketing lists for search) para visitantes del sitio</div>
-              <div class="m-meta"><span class="m-plat mp-g">Google Ads</span><span class="m-time">30 min</span><span class="m-impact">Conv. rate +35% en búsquedas de retorno</span></div>
-            </div>
-          </div>
-          <div class="mission m-imp" id="m-g-qs" onclick="toggleMission('m-g-qs')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Monitorear Quality Score semanalmente — identificar keywords con QS &lt;6 y ajustar concordancia con anuncio</div>
-              <div class="m-meta"><span class="m-plat mp-g">Google Ads</span><span class="m-time">20 min/sem</span><span class="m-impact">QS alto = CPC más bajo + mejor posición</span></div>
-            </div>
-          </div>
-          <div class="mission m-imp" id="m-g-demo2" onclick="toggleMission('m-g-demo2')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Analizar segmentación demográfica actual por ciudad: verificar edad y HHI óptimo para QRO · CDMX · SMA · Metepec</div>
-              <div class="m-meta"><span class="m-plat mp-g">Google Ads</span><span class="m-time">30 min</span><span class="m-impact">CPA -12% al filtrar demo incorrecta</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- ANÁLISIS -->
-    <div class="diag-strip">
-      <div class="diag-title">Análisis · rendimiento + configuración</div>
-      <div class="diag-items" id="g-diag">
-        <div class="diag-item diag-ok"><span class="diag-icon d-ok">✓</span><span class="diag-txt">CTR 6.2% — por encima del benchmark del sector (3–4%)</span><span class="diag-val">↑ bueno</span></div>
-        <div class="diag-item diag-ok"><span class="diag-icon d-ok">✓</span><span class="diag-txt">CPC $5.80 MXN — competitivo para arquitectura en CDMX/QRO</span><span class="diag-val">ok</span></div>
-        <div class="diag-item diag-ok"><span class="diag-icon d-ok">✓</span><span class="diag-txt">Sitelinks · Callouts · Extensión llamada activos</span><span class="diag-val">✓ activas</span></div>
-        <div class="diag-item diag-warn"><span class="diag-icon d-warn">!</span><span class="diag-txt">CPA Toluca $560 vs $394 en QRO — gap del 42%, investigar segmentación y landing</span><span class="diag-val">↑ 42%</span></div>
-        <div class="diag-item diag-warn" id="gd-snippets"><span class="diag-icon d-warn">!</span><span class="diag-txt">Structured Snippets incompletas — faltan tipos de proyecto relevantes</span><span class="diag-val">revisar</span></div>
-        <div class="diag-item diag-warn" id="gd-geo"><span class="diag-icon d-warn">!</span><span class="diag-txt">Segmentación geográfica activa — verificar cobertura de Metepec, Valle de Bravo, Guanajuato y Bajío</span><span class="diag-val">revisar</span></div>
-        <div class="diag-item diag-bad" id="gd-neg-kw"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Keywords como "software arquitectura", "escuela arquitectura" generando clics irrelevantes</span><span class="diag-val">$1,960/mes</span></div>
-        <div class="diag-item diag-bad" id="gd-lead-form"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Lead Form Extension inactiva — pérdida de leads directos desde Google</span><span class="diag-val">-18 leads/mes</span></div>
-        <div class="diag-item diag-bad" id="gd-img-ext"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Image Extensions sin activar — CTR potencial no aprovechado</span><span class="diag-val">sin foto</span></div>
-      </div>
-    </div>
-    <!-- OPPORTUNITIES -->
-    <div class="opp-strip">
-      <div class="diag-title">Oportunidades de expansión</div>
-      <div class="opp-chips">
-        <span class="opp-chip oc-g">+ Campaña ARQ_2025_METEPEC</span>
-        <span class="opp-chip oc-g">+ Google Ads para SMA / Bajío</span>
-        <span class="opp-chip oc-g">+ YouTube Ads · branding arquitectura</span>
-        <span class="opp-chip oc-g">+ RLSA para visitantes del sitio</span>
-        <span class="opp-chip oc-s">+ A/B test anuncios RSA por ciudad</span>
-      </div>
-    </div>
-    <!-- REAL KEYWORDS TABLE -->
-    <div style="padding:14px 18px;border-top:1px solid var(--ln)">
-      <div class="stage-col-title" style="margin-bottom:10px">Top keywords · rendimiento real <span style="font-family:var(--fm);font-size:9px;font-weight:400;color:var(--t3)" id="kw-period"></span></div>
-      <div class="tw" id="kw-table"><div class="aiload">Cargando desde Google Ads API...</div></div>
-    </div>
-  </div>
-</div>
-
-<!-- ════ STAGE 2: SITIO WEB ════ -->
-<div class="stage-sec" id="sec-web">
-  <div class="stage-hd" onclick="toggleStage('sec-web')">
-    <div class="stage-color" style="background:var(--amb)"></div>
-    <div class="stage-hd-inner">
-      <span class="stage-icon" style="color:var(--amb)">W</span>
-      <div>
-        <div class="stage-title"><span class="stage-label sl-s2">STEP 2</span>Sitio Web</div>
-        <div class="stage-camp">casaclubarq.com · Wix · Pixel Meta · GTM · GA4</div>
-      </div>
-      <div class="stage-hd-r">
-        <div class="stage-metric"><span class="stage-metric-val" id="w-visits">—</span><span class="stage-metric-lbl">visitas</span></div>
-        <span class="stage-health sh-warn" id="w-health">Mejorable</span>
-        <span class="stage-toggle" id="tog-sec-web">▾</span>
-      </div>
-    </div>
-  </div>
-  <div class="stage-body" id="body-sec-web">
-    <div class="stage-grid">
-      <div class="stage-col">
-        <div class="stage-col-title">Activo</div>
-        <div class="asset-list">
-          <div class="asset"><div class="a-dot dot-on"></div><span class="a-name">casaclubarq.com (Wix)</span><span class="a-st ast-on">online</span></div>
-        </div>
-      </div>
-      <div class="stage-col">
-        <div class="stage-col-title">Micromisiones</div>
-        <div class="mission-list">
-          <div class="mission m-crit" id="m-w1" onclick="toggleMission('m-w1')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Verificar Pixel Meta ViewContent en cada página de portafolio</div>
-              <div class="m-meta"><span class="m-plat mp-m">Meta / Web</span><span class="m-time">30 min</span><span class="m-impact">CPL retargeting -22%</span></div>
-            </div>
-          </div>
-          <div class="mission m-imp" id="m-w2" onclick="toggleMission('m-w2')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Instalar Microsoft Clarity (heatmaps y grabaciones gratis)</div>
-              <div class="m-meta"><span class="m-plat mp-s">Web</span><span class="m-time">20 min</span><span class="m-impact">Entiende por qué se van</span></div>
-            </div>
-          </div>
-          <div class="mission m-imp" id="m-w3" onclick="toggleMission('m-w3')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Agregar botón WhatsApp flotante en todas las páginas del portafolio</div>
-              <div class="m-meta"><span class="m-plat mp-w">Web / WA</span><span class="m-time">45 min</span><span class="m-impact">+conv. orgánico directo</span></div>
-            </div>
-          </div>
-          <div class="mission m-imp" id="m-w4" onclick="toggleMission('m-w4')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Comprimir imágenes del portafolio para mejorar velocidad móvil</div>
-              <div class="m-meta"><span class="m-plat mp-s">Web</span><span class="m-time">1 h</span><span class="m-impact">LCP -2s mobile</span></div>
-            </div>
-          </div>
-          <div class="mission m-opp" id="m-w5" onclick="toggleMission('m-w5')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Crear landing page específica para Querétaro (copy + proyectos locales)</div>
-              <div class="m-meta"><span class="m-plat mp-s">Web / SEO</span><span class="m-time">3 h</span><span class="m-impact">QS Google +1 · bounce -15%</span></div>
-            </div>
-          </div>
-          <div class="mission m-opp" id="m-w6" onclick="toggleMission('m-w6')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Landing page San Miguel de Allende con galería de proyectos Bajío</div>
-              <div class="m-meta"><span class="m-plat mp-s">Web / SEO</span><span class="m-time">3 h</span><span class="m-impact">Soporte campaña SMA nueva</span></div>
-            </div>
-          </div>
-          <div class="mission m-crit" id="m-w-pixel" onclick="toggleMission('m-w-pixel')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Auditar todos los eventos del Pixel Meta en Wix: PageView · ViewContent · Lead · Contact — verificar con Meta Pixel Helper</div>
-              <div class="m-meta"><span class="m-plat mp-m">Meta / Wix</span><span class="m-time">1 h</span><span class="m-impact">Retargeting más preciso = CPL -22%</span></div>
-            </div>
-          </div>
-          <div class="mission m-crit" id="m-w-ga4" onclick="toggleMission('m-w-ga4')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Verificar eventos GA4 en Wix: contacto · clic WA · formulario · tiempo en portafolio — usar DebugView</div>
-              <div class="m-meta"><span class="m-plat mp-s">GA4 / Wix</span><span class="m-time">45 min</span><span class="m-impact">Datos de comportamiento confiables</span></div>
-            </div>
-          </div>
-          <div class="mission m-imp" id="m-w-wix" onclick="toggleMission('m-w-wix')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Analizar Wix Analytics: páginas más visitadas, tiempo promedio, tasa de rebote y flujo de usuarios entre secciones</div>
-              <div class="m-meta"><span class="m-plat mp-s">Wix</span><span class="m-time">30 min</span><span class="m-impact">Identifica dónde se pierden los visitantes</span></div>
-            </div>
-          </div>
-          <div class="mission m-imp" id="m-w-ps" onclick="toggleMission('m-w-ps')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Revisar PageSpeed Insights mobile/desktop — comprimir imágenes del portafolio y activar lazy load en Wix</div>
-              <div class="m-meta"><span class="m-plat mp-s">Web</span><span class="m-time">1 h</span><span class="m-impact">LCP móvil -2s · QS Google +1</span></div>
-            </div>
-          </div>
-          <div class="mission m-opp" id="m-w-heat" onclick="toggleMission('m-w-heat')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Instalar Microsoft Clarity (heatmaps y grabaciones de sesión gratis) para ver cómo navegan los usuarios reales</div>
-              <div class="m-meta"><span class="m-plat mp-s">Web</span><span class="m-time">20 min</span><span class="m-impact">Identifica por qué se van sin contactar</span></div>
-            </div>
-          </div>
-          <div class="mission m-opp" id="m-w-schema" onclick="toggleMission('m-w-schema')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Implementar Schema markup de "LocalBusiness Arquitecto" en Wix para SEO local en QRO · CDMX · Metepec · SMA</div>
-              <div class="m-meta"><span class="m-plat mp-s">SEO / Wix</span><span class="m-time">2 h</span><span class="m-impact">Visibilidad orgánica local</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Análisis configuraciones -->
-    <div class="diag-strip">
-      <div class="diag-title">Análisis · configuraciones del sitio</div>
-      <div class="diag-items">
-        <div class="diag-item diag-ok"><span class="diag-icon d-ok">✓</span><span class="diag-txt">Pixel Meta PageView disparando en sitio</span><span class="diag-val">✓ activo</span></div>
-        <div class="diag-item diag-ok"><span class="diag-icon d-ok">✓</span><span class="diag-txt">Google Tag Manager instalado y activo</span><span class="diag-val">✓ activo</span></div>
-        <div class="diag-item diag-warn" id="wd-vc"><span class="diag-icon d-warn">!</span><span class="diag-txt">Pixel Meta ViewContent — verificar disparo en cada página del portafolio</span><span class="diag-val">⚠ revisar</span></div>
-        <div class="diag-item diag-warn" id="wd-ga4"><span class="diag-icon d-warn">!</span><span class="diag-txt">GA4 eventos clave — confirmar que contacto y clic WA se registran correctamente</span><span class="diag-val">⚠ verificar</span></div>
-        <div class="diag-item diag-bad" id="wd-clarity"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin heatmap (Clarity/Hotjar) — sin datos de comportamiento de los visitantes</span><span class="diag-val">ciego</span></div>
-        <div class="diag-item diag-bad" id="wd-wa-cta"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin CTA WhatsApp flotante en portafolio — fricción innecesaria para contactar</span><span class="diag-val">-conv.</span></div>
-        <div class="diag-item diag-bad" id="wd-landing"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin landing pages por ciudad — mismo contenido para QRO, CDMX, SMA, Metepec, GTO</span><span class="diag-val">QS bajo</span></div>
-      </div>
-    </div>
-    <!-- PageSpeed -->
-    <div class="diag-strip">
-      <div class="diag-title">PageSpeed Insights · casaclubarq.com</div>
-      <div class="stage-grid" style="gap:12px;margin-bottom:10px">
-        <div>
-          <div style="font-family:var(--fh);font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);margin-bottom:6px">Mobile</div>
-          <div class="ps-row">
-            <div class="ps-m"><div class="ps-v ps-a" id="psm-s">—</div><div class="ps-l">Score</div></div>
-            <div class="ps-m"><div class="ps-v ps-a" id="psm-fcp">—</div><div class="ps-l">FCP</div></div>
-            <div class="ps-m"><div class="ps-v ps-a" id="psm-lcp">—</div><div class="ps-l">LCP</div></div>
-            <div class="ps-m"><div class="ps-v ps-a" id="psm-cls">—</div><div class="ps-l">CLS</div></div>
-          </div>
-        </div>
-        <div>
-          <div style="font-family:var(--fh);font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);margin-bottom:6px">Desktop</div>
-          <div class="ps-row">
-            <div class="ps-m"><div class="ps-v ps-a" id="psd-s">—</div><div class="ps-l">Score</div></div>
-            <div class="ps-m"><div class="ps-v ps-a" id="psd-fcp">—</div><div class="ps-l">FCP</div></div>
-            <div class="ps-m"><div class="ps-v ps-a" id="psd-lcp">—</div><div class="ps-l">LCP</div></div>
-            <div class="ps-m"><div class="ps-v ps-a" id="psd-cls">—</div><div class="ps-l">CLS</div></div>
-          </div>
-        </div>
-      </div>
-      <div class="diag-items" id="ps-audits"><div class="aiload">Consultando PageSpeed API...</div></div>
-    </div>
-    <div class="opp-strip">
-      <div class="diag-title">Oportunidades</div>
-      <div class="opp-chips">
-        <span class="opp-chip oc-s">+ Landing Metepec / Toluca</span>
-        <span class="opp-chip oc-s">+ Blog SEO "costo construir casa QRO"</span>
-        <span class="opp-chip oc-s">+ Formulario cotización online</span>
-        <span class="opp-chip oc-s">+ Schema markup arquitecto local</span>
-        <span class="opp-chip oc-m">+ Pixel Lead Form Meta en el sitio</span>
-      </div>
-    </div>
-    <!-- AI site analysis -->
-    <div style="padding:14px 18px;border-top:1px solid var(--ln)">
-      <div class="ai-card" style="margin-bottom:0">
-        <span class="ai-tag">✦ Análisis IA · copy, UX y coherencia con anuncios</span>
-        <div class="ai-out" id="ai-site-out"><div class="aiload">Analizando casaclubarq.com...</div></div>
-        <button class="ai-btn" id="ai-site-btn" onclick="runAI('site')">⟳ Regenerar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ════ STAGE 3: META ADS ════ -->
-<div class="stage-sec" id="sec-meta">
-  <div class="stage-hd" onclick="toggleStage('sec-meta')">
-    <div class="stage-color" style="background:var(--blu)"></div>
-    <div class="stage-hd-inner">
-      <span class="stage-icon" style="color:var(--blu)">M</span>
-      <div>
-        <div class="stage-title"><span class="stage-label sl-s3">STEP 3</span>Meta Ads</div>
-        <div class="stage-camp">2024, ARQ, QRO · Retargeting + Lookalike · Click-to-WhatsApp</div>
-      </div>
-      <div class="stage-hd-r">
-        <div class="stage-metric"><span class="stage-metric-val" id="m-wa">—</span><span class="stage-metric-lbl">convs. WA</span></div>
-        <span class="stage-health sh-warn" id="m-health">4/7 activos</span>
-        <span class="stage-toggle" id="tog-sec-meta">▾</span>
-      </div>
-    </div>
-  </div>
-  <div class="stage-body" id="body-sec-meta">
-    <div class="stage-grid">
-      <div class="stage-col">
-        <div class="stage-col-title">Activo</div>
-        <div class="asset-list">
-          <div class="asset"><div class="a-dot dot-on"></div><span class="a-name">Campaña "2024, ARQ, QRO"</span><span class="a-st ast-on">activa</span></div>
-        </div>
-      </div>
-      <div class="stage-col">
-        <div class="stage-col-title">Micromisiones</div>
-        <div class="mission-list">
-          <div class="mission m-crit" id="m-m1" onclick="toggleMission('m-m1')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Grabar 3 videos testimoniales reales de clientes QRO / CDMX (brief listo)</div>
-              <div class="m-meta"><span class="m-plat mp-m">Meta Ads</span><span class="m-time">1 semana</span><span class="m-impact">Conv. WA +40% estimado</span></div>
-            </div>
-          </div>
-          <div class="mission m-crit" id="m-m2" onclick="toggleMission('m-m2')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Lanzar campaña "2024, ARQ, SMA" para San Miguel de Allende</div>
-              <div class="m-meta"><span class="m-plat mp-m">Meta Ads</span><span class="m-time">2 h</span><span class="m-impact">+22 leads/mes Bajío</span></div>
-            </div>
-          </div>
-          <div class="mission m-imp" id="m-m3" onclick="toggleMission('m-m3')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Activar formato Reels en ad sets de retargeting 0–7 días</div>
-              <div class="m-meta"><span class="m-plat mp-m">Meta Ads</span><span class="m-time">30 min</span><span class="m-impact">Alcance +35% mismo presupuesto</span></div>
-            </div>
-          </div>
-          <div class="mission m-imp" id="m-m4" onclick="toggleMission('m-m4')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Activar Meta Advantage+ AI en un ad set para test de 2 semanas</div>
-              <div class="m-meta"><span class="m-plat mp-m">Meta Ads</span><span class="m-time">20 min</span><span class="m-impact">CPL estimado -12%</span></div>
-            </div>
-          </div>
-          <div class="mission m-opp" id="m-m5" onclick="toggleMission('m-m5')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Crear carrusel "Antes / Durante / Después" de proyecto terminado</div>
-              <div class="m-meta"><span class="m-plat mp-m">Meta Ads</span><span class="m-time">1 h</span><span class="m-impact">Engagement +20% retargeting 8–30d</span></div>
-            </div>
-          </div>
-          <div class="mission m-opp" id="m-m6" onclick="toggleMission('m-m6')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Crear campaña específica para Metepec / Toluca premium con segmento HHI Top 30%</div>
-              <div class="m-meta"><span class="m-plat mp-m">Meta Ads</span><span class="m-time">2 h</span><span class="m-impact">CPA Toluca estimado $390 vs $560</span></div>
-            </div>
-          </div>
-          <div class="mission m-crit" id="m-m-audit" onclick="toggleMission('m-m-audit')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Auditar públicos actuales en cada ad set: verificar tamaño, overlap y si estamos llegando al perfil correcto (35–55 años, HHI alto, interés en vivienda)</div>
-              <div class="m-meta"><span class="m-plat mp-m">Meta Ads</span><span class="m-time">45 min</span><span class="m-impact">Leads más calificados · CPL bajo</span></div>
-            </div>
-          </div>
-          <div class="mission m-crit" id="m-m-pix" onclick="toggleMission('m-m-pix')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Verificar configuración completa del Pixel de Meta: revisar eventos activos, confirmar ViewContent en portafolio y Lead en formularios con Meta Pixel Helper</div>
-              <div class="m-meta"><span class="m-plat mp-m">Meta / Pixel</span><span class="m-time">1 h</span><span class="m-impact">Retargeting preciso = CPL -22%</span></div>
-            </div>
-          </div>
-          <div class="mission m-imp" id="m-m-aud" onclick="toggleMission('m-m-aud')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Analizar Audience Insights: ver quién realmente interactúa con los anuncios — edad, ciudad, género, intereses. Comparar con cliente ideal</div>
-              <div class="m-meta"><span class="m-plat mp-m">Meta Ads</span><span class="m-time">30 min</span><span class="m-impact">Ajuste de targeting basado en datos reales</span></div>
-            </div>
-          </div>
-          <div class="mission m-imp" id="m-m-freq" onclick="toggleMission('m-m-freq')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Monitorear frecuencia de anuncios en retargeting — si supera 4x/semana, rotar creativos o ampliar audiencia</div>
-              <div class="m-meta"><span class="m-plat mp-m">Meta Ads</span><span class="m-time">15 min/sem</span><span class="m-impact">Evita fatiga de anuncio y CPL alto</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="diag-strip">
-      <div class="diag-title">Análisis · ad sets y configuración</div>
-      <div class="diag-items" id="meta-diag">
-        <div class="diag-item diag-ok"><span class="diag-icon d-ok">✓</span><span class="diag-txt">Retargeting 0–7 días: CPL $48 — mejor ad set, por debajo del benchmark del sector ($70)</span><span class="diag-val">↑ best</span></div>
-        <div class="diag-item diag-ok"><span class="diag-icon d-ok">✓</span><span class="diag-txt">Retargeting 8–30 días: CPL $62 · Lookalike 1%: CPL $88 — ambos activos</span><span class="diag-val">✓ activos</span></div>
-        <div class="diag-item diag-warn" id="md-int"><span class="diag-icon d-warn">!</span><span class="diag-txt">Ad set "Intereses Arq." con CPL $124 — auditar audiencia, posible overlap con retargeting</span><span class="diag-val">$124 CPL</span></div>
-        <div class="diag-item diag-warn" id="md-pub"><span class="diag-icon d-warn">!</span><span class="diag-txt">Verificar configuración de públicos: tamaño óptimo, exclusiones y overlap entre ad sets</span><span class="diag-val">⚠ auditar</span></div>
-        <div class="diag-item diag-bad" id="md-vid"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin videos testimoniales — formato de mayor conversión en arquitectura premium</span><span class="diag-val">pendiente</span></div>
-        <div class="diag-item diag-bad" id="md-sma"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin campaña para San Miguel de Allende, Guanajuato ni Bajío — mercados sin cubrir</span><span class="diag-val">0 leads</span></div>
-        <div class="diag-item diag-bad" id="md-pix-vc"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Pixel ViewContent sin verificar en portafolio — retargeting basado en audiencia incompleta</span><span class="diag-val">revisar</span></div>
-      </div>
-    </div>
-    <div style="padding:14px 18px;border-top:1px solid var(--ln)">
-      <div class="stage-col-title" style="margin-bottom:10px">Ad sets · rendimiento real</div>
-      <div class="tw" id="adsets-table"><div class="aiload">Cargando...</div></div>
-    </div>
-  </div>
-</div>
-
-<!-- ════ STAGE 4: WHATSAPP ════ -->
-<div class="stage-sec" id="sec-wa">
-  <div class="stage-hd" onclick="toggleStage('sec-wa')">
-    <div class="stage-color" style="background:var(--grn)"></div>
-    <div class="stage-hd-inner">
-      <span class="stage-icon" style="color:var(--grn);font-size:10px">WA</span>
-      <div>
-        <div class="stage-title"><span class="stage-label sl-fb">FINAL BOSS</span>WhatsApp</div>
-        <div class="stage-camp">Click-to-WA desde Meta · Calificación · 44.3% → SQL · Registro de leads</div>
-      </div>
-      <div class="stage-hd-r">
-        <div class="stage-metric"><span class="stage-metric-val" id="wa-sql">—</span><span class="stage-metric-lbl">SQLs</span></div>
-        <span class="stage-health sh-warn" id="wa-health">Proceso manual</span>
-        <span class="stage-toggle" id="tog-sec-wa">▾</span>
-      </div>
-    </div>
-  </div>
-  <div class="stage-body" id="body-sec-wa">
-    <div class="stage-grid">
-      <div class="stage-col">
-        <div class="stage-col-title">Activo</div>
-        <div class="asset-list">
-          <div class="asset"><div class="a-dot dot-on"></div><span class="a-name">WhatsApp Business</span><span class="a-st ast-on">activo</span></div>
-          <div class="asset"><div class="a-dot dot-on"></div><span class="a-name">Click-to-WA desde Meta</span><span class="a-st ast-on">configurado</span></div>
-        </div>
-      </div>
-      <div class="stage-col">
-        <div class="stage-col-title">Micromisiones</div>
-        <div class="mission-list">
-          <div class="mission m-crit" id="m-wa1" onclick="toggleMission('m-wa1')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Documentar y fijar el script de 5 preguntas en WA Business como respuesta rápida</div>
-              <div class="m-meta"><span class="m-plat mp-w">WhatsApp</span><span class="m-time">1 h</span><span class="m-impact">SQL rate +8% estimado</span></div>
-            </div>
-          </div>
-          <div class="mission m-crit" id="m-wa2" onclick="toggleMission('m-wa2')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Configurar respuesta automática fuera de horario (WA Business)</div>
-              <div class="m-meta"><span class="m-plat mp-w">WhatsApp</span><span class="m-time">30 min</span><span class="m-impact">Sin pérdida de leads nocturnos</span></div>
-            </div>
-          </div>
-          <div class="mission m-imp" id="m-wa3" onclick="toggleMission('m-wa3')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Crear etiquetas en WA Business: WA Nuevo · SQL · Cita · Proyecto · Perdido</div>
-              <div class="m-meta"><span class="m-plat mp-w">WhatsApp</span><span class="m-time">20 min</span><span class="m-impact">Pipeline visible sin CRM externo</span></div>
-            </div>
-          </div>
-          <div class="mission m-imp" id="m-wa4" onclick="toggleMission('m-wa4')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Crear template de seguimiento a 48h para leads sin respuesta</div>
-              <div class="m-meta"><span class="m-plat mp-w">WhatsApp</span><span class="m-time">30 min</span><span class="m-impact">+15 citas/mes recuperadas</span></div>
-            </div>
-          </div>
-          <div class="mission m-opp" id="m-wa5" onclick="toggleMission('m-wa5')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Integrar Calendly: los SQLs agendan cita directo desde el chat</div>
-              <div class="m-meta"><span class="m-plat mp-w">WA / Cal</span><span class="m-time">1 h</span><span class="m-impact">SQL→Cita +12% estimado</span></div>
-            </div>
-          </div>
-          <div class="mission m-crit" id="m-wa-msg" onclick="toggleMission('m-wa-msg')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Revisar y optimizar mensaje de bienvenida automático — que filtre y califique desde el primer contacto</div>
-              <div class="m-meta"><span class="m-plat mp-w">WhatsApp</span><span class="m-time">30 min</span><span class="m-impact">SQL rate +5% en primer mensaje</span></div>
-            </div>
-          </div>
-          <div class="mission m-imp" id="m-wa-tags" onclick="toggleMission('m-wa-tags')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Crear sistema de etiquetas en WA Business: Nuevo · Calificando · SQL · Cita · Proyecto · Perdido — para tener pipeline visible</div>
-              <div class="m-meta"><span class="m-plat mp-w">WhatsApp</span><span class="m-time">20 min</span><span class="m-impact">Pipeline visible sin CRM externo</span></div>
-            </div>
-          </div>
-          <div class="mission m-opp" id="m-wa-bot" onclick="toggleMission('m-wa-bot')">
-            <div class="m-check"></div>
-            <div class="m-body">
-              <div class="m-title">Evaluar bot de calificación automática (Leadsales / WATI) para manejo nocturno y weekends sin perder leads</div>
-              <div class="m-meta"><span class="m-plat mp-w">WhatsApp</span><span class="m-time">1 sem investigar</span><span class="m-impact">Cero leads perdidos fuera de horario</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- ANÁLISIS WA -->
-    <div class="diag-strip">
-      <div class="diag-title">Análisis · configuración y rendimiento</div>
-      <div class="diag-items">
-        <div class="diag-item diag-ok"><span class="diag-icon d-ok">✓</span><span class="diag-txt">Tasa WA → SQL 44.3% — excelente, top del sector en arquitectura</span><span class="diag-val">↑ top 10%</span></div>
-        <div class="diag-item diag-ok"><span class="diag-icon d-ok">✓</span><span class="diag-txt">Click-to-WA activo desde Meta Ads — flujo directo campaña → conversación</span><span class="diag-val">✓ ok</span></div>
-        <div class="diag-item diag-warn" id="wad-script"><span class="diag-icon d-warn">!</span><span class="diag-txt">Script de calificación no documentado — proceso depende de una sola persona</span><span class="diag-val">riesgo</span></div>
-        <div class="diag-item diag-warn" id="wad-welcome"><span class="diag-icon d-warn">!</span><span class="diag-txt">Mensaje de bienvenida pendiente de optimización para calificar desde el primer contacto</span><span class="diag-val">revisar</span></div>
-        <div class="diag-item diag-bad" id="wad-bot"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin bot nocturno — leads que escriben de noche se pierden hasta el día siguiente</span><span class="diag-val">-leads</span></div>
-        <div class="diag-item diag-bad" id="wad-tags"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin etiquetas por etapa — sin visibilidad del pipeline dentro de WA Business</span><span class="diag-val">ciego</span></div>
-        <div class="diag-item diag-bad" id="wad-followup"><span class="diag-icon d-bad">✗</span><span class="diag-txt">Sin seguimiento sistematizado a 48h — oportunidad de recuperar 15+ citas/mes</span><span class="diag-val">-15/mes</span></div>
-      </div>
-    </div>
-    <!-- MINI QUICK LEAD -->
-    <div style="padding:14px 18px;border-top:1px solid var(--ln)">
-      <div class="ql-wrap">
-        <div class="ql-title" onclick="this.nextElementSibling.classList.toggle('open')">
-          ⚡ Registrar lead rápido — viene de WA <span style="margin-left:auto;font-size:9px;color:var(--t3)">clic para abrir/cerrar</span>
-        </div>
-        <div class="ql-body">
-          <div class="ql-grid">
-            <div class="ql-field"><label>Nombre</label><input type="text" id="ql-name" placeholder="ej. Carlos García"></div>
-            <div class="ql-field"><label>Teléfono / WA</label><input type="tel" id="ql-phone" placeholder="442 123 4567"></div>
-          </div>
-          <div class="ql-grid">
-            <div class="ql-field"><label>Ciudad</label>
-              <select id="ql-city">
-                <option>Querétaro</option><option>CDMX</option><option>Toluca</option>
-                <option>Metepec</option><option>Valle de Bravo</option>
-                <option>San Miguel de Allende</option><option>Guanajuato</option><option>Bajío</option><option>Otra</option>
-              </select>
-            </div>
-            <div class="ql-field"><label>Fuente</label>
-              <select id="ql-source">
-                <option value="m">Meta Ads</option><option value="g">Google Ads</option>
-                <option value="r">Referido</option><option value="o">Orgánico</option>
-              </select>
-            </div>
-          </div>
-          <div class="ql-grid">
-            <div class="ql-field"><label>Presupuesto aprox.</label>
-              <select id="ql-budget">
-                <option value="">Sin definir</option><option value="<1M">&lt;$1M MXN</option>
-                <option value="1-2M">$1M–$2M</option><option value="2-4M">$2M–$4M</option>
-                <option value=">4M">&gt;$4M</option>
-              </select>
-            </div>
-            <div class="ql-field"><label>Terreno</label>
-              <select id="ql-land">
-                <option value="">No sé aún</option>
-                <option value="propio">Tiene terreno propio</option>
-                <option value="busca">Busca terreno</option>
-              </select>
-            </div>
-          </div>
-          <div class="ql-field" style="margin-bottom:8px"><label>Nota rápida</label><input type="text" id="ql-note" placeholder="ej. QRO Norte, 200m², timeline 2026, muy interesado..."></div>
-          <button class="ql-btn" onclick="quickLead()">+ Guardar lead en CRM</button>
-          <div class="ql-ok" id="ql-ok">✓ Lead guardado — ve al tab CRM para verlo</div>
-        </div>
-      </div>
-    </div>
-    <div class="opp-strip">
-      <div class="diag-title">Oportunidades</div>
-      <div class="opp-chips">
-        <span class="opp-chip oc-w">+ Bot IA de calificación (Leadsales / WATI)</span>
-        <span class="opp-chip oc-w">+ Catálogo de servicios en WA Business</span>
-        <span class="opp-chip oc-w">+ Encuesta post-cita para testimoniales</span>
-        <span class="opp-chip oc-s">+ Agendado automático vía Calendly</span>
-        <span class="opp-chip oc-s">+ Seguimiento 48h con template WA</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- ════ INVERSIÓN (BOTTOM) ════ -->
-<!-- ════ TARJETA DE DATOS UNIFICADA ════ -->
-<div class="data-card" style="margin-top:8px">
-  <div class="dc-hd">
-    <div class="dc-hd-title">Datos del período · <span id="dc-period">—</span></div>
-    <div class="dc-hd-sync">Sync: <span id="dc-sync">—</span></div>
-  </div>
-
-  <!-- Google + Meta en paralelo -->
-  <div class="dc-plat-grid">
-    <div class="dc-plat">
-      <div class="dc-plat-hd"><span class="dc-badge-g">G</span> Google Ads · ARQ_2025_B</div>
-      <div class="dc-nums">
-        <div class="dc-num"><div class="dc-num-lbl">Inversión</div><div class="dc-num-val" id="dc-ginv">$—</div></div>
-        <div class="dc-num"><div class="dc-num-lbl">Impresiones</div><div class="dc-num-val" id="dc-gimp">—</div></div>
-        <div class="dc-num"><div class="dc-num-lbl">Clics</div><div class="dc-num-val" id="dc-gclk">—</div></div>
-        <div class="dc-num"><div class="dc-num-lbl">CTR</div><div class="dc-num-val" id="dc-gctr">—</div></div>
-        <div class="dc-num"><div class="dc-num-lbl">$ × clic</div><div class="dc-num-val" id="dc-gcpc">$—</div></div>
-      </div>
-    </div>
-    <div class="dc-plat">
-      <div class="dc-plat-hd"><span class="dc-badge-m">M</span> Meta Ads · 2024, ARQ, QRO</div>
-      <div class="dc-nums">
-        <div class="dc-num"><div class="dc-num-lbl">Inversión</div><div class="dc-num-val" id="dc-minv">$—</div></div>
-        <div class="dc-num"><div class="dc-num-lbl">Conversaciones WA</div><div class="dc-num-val" id="dc-mwa">—</div></div>
-        <div class="dc-num"><div class="dc-num-lbl">$ × conversación</div><div class="dc-num-val" id="dc-mcwa">$—</div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Comparativo mensual -->
-  <div class="dc-hist">
-    <div class="dc-hist-title">Comparativo mensual</div>
-    <div class="tw" id="dc-hist-table"><div class="aiload">Cargando histórico...</div></div>
-  </div>
-</div>
-
-<!-- AI Global -->
-<div class="ai-card" style="margin-top:14px">
-  <span class="ai-tag">✦ Análisis estratégico del funnel completo</span>
-  <div class="ai-out" id="ai-full-out"><div class="aiload">Cargando análisis...</div></div>
-  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
-    <button class="ai-btn" id="ai-full-btn" onclick="runAI('full')">⟳ Regenerar</button>
-    <button class="ai-btn" onclick="runAI('budget')">✦ Redistribución de presupuesto</button>
-    <button class="ai-btn" onclick="runAI('toluca')">✦ Optimizar CPA Toluca</button>
-    <button class="ai-btn" onclick="runAI('sma')">✦ Plan campaña SMA / Bajío</button>
-  </div>
-  <div class="ai-out" id="ai-extra-out" style="display:none;margin-top:12px;padding-top:12px;border-top:1px solid rgba(204,41,41,.15)"></div>
-</div>
-
-</div><!-- /wrap -->
-</div><!-- /panel-dash -->
-
-<!-- ════════════════ CRM ════════════════ -->
-<div class="panel" id="panel-crm">
-<div class="wrap">
-  <div class="crm-header">
-    <div>
-      <div style="font-family:var(--fpx);font-size:22px;color:var(--t1);margin-bottom:2px">CRM</div>
-      <div style="font-size:12px;color:var(--t3)">Pipeline de leads · desde WhatsApp hasta proyecto activo</div>
-    </div>
-    <div style="display:flex;gap:8px">
-      <button class="hdr-btn" id="crm-view-btn" onclick="crmToggleView()">Vista lista</button>
-      <button class="hdr-btn p" onclick="crmOpenModal()">+ Agregar lead</button>
-    </div>
-  </div>
-
-  <div class="crm-stats">
-    <div class="crm-stat"><div class="crm-stat-dot" style="background:#2860B4"></div><div class="crm-stat-n" id="crm-n-wa">0</div><div class="crm-stat-lbl">WA iniciado</div></div>
-    <div class="crm-stat"><div class="crm-stat-dot" style="background:#B07830"></div><div class="crm-stat-n" id="crm-n-sql">0</div><div class="crm-stat-lbl">Calificado</div></div>
-    <div class="crm-stat"><div class="crm-stat-dot" style="background:#CC2929"></div><div class="crm-stat-n" id="crm-n-cita">0</div><div class="crm-stat-lbl">Cita agendada</div></div>
-    <div class="crm-stat"><div class="crm-stat-dot" style="background:#2E8B57"></div><div class="crm-stat-n" id="crm-n-proy">0</div><div class="crm-stat-lbl">Proyecto activo</div></div>
-    <div class="crm-stat"><div class="crm-stat-dot" style="background:#9A9894"></div><div class="crm-stat-n" id="crm-n-lost">0</div><div class="crm-stat-lbl">Perdido</div></div>
-  </div>
-
-  <!-- BOARD -->
-  <div class="crm-board" id="crm-board-wrap">
-    <div class="crm-col"><div class="crm-col-hd"><div class="crm-col-dot" style="background:#2860B4"></div><span class="crm-col-name">WA iniciado</span><span class="crm-col-cnt" id="crm-hd-wa">0</span></div><div class="crm-cards" id="crm-col-wa"></div><button class="crm-add-btn" onclick="crmOpenModal('wa')">+ Agregar</button></div>
-    <div class="crm-col"><div class="crm-col-hd"><div class="crm-col-dot" style="background:#B07830"></div><span class="crm-col-name">Calificado</span><span class="crm-col-cnt" id="crm-hd-sql">0</span></div><div class="crm-cards" id="crm-col-sql"></div><button class="crm-add-btn" onclick="crmOpenModal('sql')">+ Agregar</button></div>
-    <div class="crm-col"><div class="crm-col-hd"><div class="crm-col-dot" style="background:#CC2929"></div><span class="crm-col-name">Cita agendada</span><span class="crm-col-cnt" id="crm-hd-cita">0</span></div><div class="crm-cards" id="crm-col-cita"></div><button class="crm-add-btn" onclick="crmOpenModal('cita')">+ Agregar</button></div>
-    <div class="crm-col"><div class="crm-col-hd"><div class="crm-col-dot" style="background:#2E8B57"></div><span class="crm-col-name">Proyecto activo</span><span class="crm-col-cnt" id="crm-hd-proy">0</span></div><div class="crm-cards" id="crm-col-proy"></div><button class="crm-add-btn" onclick="crmOpenModal('proyecto')">+ Agregar</button></div>
-    <div class="crm-col"><div class="crm-col-hd"><div class="crm-col-dot" style="background:#9A9894"></div><span class="crm-col-name">Perdido</span><span class="crm-col-cnt" id="crm-hd-lost">0</span></div><div class="crm-cards" id="crm-col-lost"></div><button class="crm-add-btn" onclick="crmOpenModal('perdido')">+ Agregar</button></div>
-  </div>
-
-  <!-- LIST -->
-  <div id="crm-list-wrap" style="display:none">
-    <div style="background:var(--bg2);border:1px solid var(--ln);border-radius:var(--r);overflow:hidden">
-      <div class="tw"><table class="tbl">
-        <thead><tr><th>Estado</th><th>Nombre</th><th>Ciudad</th><th>Fuente</th><th>Presupuesto</th><th>Fecha</th><th>Notas</th><th></th></tr></thead>
-        <tbody id="crm-tbody"></tbody>
-      </table></div>
-    </div>
-  </div>
-</div>
-</div><!-- /panel-crm -->
-
-<!-- CRM MODAL -->
-<div class="modal-bg" id="crm-modal-bg" onclick="if(event.target===this)this.classList.remove('open')">
-  <div class="modal">
-    <div class="modal-title" id="crm-modal-title">Nuevo lead</div>
-    <input type="hidden" id="crm-edit-id">
-    <div class="field"><label>Nombre</label><input type="text" id="crm-f-name" placeholder="ej. Carlos García"></div>
-    <div class="row2">
-      <div class="field"><label>Ciudad</label>
-        <select id="crm-f-city"><option>Querétaro</option><option>CDMX</option><option>Toluca</option><option>Metepec</option><option>Valle de Bravo</option><option>San Miguel de Allende</option><option>Guanajuato</option><option>Bajío</option><option>Otra</option></select>
-      </div>
-      <div class="field"><label>Fuente</label>
-        <select id="crm-f-source"><option value="g">Google Ads</option><option value="m">Meta Ads</option><option value="r">Referido</option><option value="o">Otro</option></select>
-      </div>
-    </div>
-    <div class="field"><label>Etapa</label>
-      <select id="crm-f-stage"><option value="wa">WA Iniciado</option><option value="sql">Calificado (SQL)</option><option value="cita">Cita Agendada</option><option value="proyecto">Proyecto Activo</option><option value="perdido">Perdido</option></select>
-    </div>
-    <div class="row2">
-      <div class="field"><label>Teléfono / WA</label><input type="text" id="crm-f-phone" placeholder="442 123 4567"></div>
-      <div class="field"><label>Presupuesto</label>
-        <select id="crm-f-budget"><option value="">Sin definir</option><option value="<1M">&lt;$1M</option><option value="1-2M">$1M–$2M</option><option value="2-4M">$2M–$4M</option><option value=">4M">&gt;$4M</option></select>
-      </div>
-    </div>
-    <div class="field"><label>Notas</label><textarea id="crm-f-notes" placeholder="Terreno en Col. del Valle, 220m², timeline 2026..."></textarea></div>
-    <div class="modal-btns">
-      <button class="btn-cancel" onclick="document.getElementById('crm-modal-bg').classList.remove('open')">Cancelar</button>
-      <button class="btn-save" onclick="crmSave()">Guardar</button>
-    </div>
-  </div>
-</div>
+<!-- CONTENT -->
+<main class="main" id="main">
+  <div class="loading" id="loading">inicializando...</div>
+</main>
 
 <script>
-/* ══ CONSTANTS ══ */
-const SHEET_URL = localStorage.getItem('arq-sheet-url') ||
-  'https://script.google.com/macros/s/AKfycbxyrmc3JXpUFnjrCYVEF23oZgX5KbVYeKRKc0i9933HZx_flPh6mSDhe5bO4ruOc8Fk_Q/exec';
-const CLAUDE   = 'https://api.anthropic.com/v1/messages';
-const PS_API   = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed';
-const CRM_KEY  = 'arq-crm-v3';
-const MISS_KEY = 'arq-missions';
+const STORE_KEY = 'arq-sheet-url-v2';
+let DATA   = null;
+let PERIOD = '7d';
 
-/* ══ HELPERS ══ */
-const $  = id => document.getElementById(id);
-const mxn = n => '$' + Math.round(n).toLocaleString('es-MX');
-const pct = n => (+n||0).toFixed(1) + '%';
-const fmtDate = d => { try{ return new Date(d).toLocaleDateString('es-MX',{month:'short',day:'numeric'}); }catch(e){ return ''; } };
-function setVal(id,v){ const e=$(id); if(e) e.textContent=v; }
-function setHTML(id,v){ const e=$(id); if(e) e.innerHTML=v; }
-function scrollTo(id){ const e=$(id); if(e) e.scrollIntoView({behavior:'smooth',block:'start'}); }
+/* ── URL helpers ── */
+function getUrl(){ return localStorage.getItem(STORE_KEY)||''; }
+function setUrl(u){ localStorage.setItem(STORE_KEY,u); }
 
-/* ══ TABS ══ */
-function sw(id, btn) {
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
-  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
-  $('panel-'+id).classList.add('on');
-  btn.classList.add('on');
-  window.scrollTo(0,0);
+/* ── Setup ── */
+function openSetup(){
+  document.getElementById('main').innerHTML = `
+    <div class="setup-wrap">
+      <h2>// configurar fuente de datos</h2>
+      <p>Pega la URL de Google Apps Script (termina en /exec):</p>
+      <input id="url-in" type="text" placeholder="https://script.google.com/macros/s/..." value="${getUrl()}">
+      <button class="btn" style="display:block;margin:0 auto;padding:8px 20px" onclick="saveUrl()">guardar &rarr;</button>
+    </div>`;
+}
+function saveUrl(){
+  const u = document.getElementById('url-in').value.trim();
+  if(!u) return;
+  setUrl(u);
+  loadData();
 }
 
-/* ══ STAGE COLLAPSE ══ */
-function toggleStage(id) {
-  const body = $('body-'+id);
-  const tog  = $('tog-'+id);
-  if (!body) return;
-  const open = body.style.display !== 'none';
-  body.style.display = open ? 'none' : 'block';
-  if (tog) tog.textContent = open ? '▸' : '▾';
+/* ── Connection indicator ── */
+function setConn(state){
+  document.getElementById('conn-dot').className = 'conn-dot '+state;
 }
 
-/* ══ MISSIONS ══ */
-function loadMissions() {
-  try { return JSON.parse(localStorage.getItem(MISS_KEY)||'{}'); } catch(e) { return {}; }
+/* ── Period switch ── */
+function setPeriod(p,btn){
+  PERIOD = p;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t===btn));
+  if(DATA) render();
 }
-function saveMissions(m) { localStorage.setItem(MISS_KEY, JSON.stringify(m)); }
 
-/* ── Mission intelligence data ── */
-const MISSION_STAGE = {
-  'm-g1':'sec-google','m-g2':'sec-google','m-g-conc':'sec-google',
-  'm-g-geo':'sec-google','m-g4':'sec-google','m-g3':'sec-google',
-  'm-g5':'sec-google','m-g6':'sec-google','m-g7':'sec-google',
-  'm-g-rlsa':'sec-google','m-g-qs':'sec-google','m-g-demo2':'sec-google',
-  'm-w1':'sec-web','m-w2':'sec-web','m-w3':'sec-web','m-w4':'sec-web',
-  'm-w5':'sec-web','m-w6':'sec-web','m-w-pixel':'sec-web','m-w-ga4':'sec-web',
-  'm-w-wix':'sec-web','m-w-ps':'sec-web','m-w-heat':'sec-web','m-w-schema':'sec-web',
-  'm-m1':'sec-meta','m-m2':'sec-meta','m-m3':'sec-meta','m-m4':'sec-meta',
-  'm-m5':'sec-meta','m-m6':'sec-meta','m-m-audit':'sec-meta','m-m-pix':'sec-meta',
-  'm-m-aud':'sec-meta','m-m-freq':'sec-meta',
-  'm-wa1':'sec-wa','m-wa2':'sec-wa','m-wa3':'sec-wa','m-wa4':'sec-wa',
-  'm-wa5':'sec-wa','m-wa-msg':'sec-wa','m-wa-tags':'sec-wa','m-wa-bot':'sec-wa'
-};
-
-const STAGE_CRITS = {
-  'sec-google': ['m-g1','m-g2','m-g-conc','m-g-geo'],
-  'sec-web':    ['m-w1','m-w-pixel','m-w-ga4'],
-  'sec-meta':   ['m-m1','m-m2','m-m-audit','m-m-pix'],
-  'sec-wa':     ['m-wa1','m-wa2','m-wa-msg']
-};
-
-const STAGE_HEALTH_IDS = {
-  'sec-google':'g-health','sec-web':'w-health','sec-meta':'m-health','sec-wa':'wa-health'
-};
-
-/* What each mission resolves in the diagnosis strip */
-const MISSION_EFFECTS = {
-  'm-g1':     [{id:'gd-lead-form', txt:'Lead Form Extension configurada — captando leads directos desde Google', val:'✓ activa'}],
-  'm-g2':     [{id:'gd-neg-kw',    txt:'Keywords negativas agregadas — ahorrando ~$1,960/mes en clics irrelevantes', val:'✓ ok'}],
-  'm-g3':     [{id:'gd-img-ext',   txt:'Image Extensions activas — CTR visual mejorado', val:'✓ activas'}],
-  'm-g5':     [{id:'gd-snippets',  txt:'Structured Snippets completas — tipos de proyecto incluidos', val:'✓ ok'}],
-  'm-g-geo':  [{id:'gd-geo',       txt:'Segmentación geográfica verificada — todos los mercados cubiertos', val:'✓ ok'}],
-  'm-w1':     [{id:'wd-vc',        txt:'Pixel Meta ViewContent verificado en portafolio', val:'✓ ok'}],
-  'm-w-pixel':[{id:'wd-vc',        txt:'Pixel Meta auditado — todos los eventos verificados con Pixel Helper', val:'✓ ok'},
-               {id:'md-pix-vc',    txt:'Pixel ViewContent verificado — retargeting sobre audiencia real del portafolio', val:'✓ ok'}],
-  'm-w-ga4':  [{id:'wd-ga4',       txt:'GA4 eventos verificados — contacto y clic WA registrándose correctamente', val:'✓ ok'}],
-  'm-w2':     [{id:'wd-clarity',   txt:'Microsoft Clarity instalado — heatmaps y grabaciones activas', val:'✓ activo'}],
-  'm-w-heat': [{id:'wd-clarity',   txt:'Microsoft Clarity instalado — heatmaps y grabaciones activas', val:'✓ activo'}],
-  'm-w3':     [{id:'wd-wa-cta',    txt:'Botón WhatsApp flotante activo en portafolio — contacto con un clic', val:'✓ ok'}],
-  'm-w5':     [{id:'wd-landing',   txt:'Landing QRO activa — copy + proyectos locales. Pendiente: SMA, Metepec', val:'parcial'}],
-  'm-m1':     [{id:'md-vid',       txt:'Videos testimoniales activos — formato de mayor conversión en Meta', val:'✓ ok'}],
-  'm-m2':     [{id:'md-sma',       txt:'Campaña SMA activa — mercado Bajío siendo captado', val:'✓ activa'}],
-  'm-m-audit':[{id:'md-int',       txt:'Ad set Intereses Arq. auditado — overlap corregido, CPL bajando', val:'✓ ok'},
-               {id:'md-pub',       txt:'Configuración de públicos verificada — targeting optimizado', val:'✓ ok'}],
-  'm-m-pix':  [{id:'md-pix-vc',    txt:'Pixel ViewContent verificado — retargeting basado en audiencia real', val:'✓ ok'}],
-  'm-wa1':    [{id:'wad-script',   txt:'Script documentado y fijo en WA Business — proceso estandarizado', val:'✓ ok'}],
-  'm-wa-msg': [{id:'wad-welcome',  txt:'Mensaje de bienvenida optimizado — califica desde el primer contacto', val:'✓ ok'}],
-  'm-wa2':    [{id:'wad-welcome',  txt:'Respuesta automática fuera de horario configurada — cero leads perdidos', val:'✓ ok'}],
-  'm-wa3':    [{id:'wad-tags',     txt:'Etiquetas configuradas en WA Business — pipeline visible', val:'✓ ok'}],
-  'm-wa-tags':[{id:'wad-tags',     txt:'Sistema de etiquetas activo — pipeline visible en WA Business', val:'✓ ok'}],
-  'm-wa4':    [{id:'wad-followup', txt:'Template 48h activo — recuperando leads sin respuesta', val:'✓ ok'}],
-  'm-wa-bot': [{id:'wad-bot',      txt:'Bot nocturno configurado — cero leads perdidos fuera de horario', val:'✓ ok'}]
-};
-
-/* Original states to restore on uncheck */
-const DIAG_ORIGINALS = {
-  'gd-lead-form':{ cls:'diag-bad',  ic:'d-bad',  sym:'✗', txt:'Lead Form Extension inactiva — pérdida de leads directos desde Google', val:'-18 leads/mes' },
-  'gd-neg-kw':   { cls:'diag-bad',  ic:'d-bad',  sym:'✗', txt:'Keywords como "software arquitectura", "escuela arquitectura" generando clics irrelevantes', val:'$1,960/mes' },
-  'gd-img-ext':  { cls:'diag-bad',  ic:'d-bad',  sym:'✗', txt:'Image Extensions sin activar — CTR potencial no aprovechado', val:'sin foto' },
-  'gd-snippets': { cls:'diag-warn', ic:'d-warn', sym:'!', txt:'Structured Snippets incompletas — faltan tipos de proyecto relevantes', val:'revisar' },
-  'gd-geo':      { cls:'diag-warn', ic:'d-warn', sym:'!', txt:'Segmentación geográfica activa — verificar cobertura de Metepec, Valle de Bravo, Guanajuato y Bajío', val:'revisar' },
-  'wd-vc':       { cls:'diag-warn', ic:'d-warn', sym:'!', txt:'Pixel Meta ViewContent — verificar disparo en cada página del portafolio', val:'⚠ revisar' },
-  'wd-ga4':      { cls:'diag-warn', ic:'d-warn', sym:'!', txt:'GA4 eventos clave — confirmar que contacto y clic WA se registran correctamente', val:'⚠ verificar' },
-  'wd-clarity':  { cls:'diag-bad',  ic:'d-bad',  sym:'✗', txt:'Sin heatmap (Clarity/Hotjar) — sin datos de comportamiento de los visitantes', val:'ciego' },
-  'wd-wa-cta':   { cls:'diag-bad',  ic:'d-bad',  sym:'✗', txt:'Sin CTA WhatsApp flotante en portafolio — fricción innecesaria para contactar', val:'-conv.' },
-  'wd-landing':  { cls:'diag-bad',  ic:'d-bad',  sym:'✗', txt:'Sin landing pages por ciudad — mismo contenido para QRO, CDMX, SMA, Metepec, GTO', val:'QS bajo' },
-  'md-int':      { cls:'diag-warn', ic:'d-warn', sym:'!', txt:'Ad set "Intereses Arq." con CPL $124 — auditar audiencia, posible overlap con retargeting', val:'$124 CPL' },
-  'md-pub':      { cls:'diag-warn', ic:'d-warn', sym:'!', txt:'Verificar configuración de públicos: tamaño óptimo, exclusiones y overlap entre ad sets', val:'⚠ auditar' },
-  'md-vid':      { cls:'diag-bad',  ic:'d-bad',  sym:'✗', txt:'Sin videos testimoniales — formato de mayor conversión en arquitectura premium', val:'pendiente' },
-  'md-sma':      { cls:'diag-bad',  ic:'d-bad',  sym:'✗', txt:'Sin campaña para San Miguel de Allende, Guanajuato ni Bajío — mercados sin cubrir', val:'0 leads' },
-  'md-pix-vc':   { cls:'diag-bad',  ic:'d-bad',  sym:'✗', txt:'Pixel ViewContent sin verificar en portafolio — retargeting basado en audiencia incompleta', val:'revisar' },
-  'wad-script':  { cls:'diag-warn', ic:'d-warn', sym:'!', txt:'Script de calificación no documentado — proceso depende de una sola persona', val:'riesgo' },
-  'wad-welcome': { cls:'diag-warn', ic:'d-warn', sym:'!', txt:'Mensaje de bienvenida pendiente de optimización para calificar desde el primer contacto', val:'revisar' },
-  'wad-bot':     { cls:'diag-bad',  ic:'d-bad',  sym:'✗', txt:'Sin bot nocturno — leads que escriben de noche se pierden hasta el día siguiente', val:'-leads' },
-  'wad-tags':    { cls:'diag-bad',  ic:'d-bad',  sym:'✗', txt:'Sin etiquetas por etapa — sin visibilidad del pipeline dentro de WA Business', val:'ciego' },
-  'wad-followup':{ cls:'diag-bad',  ic:'d-bad',  sym:'✗', txt:'Sin seguimiento sistematizado a 48h — oportunidad de recuperar 15+ citas/mes', val:'-15/mes' }
-};
-
-/* Follow-up missions unlocked when trigger missions are all done */
-const FOLLOWUPS = [
-  {
-    trigger:['m-w-pixel','m-w-ga4'], id:'mfu-retarget', stage:'sec-meta', pri:'m-imp', plat:'mp-m',
-    title:'Crear audiencia de retargeting "ViewContent" en Meta Ads Manager — pixel verificado, ahora aprovéchalo al máximo con audience específica de visitantes del portafolio',
-    time:'20 min', impact:'Retargeting ultra-preciso · CPL -22%'
-  },
-  {
-    trigger:['m-g1'], id:'mfu-lf-check', stage:'sec-google', pri:'m-imp', plat:'mp-g',
-    title:'Lead Form activa — verificar que la conversión aparece en Google Ads y activar "Formulario Lead" como conversión principal para optimización de pujas',
-    time:'15 min', impact:'Smart Bidding optimiza hacia leads reales'
-  },
-  {
-    trigger:['m-m2'], id:'mfu-sma-lp', stage:'sec-web', pri:'m-imp', plat:'mp-s',
-    title:'Campaña SMA lanzada — crear landing page San Miguel de Allende / Bajío para mejorar QS y bajar CPL desde el día 1',
-    time:'3 h', impact:'QS +1 · CPL SMA -15% · bounce -20%'
-  },
-  {
-    trigger:['m-wa3','m-wa-tags'], id:'mfu-crm-sync', stage:'sec-wa', pri:'m-opp', plat:'mp-w',
-    title:'Etiquetas WA activas — evaluar sincronización con CRM liviano (HubSpot Free / Notion) para trazabilidad completa sin perder leads entre etapas',
-    time:'1 sem investigar', impact:'Pipeline 100% visible · escalable'
+/* ── Load data ── */
+async function loadData(){
+  const url = getUrl();
+  if(!url){ openSetup(); return; }
+  setConn('wait');
+  document.getElementById('loading').style.display='block';
+  document.getElementById('loading').textContent='cargando...';
+  try{
+    const r = await fetch(url+'?nc='+Date.now());
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const j = await r.json();
+    DATA = parsePayload(j);
+    setConn('ok');
+    document.getElementById('loading').style.display='none';
+    render();
+  }catch(e){
+    setConn('err');
+    document.getElementById('loading').textContent='error: '+e.message;
   }
-];
-
-/* ── Diag helpers ── */
-function setDiagOk(id, txt, val) {
-  const el = $(id); if (!el) return;
-  el.className = 'diag-item diag-ok';
-  const ic = el.querySelector('.diag-icon');
-  const te = el.querySelector('.diag-txt');
-  const ve = el.querySelector('.diag-val');
-  if (ic) { ic.className='diag-icon d-ok'; ic.textContent='✓'; }
-  if (te) te.textContent = txt;
-  if (ve) ve.textContent = val;
 }
 
-function resetDiag(id) {
-  const o = DIAG_ORIGINALS[id]; const el = $(id);
-  if (!el || !o) return;
-  el.className = 'diag-item ' + o.cls;
-  const ic = el.querySelector('.diag-icon');
-  const te = el.querySelector('.diag-txt');
-  const ve = el.querySelector('.diag-val');
-  if (ic) { ic.className='diag-icon '+o.ic; ic.textContent=o.sym; }
-  if (te) te.textContent = o.txt;
-  if (ve) ve.textContent = o.val;
+function parsePayload(j){
+  // Formato v2 directo
+  if(j.periods) return j;
+  // Formato v2 guardado en Sheet (el GAS devuelve el JSON directamente)
+  if(j.error) return {_error: j.error};
+  return {_legacy: true, _raw: j};
 }
 
-function reapplyAllEffects() {
-  Object.keys(DIAG_ORIGINALS).forEach(id => resetDiag(id));
-  const m = loadMissions();
-  Object.entries(MISSION_EFFECTS).forEach(([mId, effects]) => {
-    if (!m[mId]) return;
-    effects.forEach(fx => setDiagOk(fx.id, fx.txt, fx.val));
-  });
+/* ── Formatters ── */
+function fmt(n,d=2){
+  if(n===undefined||n===null||n===''||isNaN(Number(n))) return '—';
+  return Number(n).toLocaleString('es-MX',{minimumFractionDigits:d,maximumFractionDigits:d});
 }
+function fmx(n){ return '$'+fmt(n)+' MXN'; }
+function pct(n){ if(!n&&n!==0) return '—'; return fmt(n,2)+'%'; }
+function num(n){ if(n===undefined||n===null) return '—'; return Number(n).toLocaleString('es-MX'); }
 
-function applyMissionEffects(missionId, isDone) {
-  if (isDone) {
-    (MISSION_EFFECTS[missionId] || []).forEach(fx => {
-      setDiagOk(fx.id, fx.txt, fx.val);
-      const el = $(fx.id);
-      if (el) { el.classList.add('resolving'); setTimeout(()=>el.classList.remove('resolving'), 700); }
-    });
+/* ── Main render ── */
+function render(){
+  if(!DATA) return;
+  if(DATA._error){ document.getElementById('main').innerHTML=`<div class="loading" style="color:var(--red)">error sheet: ${DATA._error}</div>`; return; }
+  if(DATA._legacy){ document.getElementById('main').innerHTML=`<div class="loading" style="color:var(--yel)">&#9888; formato legacy — ejecuta pull_ads_arq.py v2 para actualizar</div>`; return; }
+
+  const ts = DATA.timestamp ? new Date(DATA.timestamp).toLocaleString('es-MX') : '—';
+  document.getElementById('ts-lbl').textContent = ts;
+
+  const p  = DATA.periods && DATA.periods[PERIOD] ? DATA.periods[PERIOD] : {};
+  const g  = p.google || {};
+  const m  = p.meta   || {};
+  const al = DATA.alerts || [];
+  const ga = DATA.google_account || {};
+  const ma = DATA.meta_account   || {};
+
+  let html = '';
+
+  /* ALERTAS */
+  html += '<div class="sec">';
+  html += '<div class="sec-hd"><div class="sec-hd-dot" style="background:var(--red)"></div>ALERTAS ACTIVAS</div>';
+  if(al.length===0){
+    html += '<div class="no-alerts">&#10003; sin alertas — todos los indicadores dentro de parametros</div>';
   } else {
-    reapplyAllEffects();
+    al.forEach(a=>{
+      const lvl = a.level==='urgent'?'&#9679; URGENTE': a.level==='critical'?'&#9679; CRITICO':'&#9651; ALERTA';
+      html += `<div class="alert-row ${a.level}">
+        <div class="alert-level">${lvl} &mdash; ${a.code||''}</div>
+        <div class="alert-msg">${a.msg||''}</div>
+        ${a.detail?`<div class="alert-detail">${a.detail}</div>`:''}
+      </div>`;
+    });
   }
-}
+  html += '</div>';
 
-/* ── Stage health badge ── */
-function updateStageHealth(stageId, missions) {
-  const crits = STAGE_CRITS[stageId] || [];
-  const done  = crits.filter(id => !!missions[id]).length;
-  const total = crits.length;
-  const ratio = total > 0 ? done / total : 0;
-  const el    = $(STAGE_HEALTH_IDS[stageId]);
-  if (!el) return;
-  el.className = 'stage-health ' + (ratio >= 1 ? 'sh-good' : ratio >= 0.5 ? 'sh-warn' : 'sh-bad');
-  // Only rewrite text for non-data-driven badges
-  if (stageId === 'sec-web' || stageId === 'sec-wa') {
-    el.textContent = ratio >= 1 ? '✓ Configurado' : ratio >= 0.5 ? `${done}/${total} críticas ok` : el.textContent;
-  } else if (ratio >= 1) {
-    el.textContent = '✓ Optimizando';
+  /* GOOGLE ADS */
+  const gStatus = g.status==='ok'||!g.status ? 'ok' : 'err';
+  const cpc     = g.cpc||0;
+  const conv    = g.conversions!==undefined ? g.conversions : null;
+  const isLost  = g.impression_share_lost_budget||0;
+
+  html += '<div class="sec">';
+  html += `<div class="sec-hd">
+    <div class="sec-hd-dot" style="background:var(--blu)"></div>
+    GOOGLE ADS &mdash; ${g.campaign||'ARQ_QRO_2026'}
+    <span class="badge ${gStatus}" style="margin-left:6px">${gStatus==='ok'?'activo':g.status}</span>
+    <span style="color:var(--dim);font-size:9px;margin-left:auto">${g.date_from||''} / ${g.date_to||''}</span>
+  </div>`;
+
+  html += '<div class="mrows">';
+  html += mr('GASTO',         fmx(g.spend));
+  html += mr('CLICS',         num(g.clicks));
+  html += mr('IMPRESIONES',   num(g.impressions));
+  html += mr('CTR',           pct(g.ctr));
+  html += mr('CPC',           fmx(cpc), cpc>18?'red':cpc>15?'yel':'', cpc>18?'&#9651; sobre umbral $18':'');
+  html += mr('CONVERSIONES',  conv!==null?num(conv):'—', conv===0&&(g.spend||0)>0?'red':conv>0?'grn':'', conv===0&&(g.spend||0)>0?'&#9679; urgente':'');
+  html += mr('CPA',           g.cpa?fmx(g.cpa):'—');
+  html += mr('IS PERDIDA PRE',isLost?isLost+'%':'—', isLost>30?'yel':'', isLost>30?'&#9651; presupuesto bajo':'');
+  html += '</div>';
+
+  /* Saldo Google */
+  if(ga.balance!==undefined&&ga.balance>0){
+    html += balChip('SALDO GOOGLE', fmx(ga.balance), ga.balance<2000?'low':'ok');
   }
-}
 
-/* ── Follow-up mission injection ── */
-function checkFollowups(missions) {
-  FOLLOWUPS.forEach(fu => {
-    const triggered = fu.trigger.every(t => !!missions[t]);
-    const existing  = $(fu.id);
-    if (triggered && !existing) {
-      const stageBody = $('body-' + fu.stage);
-      if (!stageBody) return;
-      const ml = stageBody.querySelector('.mission-list');
-      if (!ml) return;
-      const div = document.createElement('div');
-      div.className = `mission ${fu.pri} mission-followup`;
-      div.id = fu.id;
-      div.setAttribute('onclick', `toggleMission('${fu.id}')`);
-      div.innerHTML = `<div class="m-check"></div>
-        <div class="m-body">
-          <div class="m-title"><span style="font-family:var(--fm);font-size:8px;background:var(--grn);color:#fff;padding:1px 6px;border-radius:3px;margin-right:6px;vertical-align:middle">NEW</span>${fu.title}</div>
-          <div class="m-meta"><span class="m-plat ${fu.plat}">${fu.plat.replace('mp-','').toUpperCase()}</span><span class="m-time">${fu.time}</span><span class="m-impact">${fu.impact}</span></div>
-        </div>`;
-      ml.insertBefore(div, ml.firstChild);
-      // Track this in MISSION_STAGE so health calc works
-      MISSION_STAGE[fu.id] = fu.stage;
-    } else if (!triggered && existing && existing.classList.contains('mission-followup')) {
-      existing.remove();
-    }
-  });
-}
-
-/* ── Main toggle ── */
-function toggleMission(id) {
-  const el = $(id);
-  if (!el) return;
-  const m = loadMissions();
-  m[id] = !m[id];
-  saveMissions(m);
-  const isDone = m[id];
-  el.classList.toggle('done', isDone);
-  // Apply diagnostic effects
-  applyMissionEffects(id, isDone);
-  // Update stage health badge
-  const stageId = MISSION_STAGE[id];
-  if (stageId) updateStageHealth(stageId, m);
-  // Check for newly triggered follow-up missions
-  checkFollowups(m);
-  updatePendingBadge();
-}
-
-function initMissions() {
-  const m = loadMissions();
-  document.querySelectorAll('.mission').forEach(el => {
-    if (m[el.id]) el.classList.add('done');
-  });
-  // Restore saved diag states
-  reapplyAllEffects();
-  // Re-inject any follow-up missions that were unlocked
-  checkFollowups(m);
-  // Update all health badges
-  Object.keys(STAGE_CRITS).forEach(sId => updateStageHealth(sId, m));
-  updatePendingBadge();
-}
-
-function updatePendingBadge() {
-  const m = loadMissions();
-  const total = document.querySelectorAll('.mission').length;
-  const done  = Object.values(m).filter(Boolean).length;
-  const pend  = total - done;
-  const badge = $('pending-badge');
-  if (badge) badge.textContent = pend + ' pendientes';
-}
-
-/* ══ PERIOD HELPERS ══ */
-const MESES_ES = ["Enero","Febrero","Marzo","Abril","Mayo","Junio",
-                  "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
-
-function initPeriodSelector() {
-  const now = new Date();
-  const selMes  = $('sel-mes');
-  const selAnio = $('sel-anio');
-  if (selMes)  selMes.value  = MESES_ES[now.getMonth()];
-  if (selAnio) selAnio.value = String(now.getFullYear());
-}
-
-function getPeriod() {
-  const mes  = ($('sel-mes')  || {}).value || MESES_ES[new Date().getMonth()];
-  const anio = ($('sel-anio') || {}).value || String(new Date().getFullYear());
-  return { mes, anio };
-}
-
-function onPeriodChange() {
-  // Resetear caché de IA al cambiar periodo para que se regenere con datos frescos
-  Object.keys(DONE_AI).forEach(k => delete DONE_AI[k]);
-  loadSheet();
-}
-
-/* ══ SHEET DATA ══ */
-async function loadSheet() {
-  const { mes, anio } = getPeriod();
-  const url = `${SHEET_URL}?mes=${encodeURIComponent(mes)}&anio=${encodeURIComponent(anio)}`;
-  // Actualizar banner mientras carga
-  const banner = $('data-banner');
-  if (banner) {
-    banner.style.cssText = 'border-radius:var(--r);padding:10px 14px;margin-bottom:16px;font-size:12px;display:flex;align-items:flex-start;gap:10px;border-left:3px solid var(--amb);background:rgba(176,120,48,.07);border:1px solid rgba(176,120,48,.2)';
-    banner.innerHTML = `<span style="font-size:14px;margin-top:1px">⟳</span><div><strong style="color:var(--amb)">Cargando ${mes} ${anio}</strong> — conectando con ARQ_2025_B + 2024, ARQ, QRO...</div>`;
+  /* Keywords */
+  const kws = g.keywords||[];
+  if(kws.length>0){
+    html += '<div class="coll-wrap">';
+    html += `<button class="coll-btn" onclick="toggleColl(this)">&#9654; keywords (${kws.length})</button>`;
+    html += '<div class="coll-body"><table class="tbl"><thead><tr><th>keyword</th><th>tipo</th><th class="r">clics</th><th class="r">gasto</th><th class="r">conv</th><th class="r">QS</th></tr></thead><tbody>';
+    kws.slice(0,15).forEach(k=>{
+      const mt = (k.match||'').replace('KEYWORD_MATCH_TYPE_UNSPECIFIED','').replace('KeywordMatchType.','').toLowerCase();
+      html += `<tr>
+        <td>${k.keyword||'—'}</td>
+        <td class="dim">${mt}</td>
+        <td class="r">${num(k.clicks)}</td>
+        <td class="r">$${fmt(k.spend,0)}</td>
+        <td class="r ${k.conv>0?'grn':'dim'}">${k.conv||0}</td>
+        <td class="r">${k.qs||'—'}</td>
+      </tr>`;
+    });
+    html += '</tbody></table></div></div>';
   }
-  try {
-    const res  = await fetch(url);
-    const json = await res.json();
-    const d    = json.latest || {};
-    if (!d || (!d['Total Spend'] && !d.total_spend)) {
-      // No hay datos para ese periodo
-      if (banner) {
-        banner.style.cssText = 'border-radius:var(--r);padding:10px 14px;margin-bottom:16px;font-size:12px;display:flex;align-items:flex-start;gap:10px;border-left:3px solid var(--red);background:rgba(204,41,41,.07);border:1px solid rgba(204,41,41,.2)';
-        banner.innerHTML = `<span style="font-size:14px;margin-top:1px">⚠</span><div><strong style="color:var(--red)">Sin datos para ${mes} ${anio}</strong> — ejecuta el pull de datos en GitHub Actions para este periodo</div>`;
-      }
-      $('conn-dot').style.background = 'var(--amb)';
-      return;
-    }
 
-    const inv    = +(d['Total Spend']        ||d.total_spend         ||0);
-    const gSpend = +(d['Google Spend']       ||d.google_spend        ||0);
-    const mSpend = +(d['Meta Spend']         ||d.meta_spend          ||0);
-    const gClks  = +(d['Google Clicks']      ||d.google_clicks       ||0);
-    const gImpr  = +(d['Google Impresiones'] ||d.google_impressions  ||0);
-    const gCTR   = +(d['Google CTR']         ||d.google_ctr          ||0);
-    const gCPC   = +(d['Google CPC']         ||d.google_cpc          ||(gClks>0&&gSpend>0?gSpend/gClks:0));
-    const gConv  = +(d['Google Conversiones']||d.google_conversions  ||0);
-    const mReach = +(d['Meta Reach']         ||d.meta_reach          ||0);
-    const wa     = +(d['Meta WA Convs']      ||d.meta_wa_convs       ||0);
-    const cwa    = +(d['Meta Costo WA']      ||d.meta_cost_per_wa    ||0);
-    const mCPM   = +(d['Meta CPM']           ||d.meta_cpm            ||0);
-    const kws    = d['Google Keywords']     ||d.google_keywords      ||[];
-    const adsets = d['Meta Ad Sets']        ||d.meta_ad_sets         ||[];
-    const per    = ((d['Mes']||d.mes||'')+' '+(d['Anio']||d.anio||'')).trim();
-    const cpl    = wa>0 ? Math.round(inv/wa) : 0;
-    const citas  = Math.round(wa*0.268);
-    const sql    = Math.round(wa*0.443);
-
-    // Banner éxito
-    const ts = d['Timestamp']||d.timestamp||'';
-    const foundTag = json.found === false ? ' · <span style="color:var(--amb)">mostrando último disponible</span>' : '';
-    banner.style.cssText = 'border-radius:var(--r);padding:10px 14px;margin-bottom:16px;font-size:12px;display:flex;align-items:flex-start;gap:10px;border-left:3px solid var(--grn);background:rgba(46,139,87,.07);border:1px solid rgba(46,139,87,.2)';
-    banner.innerHTML = `<span style="font-size:14px;margin-top:1px">✓</span><div><strong style="color:var(--grn)">Datos reales · ${per||mes+' '+anio}</strong> · ARQ_2025_B + 2024, ARQ, QRO · Sync: ${ts?new Date(ts).toLocaleString('es-MX'):'hoy'} · ${json.count||0} período(s)${foundTag}</div>`;
-    $('conn-dot').style.background = 'var(--grn)';
-    if (per) setVal('kw-period', '· '+per);
-
-    // Funnel bar
-    setVal('ff1', gClks.toLocaleString('es-MX'));
-    setVal('ff1b', pct(gCTR));
-    setVal('ff2', Math.round(gClks*.7).toLocaleString('es-MX'));
-    setVal('ff3', mReach.toLocaleString('es-MX'));
-    setVal('ff3b', cwa>0?mxn(cwa):'$48');
-    setVal('ff4', wa.toLocaleString('es-MX'));
-
-    // Stage header metrics
-    setVal('g-clics', gClks.toLocaleString('es-MX'));
-    setVal('m-wa', wa.toLocaleString('es-MX'));
-    setVal('wa-sql', sql.toLocaleString('es-MX'));
-    setVal('w-visits', Math.round(gClks*.7).toLocaleString('es-MX'));
-
-    // Tarjeta de datos unificada
-    const periodLabel = per || `${mes} ${anio}`;
-    const syncLabel = ts ? new Date(ts).toLocaleString('es-MX',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}) : 'hoy';
-    setVal('dc-period', periodLabel);
-    setVal('dc-sync',   syncLabel);
-    setVal('dc-ginv',   gSpend>0 ? mxn(gSpend) : '$—');
-    setVal('dc-gimp',   gImpr>0  ? gImpr.toLocaleString('es-MX') : '—');
-    setVal('dc-gclk',   gClks>0  ? gClks.toLocaleString('es-MX') : '—');
-    setVal('dc-gctr',   gCTR>0   ? pct(gCTR) : '—');
-    setVal('dc-gcpc',   gCPC>0   ? mxn(gCPC) : '$—');
-    setVal('dc-minv',   mSpend>0 ? mxn(mSpend) : '$—');
-    setVal('dc-mwa',    wa>0     ? wa.toLocaleString('es-MX') : '—');
-    setVal('dc-mcwa',   cwa>0    ? mxn(cwa) : '—');
-
-    // Comparativo mensual — usa todos los datos devueltos por el Sheet
-    renderHistTable(json.data || []);
-
-    // Keywords table
-    renderKwTable(kws);
-
-    // AdSets table
-    renderAdSets(adsets);
-
-    // Update health badges
-    $('g-health').textContent = 'Activa';
-    $('m-health').textContent = adsets.length ? `${adsets.filter(a=>a.status==='ACTIVE').length} ad sets activos` : '4 ad sets activos';
-
-    // Actualizar prompts de IA con datos reales del periodo
-    updateAIPrompts({ per: per||`${mes} ${anio}`, inv, gSpend, mSpend, gClks, gCTR, gConv, mReach, wa, cwa, cpl, citas, sql });
-
-  } catch(err) {
-    console.warn('[ARQ]', err.message);
-    $('conn-dot').style.background = 'var(--red)';
-    const banner2 = $('data-banner');
-    if (banner2) {
-      banner2.style.cssText = 'border-radius:var(--r);padding:10px 14px;margin-bottom:16px;font-size:12px;display:flex;align-items:flex-start;gap:10px;border:1px solid rgba(204,41,41,.2);background:rgba(204,41,41,.07)';
-      banner2.innerHTML = `<span style="font-size:14px;margin-top:1px">✗</span><div><strong style="color:var(--red)">Error al conectar</strong> — ${err.message}</div>`;
-    }
+  /* Terminos de busqueda */
+  const sts = g.search_terms||[];
+  if(sts.length>0){
+    html += '<div class="coll-wrap">';
+    html += `<button class="coll-btn" onclick="toggleColl(this)">&#9654; terminos de busqueda (${sts.length})</button>`;
+    html += '<div class="coll-body"><table class="tbl"><thead><tr><th>termino</th><th class="r">clics</th><th class="r">gasto</th><th class="r">conv</th></tr></thead><tbody>';
+    sts.slice(0,20).forEach(s=>{
+      html += `<tr>
+        <td>${s.term||'—'}</td>
+        <td class="r">${num(s.clicks)}</td>
+        <td class="r">$${fmt(s.spend,0)}</td>
+        <td class="r ${s.conv>0?'grn':'dim'}">${s.conv||0}</td>
+      </tr>`;
+    });
+    html += '</tbody></table></div></div>';
   }
-}
+  html += '</div>'; /* /sec google */
 
-function renderKwTable(kws) {
-  if (!kws||!kws.length) { setHTML('kw-table','<div style="font-size:11px;color:var(--t3);padding:4px">Sin datos de keywords aún.</div>'); return; }
-  const sorted = [...kws].sort((a,b)=>(b.clicks||0)-(a.clicks||0)).slice(0,15);
-  setHTML('kw-table', `<table class="tbl"><thead><tr><th>Keyword</th><th>Match</th><th>QS</th><th>Clics</th><th>CTR</th><th>Gasto</th><th>Conv.</th><th>Estado</th></tr></thead><tbody>
-    ${sorted.map(k=>{
-      const qs=k.quality_score||0, qsC=qs>=8?'var(--grn)':qs>=6?'var(--amb)':'var(--red)';
-      const diag=qs<5?'<span class="b br">Pausar</span>':qs<7?'<span class="b ba">Mejorar</span>':(k.clicks>50&&!k.conversions)?'<span class="b ba">Sin conv.</span>':'<span class="b bg">OK</span>';
-      const mt=(k.match_type||'').replace('KEYWORD_MATCH_TYPE_','').replace('_',' ');
-      return `<tr><td class="tdm" style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${k.keyword||'—'}</td>
-        <td><span class="b bb" style="font-size:9px">${mt}</span></td>
-        <td style="color:${qsC};font-family:var(--fm);font-weight:500">${qs||'—'}/10</td>
-        <td>${(k.clicks||0).toLocaleString('es-MX')}</td><td>${pct(k.ctr||0)}</td>
-        <td>${mxn(k.spend||0)}</td><td>${k.conversions||0}</td><td>${diag}</td></tr>`;
-    }).join('')}</tbody></table>`);
-}
+  /* META ADS */
+  const mStatus = m.status==='ok'||!m.status ? 'ok' : 'err';
+  const freq    = m.frequency||0;
 
-function renderHistTable(rows) {
-  const el = $('dc-hist-table');
-  if (!el) return;
-  if (!rows || !rows.length) {
-    el.innerHTML = '<div style="font-size:11px;color:var(--t3);padding:4px 0">Sin histórico aún — los datos aparecerán aquí a medida que se acumulen meses.</div>';
-    return;
+  html += '<div class="sec">';
+  html += `<div class="sec-hd">
+    <div class="sec-hd-dot" style="background:var(--pur)"></div>
+    META ADS &mdash; ${m.campaign||'2026_ARQ_QRO'}
+    <span class="badge ${mStatus}" style="margin-left:6px">${mStatus==='ok'?'activo':m.status}</span>
+    <span style="color:var(--dim);font-size:9px;margin-left:auto">${m.date_from||''} / ${m.date_to||''}</span>
+  </div>`;
+
+  html += '<div class="mrows">';
+  html += mr('GASTO',          fmx(m.spend));
+  html += mr('ALCANCE',        num(m.reach));
+  html += mr('IMPRESIONES',    num(m.impressions));
+  html += mr('FRECUENCIA',     freq?fmt(freq,1):'—', freq>5?'red':freq>3.5?'yel':'', freq>5?'&#9679; fatiga':freq>3.5?'&#9651; monitorear':'');
+  html += mr('CPM',            fmx(m.cpm));
+  html += mr('CLICS',          num(m.clicks));
+  html += mr('CTR',            pct(m.ctr));
+  html += mr('CONV. WHATSAPP', m.wa_conversations!==undefined?num(m.wa_conversations):'—', m.wa_conversations>0?'grn':'');
+  html += mr('COSTO / WA',     m.cost_per_wa?fmx(m.cost_per_wa):'—');
+  html += '</div>';
+
+  /* Saldo Meta */
+  if(ma.balance!==undefined){
+    html += balChip(
+      'SALDO META',
+      fmx(ma.balance),
+      ma.balance<=0?'neg':ma.balance<500?'low':'ok'
+    );
   }
-  const MESES_IDX = {Enero:1,Febrero:2,Marzo:3,Abril:4,Mayo:5,Junio:6,
-                     Julio:7,Agosto:8,Septiembre:9,Octubre:10,Noviembre:11,Diciembre:12};
-  // Más reciente primero
-  const sorted = [...rows].sort((a, b) => {
-    const ya = +(a['Anio']||0), yb = +(b['Anio']||0);
-    if (ya !== yb) return yb - ya;
-    return (MESES_IDX[b['Mes']]||0) - (MESES_IDX[a['Mes']]||0);
-  });
-  // Referencia para deltas: el mes anterior al más reciente
-  const prev = sorted[1] || null;
-  const delta = (cur, prv, field) => {
-    if (!prv) return '';
-    const c = +(cur[field]||0), p = +(prv[field]||0);
-    if (!p) return '';
-    const d = ((c - p) / p * 100).toFixed(0);
-    const cls = c >= p ? 'du' : 'dd';
-    return ` <span class="delta ${cls}">${c>=p?'↑':'↓'}${Math.abs(d)}%</span>`;
-  };
-  el.innerHTML = `<div class="tw"><table class="dc-hist-tbl">
-    <thead><tr>
-      <th style="text-align:left">Período</th>
-      <th>Inv. Google</th>
-      <th>Inv. Meta</th>
-      <th>Impresiones G</th>
-      <th>Clics G</th>
-      <th>CTR</th>
-      <th>$ × Clic</th>
-      <th>Conv. WA</th>
-      <th>$ × Conv.</th>
-    </tr></thead>
-    <tbody>
-      ${sorted.map((r, i) => {
-        const gS  = +(r['Google Spend']||0);
-        const mS  = +(r['Meta Spend']||0);
-        const gI  = +(r['Google Impresiones']||0);
-        const gC  = +(r['Google Clicks']||0);
-        const gT  = +(r['Google CTR']||0);
-        const gP  = +(r['Google CPC']||(gC>0&&gS>0?gS/gC:0));
-        const wa  = +(r['Meta WA Convs']||0);
-        const cwa = +(r['Meta Costo WA']||0);
-        const isCurr = i === 0;
-        return `<tr${isCurr?' class="dc-cur"':''}>
-          <td>${r['Mes']||'—'} ${r['Anio']||''}</td>
-          <td>${gS>0?mxn(gS):'—'}${isCurr?delta(r,prev,'Google Spend'):''}</td>
-          <td>${mS>0?mxn(mS):'—'}${isCurr?delta(r,prev,'Meta Spend'):''}</td>
-          <td>${gI>0?gI.toLocaleString('es-MX'):'—'}${isCurr?delta(r,prev,'Google Impresiones'):''}</td>
-          <td>${gC>0?gC.toLocaleString('es-MX'):'—'}${isCurr?delta(r,prev,'Google Clicks'):''}</td>
-          <td>${gT>0?pct(gT):'—'}${isCurr?delta(r,prev,'Google CTR'):''}</td>
-          <td>${gP>0?mxn(gP):'—'}</td>
-          <td>${wa>0?wa:'—'}${isCurr?delta(r,prev,'Meta WA Convs'):''}</td>
-          <td>${cwa>0?mxn(cwa):'—'}${isCurr?delta(r,prev,'Meta Costo WA'):''}</td>
-        </tr>`;
-      }).join('')}
-    </tbody>
-  </table></div>`;
-}
 
-function renderAdSets(adsets) {
-  if (!adsets||!adsets.length) { setHTML('adsets-table','<div style="font-size:11px;color:var(--t3);padding:4px">Sin datos de ad sets aún.</div>'); return; }
-  const sorted = [...adsets].sort((a,b)=>(b.spend||0)-(a.spend||0));
-  setHTML('adsets-table', `<table class="tbl"><thead><tr><th>Conjunto</th><th>Estado</th><th>Alcance</th><th>Conv. WA</th><th>CPL WA</th><th>Diagnóstico</th></tr></thead><tbody>
-    ${sorted.map(a=>{
-      const cpl=a.cost_per_wa||0;
-      const diag=cpl>0&&cpl<70?'<span class="b bg">CPL excelente</span>':cpl<120?'<span class="b ba">CPL aceptable</span>':cpl>0?'<span class="b br">CPL alto</span>':'<span class="b" style="background:var(--bg4);border:1px solid var(--ln2);color:var(--t3)">Sin conv.</span>';
-      return `<tr><td class="tdm" style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${a.name||'—'}</td>
-        <td><span class="b ${a.status==='ACTIVE'?'bg':'ba'}">${a.status==='ACTIVE'?'Activo':'Pausado'}</span></td>
-        <td>${(a.reach||0).toLocaleString('es-MX')}</td><td>${a.wa_convs||0}</td>
-        <td style="font-family:var(--fm);color:${cpl<70?'var(--grn)':cpl<120?'var(--amb)':'var(--red)'}">${cpl>0?mxn(cpl):'—'}</td>
-        <td>${diag}</td></tr>`;
-    }).join('')}</tbody></table>`);
-}
-
-/* ══ PAGESPEED ══ */
-async function loadPS() {
-  try {
-    const [mR, dR] = await Promise.all([
-      fetch(`${PS_API}?url=https://casaclubarq.com&strategy=mobile&category=performance`),
-      fetch(`${PS_API}?url=https://casaclubarq.com&strategy=desktop&category=performance`)
-    ]);
-    const [m, d] = await Promise.all([mR.json(), dR.json()]);
-    const parse = data => {
-      const lh = data.lighthouseResult; if(!lh) return null;
-      const s = Math.round((lh.categories?.performance?.score||0)*100);
-      const a = lh.audits||{};
-      return { s, fcp:a['first-contentful-paint']?.displayValue||'—',
-        lcp:a['largest-contentful-paint']?.displayValue||'—',
-        cls:a['cumulative-layout-shift']?.displayValue||'—',
-        opps: Object.values(a).filter(x=>x.details?.type==='opportunity'&&(x.numericValue||0)>500)
-          .sort((a,b)=>(b.numericValue||0)-(a.numericValue||0)).slice(0,4)
-          .map(x=>({t:x.title,v:x.displayValue||''}))
-      };
-    };
-    const pc = s => s>=90?'ps-g':s>=50?'ps-a':'ps-b';
-    const ms = parse(m), ds = parse(d);
-    if(ms){ setVal('psm-s',ms.s); $('psm-s').className=`ps-v ${pc(ms.s)}`; setVal('psm-fcp',ms.fcp); setVal('psm-lcp',ms.lcp); setVal('psm-cls',ms.cls); }
-    if(ds){ setVal('psd-s',ds.s); $('psd-s').className=`ps-v ${pc(ds.s)}`; setVal('psd-fcp',ds.fcp); setVal('psd-lcp',ds.lcp); setVal('psd-cls',ds.cls); }
-    const opps = [...(ms?.opps||[]),...(ds?.opps||[])].filter((v,i,a)=>a.findIndex(x=>x.t===v.t)===i).slice(0,5);
-    const mScore = ms?.s||0;
-    setHTML('ps-audits', opps.length
-      ? opps.map(o=>`<div class="diag-item diag-warn"><span class="diag-icon d-warn">!</span><span class="diag-txt">${o.t}</span><span class="diag-val">${o.v}</span></div>`).join('')
-      : '<div class="diag-item diag-ok"><span class="diag-icon d-ok">✓</span><span class="diag-txt">Sin oportunidades críticas detectadas</span></div>');
-    setVal('w-health', mScore>=90?'Rápido':mScore>=50?'Mejorable':'Lento');
-    $('w-health').className = `stage-health ${mScore>=90?'sh-good':mScore>=50?'sh-warn':'sh-bad'}`;
-  } catch(e) {
-    setHTML('ps-audits','<div class="diag-item diag-warn"><span class="diag-icon d-warn">!</span><span class="diag-txt">No se pudo cargar PageSpeed en este entorno. Ejecuta desde Netlify para ver datos reales.</span></div>');
+  /* Ad sets — abiertos por defecto */
+  const adsets = m.ad_sets||[];
+  if(adsets.length>0){
+    html += '<div class="coll-wrap">';
+    html += `<button class="coll-btn on" onclick="toggleColl(this)">&#9660; ad sets (${adsets.length})</button>`;
+    html += '<div class="coll-body open"><table class="tbl"><thead><tr><th>ad set</th><th>estado</th><th class="r">gasto</th><th class="r">alcance</th><th class="r">freq</th><th class="r">WA</th><th class="r">$/WA</th></tr></thead><tbody>';
+    adsets.forEach(as=>{
+      const fa   = as.frequency||0;
+      const fcls = fa>5?'red':fa>3.5?'yel':'';
+      html += `<tr>
+        <td>${as.name||'—'}</td>
+        <td><span class="badge ${as.status==='ACTIVE'?'act':'pau'}">${as.status||'—'}</span></td>
+        <td class="r">$${fmt(as.spend,0)}</td>
+        <td class="r">${num(as.reach)}</td>
+        <td class="r ${fcls}">${fa?fmt(fa,1):'—'}</td>
+        <td class="r ${as.wa_convs>0?'grn':'dim'}">${as.wa_convs||0}</td>
+        <td class="r">${as.cost_per_wa?'$'+fmt(as.cost_per_wa,0):'—'}</td>
+      </tr>`;
+    });
+    html += '</tbody></table></div></div>';
   }
+  html += '</div>'; /* /sec meta */
+
+  document.getElementById('main').innerHTML = html;
 }
 
-/* ══ AI ══ */
-const DONE_AI = {};
-
-// Datos base que se actualizan con información real del sheet
-let AI_DATA = {
-  per:'este mes', inv:48200, gSpend:28000, mSpend:20200,
-  gClks:4820, gCTR:6.2, gConv:0, mReach:2362, wa:287,
-  cwa:48, cpl:168, citas:77, sql:127
-};
-
-function updateAIPrompts(d) {
-  AI_DATA = { ...AI_DATA, ...d };
-}
-
-function buildPrompts() {
-  const D = AI_DATA;
-  const visitas = Math.round(D.gClks * 0.7);
-  return {
-  full:`Eres experto en marketing digital para arquitectura residencial premium en México.
-Analiza el funnel de Casa Club ARQ (diseño+construcción llave en mano) para el periodo: ${D.per}.
-- Google Ads ARQ_2025_B → ${D.gClks.toLocaleString('es-MX')} clics, CTR ${D.gCTR.toFixed(1)}%, inversión $${D.gSpend.toLocaleString('es-MX')} MXN.
-- Sitio casaclubarq.com: ~${visitas.toLocaleString('es-MX')} visitas estimadas, ~30% pérdida en landing.
-- Meta Ads "2024, ARQ, QRO" → ${D.mReach.toLocaleString('es-MX')} alcanzados, ${D.wa} convs. WA, CPL $${D.cwa} MXN.
-- WA: 44.3% → SQL (~${D.sql} leads calificados). 26.8% → cita (~${D.citas} citas). Inversión total $${D.inv.toLocaleString('es-MX')} MXN/mes. CPL blended $${D.cpl} MXN.
-- Mercados: QRO, CDMX, Toluca, Metepec, San Miguel de Allende, Guanajuato.
-En 4 párrafos específicos: (1) qué está funcionando bien, (2) los 3 problemas más urgentes, (3) cómo escalar a SMA y Bajío, (4) proyección a 90 días si se ejecutan las correcciones. Con números. En español.`,
-
-  site:`Eres experto en UX, SEO y conversión para arquitectura residencial en México.
-Analiza casaclubarq.com considerando:
-- Tráfico viene de keywords: "arquitecto residencial querétaro", "construcción casa llave en mano", "empresa constructora cdmx"
-- Negocio: diseño + construcción llave en mano (no solo diseño)
-- 30% de los clics no generan sesión válida — posible problema de velocidad o mensaje
-- Objetivo del sitio: iniciar conversación WhatsApp
-- 70% del tráfico es móvil
-- Mercados: QRO, CDMX, Toluca, Metepec, San Miguel de Allende
-Analiza y da recomendaciones concretas en 4 puntos:
-1. ¿El copy del sitio usa las palabras que busca el cliente o hay desconexión?
-2. ¿Qué elementos de velocidad/UX móvil están frenando la conversión?
-3. ¿Los CTAs hacia WhatsApp son suficientemente claros y urgentes?
-4. ¿Qué páginas faltan (por ciudad, por tipo de proyecto) que deberían existir?
-Muy accionable, en español.`,
-
-  budget:`Estratega de marketing. Casa Club ARQ periodo ${D.per}: Google $${D.gSpend.toLocaleString('es-MX')} + Meta $${D.mSpend.toLocaleString('es-MX')} = $${D.inv.toLocaleString('es-MX')} MXN/mes.
-CPL retargeting Meta $${D.cwa} vs Google ~$${Math.round(D.gSpend/Math.max(D.wa,1))} MXN. ${D.wa} WA/mes, ${D.citas} citas, 26.8% conversión WA→cita.
-Dame plan de redistribución de presupuesto para maximizar leads en QRO, CDMX, Toluca, Metepec y SMA en los próximos 3 meses. Con números específicos y justificación.`,
-
-  toluca:`Experto Google Ads. ARQ_2025_B en periodo ${D.per}.
-CPA estimado Toluca/Metepec vs Querétaro — analiza gap y propón corrección.
-Diagnóstico completo y plan de acción: bid adjustments, keywords específicas a agregar/pausar para Toluca, cambios de segmentación demográfica, qué anuncios RSA crear para esa zona. Con números y tiempos.`,
-
-  sma:`Experto en Meta y Google Ads para mercados premium México.
-Casa Club ARQ quiere entrar a San Miguel de Allende, Guanajuato y Bajío. Presupuesto disponible referencia: $${D.inv.toLocaleString('es-MX')} MXN/mes actual.
-Diseña la estrategia completa: (1) campaña Meta "2024, ARQ, SMA" — audiencias, creativos, presupuesto, (2) campaña Google para SMA — keywords, anuncios, bid strategy, (3) landing page necesaria, (4) CPL y volumen esperado. Muy específico.`
-  }; // cierra return
-} // cierra buildPrompts
-
-async function runAI(type) {
-  if (DONE_AI[type]) return;
-  const isExtra = ['budget','toluca','sma'].includes(type);
-  const outId = isExtra ? 'ai-extra-out' : `ai-${type}-out`;
-  const btnId = `ai-${type}-btn`;
-  const outEl = $(outId), btnEl = $(btnId);
-  if (!outEl) return;
-  if (isExtra) { outEl.style.display='block'; }
-  outEl.innerHTML = '<div class="aiload">✦ Generando análisis...</div>';
-  if (btnEl) btnEl.disabled = true;
-  try {
-    const prompts = buildPrompts(); // usa datos reales actualizados
-    const body = {model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompts[type]}]};
-    if (type==='site') body.tools=[{type:'web_search_20250305',name:'web_search'}];
-    const r = await fetch(CLAUDE,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-    const data = await r.json();
-    const txt = (data.content||[]).filter(c=>c.type==='text').map(c=>c.text).join('')||'Error al generar.';
-    outEl.innerHTML = txt.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>');
-    DONE_AI[type] = true;
-  } catch(e) { outEl.innerHTML='<span style="color:var(--red)">Error de conexión.</span>'; }
-  if (btnEl) btnEl.disabled = false;
-}
-
-/* ══ CRM ══ */
-let crmList = false;
-const STAGES = {wa:{dot:'#2860B4',lbl:'WA iniciado'},sql:{dot:'#B07830',lbl:'Calificado'},cita:{dot:'#CC2929',lbl:'Cita agendada'},proyecto:{dot:'#2E8B57',lbl:'Proyecto activo'},perdido:{dot:'#9A9894',lbl:'Perdido'}};
-const SRC = {g:'Google Ads',m:'Meta Ads',r:'Referido',o:'Otro'};
-const SRC_CLS = {g:'cs-g',m:'cs-m',r:'cs-r',o:'cs-o'};
-const COL = {wa:'wa',sql:'sql',cita:'cita',proyecto:'proy',perdido:'lost'};
-
-function crmLoad(){ try{ return JSON.parse(localStorage.getItem(CRM_KEY)||'[]'); }catch(e){ return []; } }
-function crmStore(l){ localStorage.setItem(CRM_KEY,JSON.stringify(l)); }
-
-function crmRender(){
-  const leads = crmLoad();
-  // counts
-  Object.keys(STAGES).forEach(s=>{
-    const n = leads.filter(l=>l.stage===s).length;
-    setVal('crm-n-'+COL[s], n);
-    setVal('crm-hd-'+COL[s], n);
-  });
-  setVal('crm-tab-cnt', leads.length);
-  // board
-  Object.keys(STAGES).forEach(s=>{
-    const col = $('crm-col-'+COL[s]); if(!col) return;
-    const sl = leads.filter(l=>l.stage===s);
-    col.innerHTML = sl.length ? sl.map(crmCard).join('') : `<div class="crm-empty">vacío</div>`;
-  });
-  // list
-  const tb = $('crm-tbody'); if(!tb) return;
-  const sorted = [...leads].sort((a,b)=>new Date(b.date)-new Date(a.date));
-  tb.innerHTML = sorted.length ? sorted.map(l=>`<tr>
-    <td><span style="display:inline-flex;align-items:center;gap:5px"><span style="width:7px;height:7px;border-radius:50%;background:${STAGES[l.stage]?.dot||'#9A9894'};display:inline-block"></span><span style="font-family:var(--fh);font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t2)">${STAGES[l.stage]?.lbl||l.stage}</span></span></td>
-    <td class="tdm">${l.name||'—'}</td><td>${l.city||'—'}</td>
-    <td><span class="crm-src ${SRC_CLS[l.source]||'cs-o'}">${SRC[l.source]||'Otro'}</span></td>
-    <td style="font-family:var(--fm);font-size:10px;color:var(--t3)">${l.budget||'—'}</td>
-    <td style="font-family:var(--fm);font-size:10px;color:var(--t3)">${fmtDate(l.date)}</td>
-    <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;color:var(--t3)">${l.notes||'—'}</td>
-    <td><button style="font-family:var(--fh);font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border:1px solid var(--ln2);border-radius:2px;background:transparent;color:var(--t3);cursor:pointer" onclick="crmOpenModal(null,'${l.id}')">Editar</button></td>
-  </tr>`).join('') : `<tr><td colspan="8" style="text-align:center;color:var(--t3);padding:24px;font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase">Sin leads — agrega el primero</td></tr>`;
-}
-
-function crmCard(l){
-  return `<div class="crm-card" onclick="crmOpenModal(null,'${l.id}')">
-    <button class="crm-card-del" onclick="event.stopPropagation();crmDel('${l.id}')">×</button>
-    <div class="crm-card-name">${l.name||'Sin nombre'}</div>
-    <div class="crm-card-meta">
-      <span class="crm-tag">${l.city||'—'}</span>
-      <span class="crm-src ${SRC_CLS[l.source]||'cs-o'}">${SRC[l.source]||'Otro'}</span>
-      ${l.budget?`<span class="crm-tag">${l.budget}</span>`:''}
-    </div>
-    ${l.notes?`<div class="crm-card-note">${l.notes}</div>`:''}
+/* ── Helpers de render ── */
+function mr(label,val,color,note){
+  const vc = color?` ${color}`:'';
+  const nc = color?` ${color==='red'?'red':color==='yel'?'yel':'grn'}`:'';
+  return `<div class="mrow">
+    <span class="mrow-lbl">${label}</span>
+    <span class="mrow-val${vc}">${val}</span>
+    ${note?`<span class="mrow-note${nc}">${note}</span>`:''}
   </div>`;
 }
-
-function crmOpenModal(stage, editId){
-  $('crm-edit-id').value = editId||'';
-  $('crm-modal-title').textContent = editId?'Editar lead':'Nuevo lead';
-  if(editId){
-    const l = crmLoad().find(x=>x.id===editId); if(!l) return;
-    $('crm-f-name').value=l.name||''; $('crm-f-city').value=l.city||'Querétaro';
-    $('crm-f-source').value=l.source||'g'; $('crm-f-stage').value=l.stage||'wa';
-    $('crm-f-phone').value=l.phone||''; $('crm-f-budget').value=l.budget||'';
-    $('crm-f-notes').value=l.notes||'';
-  } else {
-    ['crm-f-name','crm-f-phone','crm-f-notes'].forEach(id=>$(id).value='');
-    $('crm-f-city').value='Querétaro'; $('crm-f-source').value='g';
-    $('crm-f-stage').value=stage||'wa'; $('crm-f-budget').value='';
-  }
-  $('crm-modal-bg').classList.add('open');
-  setTimeout(()=>$('crm-f-name').focus(),80);
+function balChip(label,val,state){
+  return `<div class="bal-chip">
+    <span class="bal-chip-lbl">${label}</span>
+    <span class="bal-chip-val ${state}">${val}</span>
+  </div>`;
+}
+function toggleColl(btn){
+  const body = btn.nextElementSibling;
+  const open = body.classList.toggle('open');
+  btn.innerHTML = btn.innerHTML.replace(open?'&#9654;':'&#9660;', open?'&#9660;':'&#9654;');
+  btn.classList.toggle('on',open);
 }
 
-function crmSave(){
-  const name=$('crm-f-name').value.trim(); if(!name){$('crm-f-name').focus();return;}
-  const editId=$('crm-edit-id').value, leads=crmLoad();
-  const lead={id:editId||'crm-'+Date.now(),name,city:$('crm-f-city').value,
-    source:$('crm-f-source').value,stage:$('crm-f-stage').value,
-    phone:$('crm-f-phone').value.trim(),budget:$('crm-f-budget').value,
-    notes:$('crm-f-notes').value.trim(),
-    date:editId?(leads.find(l=>l.id===editId)||{}).date||new Date().toISOString():new Date().toISOString()};
-  if(editId){const i=leads.findIndex(l=>l.id===editId);if(i>=0)leads[i]=lead;else leads.push(lead);}
-  else leads.push(lead);
-  crmStore(leads); $('crm-modal-bg').classList.remove('open'); crmRender();
-}
-
-function crmDel(id){
-  if(!confirm('¿Eliminar este lead?')) return;
-  crmStore(crmLoad().filter(l=>l.id!==id)); crmRender();
-}
-
-/* ══ QUICK LEAD (mini-form en FINAL BOSS) ══ */
-function quickLead(){
-  const name=$('ql-name').value.trim();
-  if(!name){ $('ql-name').focus(); $('ql-name').style.borderColor='var(--red)'; return; }
-  $('ql-name').style.borderColor='';
-  const leads=crmLoad();
-  const landNote=$('ql-land').value?'Terreno: '+$('ql-land').value+'. ':'';
-  const lead={
-    id:'crm-'+Date.now(),
-    name,
-    city:$('ql-city').value,
-    source:$('ql-source').value,
-    stage:'wa',
-    phone:$('ql-phone').value.trim(),
-    budget:$('ql-budget').value,
-    notes:landNote+($('ql-note').value.trim()),
-    date:new Date().toISOString()
-  };
-  leads.push(lead);
-  crmStore(leads); crmRender();
-  /* feedback visual */
-  const ok=$('ql-ok'); ok.style.display='block';
-  $('ql-name').value=''; $('ql-phone').value=''; $('ql-note').value='';
-  $('ql-budget').selectedIndex=0; $('ql-land').selectedIndex=0;
-  setTimeout(()=>{ ok.style.display='none'; },4000);
-}
-
-function crmToggleView(){
-  crmList=!crmList;
-  $('crm-board-wrap').style.display=crmList?'none':'grid';
-  $('crm-list-wrap').style.display=crmList?'block':'none';
-  $('crm-view-btn').textContent=crmList?'Vista pipeline':'Vista lista';
-}
-
-/* ══ INIT ══ */
-document.addEventListener('DOMContentLoaded',()=>{
-  initPeriodSelector(); // ← primero fija mes/año corriente en los selects
-  initMissions();
-  loadSheet();          // ← ya usa el mes corriente automáticamente
-  loadPS();
-  runAI('full');
-  runAI('site');
-  crmRender();
+/* ── Init ── */
+window.addEventListener('DOMContentLoaded',()=>{
+  if(!getUrl()){ openSetup(); }
+  else { loadData(); }
 });
 </script>
 </body>
